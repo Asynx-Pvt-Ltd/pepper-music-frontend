@@ -20,6 +20,25 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment
+
+Create a `.env.local` with:
+
+```
+# Origin of the Pepper-Bot API server (the `/api/v1` prefix is added automatically)
+BACKEND_API_ENDPOINT=http://localhost:3000
+
+# Must match STATS_API_KEY on the bot — required by every /api/v1/stats/* route
+STATS_API_KEY=your-stats-api-key
+
+# Public origin of this site, used for sitemap URLs
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+The stats page reads the bot's stats API server-side only; `STATS_API_KEY` is never
+exposed to the browser. The browser polls `/api/stats/realtime` on this app, which
+proxies the request with the key attached.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
