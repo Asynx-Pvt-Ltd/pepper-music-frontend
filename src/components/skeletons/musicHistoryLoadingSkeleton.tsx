@@ -16,10 +16,10 @@ const MusicHistoryLoadingSkeleton = () => {
 			<Card className="bg-black border-zinc-800 text-white">
 				<CardHeader>
 					<div className="flex items-center justify-between">
-						<CardTitle>Server Top Songs</CardTitle>
+						<CardTitle>Global Top Songs</CardTitle>
 					</div>
 					<CardDescription className="text-zinc-400">
-						Top songs played on this server.
+						The most played tracks across every server.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>

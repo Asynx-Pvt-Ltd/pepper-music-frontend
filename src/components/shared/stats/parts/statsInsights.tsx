@@ -1,82 +1,111 @@
+import React from 'react';
+import {
+	FaClock,
+	FaCrown,
+	FaDiscord,
+	FaFire,
+	FaHourglassHalf,
+	FaMusic,
+	FaPlay,
+	FaServer,
+	FaUserAlt,
+	FaUsers,
+} from 'react-icons/fa';
+
 import {
 	Card,
 	CardContent,
+	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import {
-	FaMusic,
-	FaPlay,
-	FaClock,
-	FaUserAlt,
-	FaUsers,
-	FaCrown,
-	FaHourglassHalf,
-	FaDiscord,
-} from 'react-icons/fa';
 import { MusicQuotes } from '@/constants';
+import { StatsOverview, StatsPlaytime, StatsTopRequester } from '@/types';
+import {
+	formatDurationParts,
+	formatNumber,
+	formatRelativeTime,
+	formatTime,
+} from '@/utils/format';
+
 import { ErrorComponent } from '../../errorComponent';
-import { StatsData } from '@/types';
+import { StatTile } from './statTile';
 
 interface StatsInsightsProps {
-	data: StatsData | null;
-	error: boolean;
+	overview: StatsOverview | null;
+	playtime: StatsPlaytime | null;
+	topRequester: StatsTopRequester | null;
 }
 
 const parsedQuotes = MusicQuotes.map((q) => {
-	const [quote, author] = q.split(' – ')
-	return { quote, author }
-})
+	const [quote, author] = q.split(' – ');
+	return { quote, author };
+});
 
-const pickRandomQuote = () => {
-	const idx = Math.floor(Math.random() * parsedQuotes.length)
-	return parsedQuotes[idx]
-}
+const pickRandomQuote = () => parsedQuotes[Math.floor(Math.random() * parsedQuotes.length)];
 
-export const StatsInsights: React.FC<StatsInsightsProps> = ({ data, error }) => {
+export const StatsInsights: React.FC<StatsInsightsProps> = ({
+	overview,
+	playtime,
+	topRequester,
+}) => {
+	if (!overview) {
+		return (
+			<ErrorComponent
+				title="Stats unavailable"
+				message="We couldn't reach the bot's stats API. Please try again in a moment."
+			/>
+		);
+	}
 
-	if (error) return <ErrorComponent />;
-	if (!data) return null;
-	
-	const stats = data.global_stats;
+	const quote = pickRandomQuote();
+	const playtimeMs = playtime?.estimatedPlaytimeMs ?? overview.estimatedPlaytimeMs;
+	const playtimeYears = playtimeMs / (1000 * 60 * 60 * 24 * 365);
+	const averageSongMs = overview.totalPlays > 0 ? playtimeMs / overview.totalPlays : 0;
 
 	return (
 		<div className="w-full mx-auto p-6 space-y-8">
 			<Card className="w-full bg-black backdrop-blur-md text-white border border-zinc-700">
 				<CardHeader className="pb-2">
-					<CardTitle className="text-2xl font-bold">
-						Hot Info 🔥
-					</CardTitle>
+					<CardTitle className="text-2xl font-bold">Hot Info 🔥</CardTitle>
+					<CardDescription className="text-zinc-400">
+						Last track played {formatRelativeTime(overview.lastPlayedAt)}.
+					</CardDescription>
 				</CardHeader>
-				<CardContent className="space-y-4 text-zinc-200 p-4 bg-amber-100/10">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center space-x-2">
-							<FaCrown className="text-yellow-400 text-2xl" />
-							<h2 className="text-lg font-semibold text-yellow-200">
-								Most Active Requester
-							</h2>
+
+				{topRequester && (
+					<CardContent className="space-y-4 text-zinc-200 p-4 bg-amber-100/10">
+						<div className="flex flex-wrap items-center justify-between gap-3">
+							<div className="flex items-center space-x-2">
+								<FaCrown className="text-yellow-400 text-2xl" />
+								<h2 className="text-lg font-semibold text-yellow-200">
+									Most Active Requester
+								</h2>
+							</div>
+							<div className="flex items-center space-x-2">
+								<FaDiscord className="text-2xl text-indigo-400" />
+								<a
+									href={`https://discord.com/users/${topRequester.userId}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-lg font-mono text-yellow-100 hover:underline"
+								>
+									{topRequester.username ?? topRequester.userId}
+								</a>
+								<span className="text-lg font-mono text-yellow-100">
+									({formatNumber(topRequester.totalPlays)} plays)
+								</span>
+							</div>
 						</div>
-						<div className="flex items-center space-x-2">
-							<FaDiscord className="text-2xl text-indigo-400" />
-							<a
-								href={`https://discord.com/users/${stats.most_active_requester.id}`}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-lg font-mono text-yellow-100 hover:underline"
-							>
-								{stats.most_active_requester.username}
-							</a>
-							<span className="text-lg font-mono text-yellow-100">
-								({stats.most_active_requester.total_plays} plays)
-							</span>
-						</div>
-					</div>
-					<p className="text-sm text-zinc-400">
-						Stats are updated to date. Data is collected from the
-						global stats endpoint.
-					</p>
-				</CardContent>
+						<p className="text-sm text-zinc-400">
+							{formatNumber(topRequester.uniqueSongs)} unique songs across{' '}
+							{formatNumber(topRequester.uniqueArtists)} artists — last request{' '}
+							{formatRelativeTime(topRequester.lastPlayedAt)}.
+						</p>
+					</CardContent>
+				)}
+
 				<CardHeader>
 					<CardTitle className="text-2xl font-bold text-zinc-100">
 						<div className="flex items-center space-x-3">
@@ -89,101 +118,99 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({ data, error }) => 
 				</CardHeader>
 				<CardContent className="space-y-3">
 					<div className="flex flex-wrap gap-2">
-						{stats.total_duration_formatted
-							.split(', ')
-							.map((part: string, idx: number) => (
-								<span
-									key={idx}
-									className="flex items-center space-x-1 bg-teal-700/30 text-teal-100 px-3 py-1 rounded-full text-sm font-medium"
-								>
-									<FaHourglassHalf className="text-xs" />
-									<span>{part}</span>
-								</span>
-							))}
+						{formatDurationParts(playtimeMs).map((part) => (
+							<span
+								key={part}
+								className="flex items-center space-x-1 bg-teal-700/30 text-teal-100 px-3 py-1 rounded-full text-sm font-medium"
+							>
+								<FaHourglassHalf className="text-xs" />
+								<span>{part}</span>
+							</span>
+						))}
 					</div>
-					{/* Highlight the total in a more concise summary */}
 					<div className="mt-2 p-3 bg-teal-800/20 rounded-lg">
 						<p className="text-sm text-teal-200">
-							That's over{' '}
+							That&apos;s over{' '}
 							<span className="font-semibold text-white">
-								{Math.floor(stats.total_duration_ms / (1000 * 60 * 60 * 24 * 365))} years
+								{playtimeYears >= 1
+									? `${Math.floor(playtimeYears)} years`
+									: `${Math.floor(playtimeMs / (1000 * 60 * 60 * 24))} days`}
 							</span>{' '}
-							of music enjoyed by our community—proof of how valuable our service is!
+							of music enjoyed across{' '}
+							<span className="font-semibold text-white">
+								{formatNumber(playtime?.trackedGuilds ?? overview.activeGuilds)}
+							</span>{' '}
+							servers.
 						</p>
 					</div>
 				</CardContent>
+
 				<CardContent className="border-t border-zinc-800 pt-4">
-					<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-						<div className="p-4 rounded-lg bg-zinc-800/50">
-							<div className="flex items-center space-x-2 mb-2">
-								<FaMusic className="text-2xl text-blue-300" />
-								<h3 className="font-medium text-blue-200">Total Songs</h3>
-							</div>
-							<p className="text-2xl font-mono">{stats.total_songs}</p>
-						</div>
-						<div className="p-4 rounded-lg bg-zinc-800/50">
-							<div className="flex items-center space-x-2 mb-2">
-								<FaPlay className="text-2xl text-green-300" />
-								<h3 className="font-medium text-green-200">Total Plays</h3>
-							</div>
-							<p className="text-2xl font-mono">{stats.total_plays}</p>
-						</div>
-						<div className="p-4 rounded-lg bg-zinc-800/50">
-							<div className="flex items-center space-x-2 mb-2">
-								<FaUserAlt className="text-2xl text-yellow-300" />
-								<h3 className="font-medium text-yellow-200">
-									Unique Artists
-								</h3>
-							</div>
-							<p className="text-2xl font-mono">{stats.unique_artists}</p>
-						</div>
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+						<StatTile
+							icon={<FaMusic />}
+							label="Unique Songs"
+							value={formatNumber(overview.uniqueSongs)}
+							accent="text-blue-300"
+						/>
+						<StatTile
+							icon={<FaPlay />}
+							label="Total Plays"
+							value={formatNumber(overview.totalPlays)}
+							accent="text-green-300"
+						/>
+						<StatTile
+							icon={<FaUserAlt />}
+							label="Unique Artists"
+							value={formatNumber(overview.uniqueArtists)}
+							accent="text-yellow-300"
+						/>
+						<StatTile
+							icon={<FaServer />}
+							label="Active Servers"
+							value={formatNumber(overview.activeGuilds)}
+							accent="text-purple-300"
+						/>
+						<StatTile
+							icon={<FaUsers />}
+							label="Tracked Listeners"
+							value={formatNumber(overview.trackedListeners)}
+							accent="text-pink-300"
+						/>
+						<StatTile
+							icon={<FaHourglassHalf />}
+							label="Avg. Song Length"
+							value={formatTime(averageSongMs)}
+							accent="text-teal-300"
+						/>
 					</div>
-					<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-						<div className="p-4 rounded-lg bg-zinc-800/50">
-							<div className="flex items-center space-x-2 mb-2">
-								<FaUsers className="text-2xl text-pink-300" />
-								<h3 className="font-medium text-pink-200">
-									Unique Requesters
-								</h3>
-							</div>
-							<p className="text-2xl font-mono">
-								{stats.unique_requesters}
-							</p>
-						</div>
-						<div className="p-4 rounded-lg bg-zinc-800/50">
-							<div className="flex items-center space-x-2 mb-2">
-								<FaHourglassHalf className="text-2xl text-teal-300" />
-								<h3 className="font-medium text-teal-200">
-									Avg. Listening Time
-								</h3>
-							</div>
-							<p className="text-2xl font-mono">
-							{(() => {
-								const ms = stats.average_song_duration_ms;
-								const years = Math.floor(ms / (1000 * 60 * 60 * 24 * 365));
-								const days = Math.floor((ms % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
-								
-								if (years > 0) {
-								return `${years} yr ${days} day${days !== 1 ? 's' : ''}`;
-								} else {
-								return `${days} day${days !== 1 ? 's' : ''}`;
-								}
-							})()}
-							</p>
-						</div>
+
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+						<StatTile
+							icon={<FaFire />}
+							label="Songs Played (24h)"
+							value={formatNumber(overview.songsLastPlayed24h)}
+							hint="Unique tracks touched in the last day"
+							accent="text-orange-300"
+						/>
+						<StatTile
+							icon={<FaFire />}
+							label="Songs Played (7d)"
+							value={formatNumber(overview.songsLastPlayed7d)}
+							hint="Unique tracks touched in the last week"
+							accent="text-red-300"
+						/>
 					</div>
 				</CardContent>
+
 				<CardFooter className="border-t border-zinc-800 pt-4">
 					<div className="text-xs text-zinc-500">
 						<p>
-							{pickRandomQuote().quote} -{' '}
-							<span className="font-semibold text-zinc-300">
-								{pickRandomQuote().author}
-							</span>
+							{quote.quote} -{' '}
+							<span className="font-semibold text-zinc-300">{quote.author}</span>
 						</p>
 					</div>
 				</CardFooter>
-
 			</Card>
 		</div>
 	);

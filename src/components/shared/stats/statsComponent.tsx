@@ -1,32 +1,29 @@
-import StatsInsights from "./parts/statsInsights";
-import StatsMusicPage from "./parts/statsMusic";
-import { StatsData } from "@/types";
-import FeatureCards from "./parts/featureCards";
+import { getStatsBundle } from '@/lib/stats-api';
 
-const fetchAPI = async (): Promise<StatsData | null> => {
-	try {
-		const response = await fetch(
-			process.env.NEXT_PUBLIC_BASE_URL + '/api/stats'
-		);
-		if (!response.ok) return null;
-		const data = await response.json();
-		return data as StatsData;
-	} catch {
-		return null;
-	}
-}
+import FeatureCards from './parts/featureCards';
+import StatsInsights from './parts/statsInsights';
+import StatsMusicPage from './parts/statsMusic';
+import StatsRealtimeCard from './parts/statsRealtime';
+import StatsRequestersCard from './parts/statsRequesters';
+import StatsServersCard from './parts/statsServers';
 
 const StatsComponent: React.FC = async () => {
-	const data = await fetchAPI();
-	const error = false;
+	const stats = await getStatsBundle({ songs: 20, requesters: 10, playtime: 10, servers: 10 });
 
 	return (
 		<div className="py-2 md:px-8">
 			<FeatureCards />
-			<StatsInsights data={data} error={error} />
-			<StatsMusicPage data={data} error={error} />
+			<StatsRealtimeCard initialData={stats.realtime} />
+			<StatsInsights
+				overview={stats.overview}
+				playtime={stats.playtime}
+				topRequester={stats.requesters?.requesters?.[0] ?? null}
+			/>
+			<StatsMusicPage songs={stats.songs} />
+			<StatsRequestersCard requesters={stats.requesters} />
+			<StatsServersCard servers={stats.servers} />
 		</div>
 	);
-}
+};
 
 export default StatsComponent;
