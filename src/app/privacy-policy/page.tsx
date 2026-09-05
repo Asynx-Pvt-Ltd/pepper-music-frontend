@@ -1,360 +1,560 @@
 import { Metadata, NextPage } from 'next';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import Link from 'next/link';
 import {
-	Eye,
-	Database,
-	Clock,
-	Lock,
-	Share2,
 	Baby,
-	Trash2,
 	Bell,
+	BarChart3,
+	Database,
+	Eye,
+	Globe,
+	Lock,
+	Music4,
+	Scale,
+	Share2,
+	ShieldCheck,
+	Trash2,
+	UserCheck,
 	MessageSquare,
 } from 'lucide-react';
+
+import LegalPage, {
+	LegalHighlight,
+	LegalSection,
+} from '@/components/shared/legal/legalPage';
+import {
+	Bullets,
+	DataTable,
+	Note,
+	Prose,
+	Term,
+} from '@/components/shared/legal/parts';
+import { discordServerLink, githubLink, termsLink } from '@/constants';
 
 interface Props {}
 
 export const metadata: Metadata = {
 	title: 'Privacy Policy | How Pepper Music Bot Handles Your Data',
 	description:
-		'Learn how Pepper Music Bot collects, uses, and protects your data. Our privacy policy explains user information handling, third-party integrations, and your rights as a user.',
+		'How Pepper Music Bot collects, uses, stores and deletes your data — Discord identifiers, listening history, connected Spotify accounts, public stats and your rights.',
 	keywords: [
 		'Pepper privacy policy',
 		'Discord bot privacy policy',
 		'data collection Discord bot',
 		'Pepper bot data usage',
 		'user privacy Discord',
-		'privacy and security Pepper',
-		'Lavalink bot privacy policy',
 		'Spotify Discord bot privacy',
+		'Discord bot data deletion',
+		'Lavalink bot privacy policy',
 	],
 };
 
+const inlineLink =
+	'font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white';
+
+const highlights: LegalHighlight[] = [
+	{
+		icon: <ShieldCheck className="h-4 w-4" />,
+		title: 'We never sell your data',
+		body: 'No advertising networks, no data brokers, no selling or renting of anything we hold.',
+	},
+	{
+		icon: <Music4 className="h-4 w-4" />,
+		title: 'Music data, not messages',
+		body: 'Pepper stores the tracks you play. It does not read, store or scan your chat messages.',
+	},
+	{
+		icon: <UserCheck className="h-4 w-4" />,
+		title: 'Spotify stays optional',
+		body: 'Linking Spotify is opt-in via /login, limited to reading playlists, and revoked with /logout.',
+	},
+	{
+		icon: <Trash2 className="h-4 w-4" />,
+		title: 'Deletion on request',
+		body: 'Ask in our support server and we will erase your stored history and connections.',
+	},
+];
+
+const sections: LegalSection[] = [
+	{
+		id: 'overview',
+		title: 'Overview & scope',
+		icon: <Eye className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					This Privacy Policy explains what information the{' '}
+					<Term>Pepper music bot</Term> (the &quot;Bot&quot;) and the website at{' '}
+					<Term>pepper.mrbotz.com</Term> collect, why we collect it, how long we
+					keep it, and the choices you have. It applies to everyone who uses
+					Pepper in a Discord server, links an account to it, or browses the
+					website.
+				</p>
+				<p>
+					Pepper is an independent project. It is not affiliated with, endorsed
+					by, or operated by Discord, Spotify, Apple, SoundCloud, Deezer or any
+					other platform it can play from. Your use of those platforms remains
+					governed by their own policies.
+				</p>
+				<Note title="In short">
+					Pepper stores what it needs to play music, keep your queue and
+					preferences working, power recommendations and your{' '}
+					<Term>/chart</Term> statistics, and keep the service running. Nothing
+					more.
+				</Note>
+			</Prose>
+		),
+	},
+	{
+		id: 'information-we-collect',
+		title: 'Information we collect',
+		icon: <Database className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Pepper has no sign-up form. Everything below is collected as a
+					by-product of using the Bot&apos;s commands inside Discord.
+				</p>
+				<DataTable
+					rows={[
+						{
+							label: 'Discord identifiers',
+							detail:
+								'Your user ID, username, discriminator and avatar URL, stored alongside tracks you request.',
+							purpose:
+								'To attribute queued tracks to the right person, apply per-user settings and cooldowns, and show who requested what.',
+						},
+						{
+							label: 'Server identifiers',
+							detail:
+								'Guild ID, the DJ role ID you configure, and the server language preference.',
+							purpose:
+								'To keep per-server settings, permissions and localisation working across restarts.',
+						},
+						{
+							label: 'Listening history',
+							detail:
+								'Track title, artist, duration, ISRC, source platform, artwork URL, track link, play count and the time it was played — recorded per user and per server.',
+							purpose:
+								'To power autoplay recommendations, the /chart command, queue features and aggregate statistics.',
+						},
+						{
+							label: 'Connected Spotify account',
+							detail:
+								'If you run /login: an OAuth access token, a refresh token and your Spotify display name.',
+							purpose:
+								'To read your own Spotify playlists so you can queue them with Pepper.',
+						},
+						{
+							label: 'Server metadata',
+							detail:
+								'When Pepper is added to or removed from a server: server ID, name, icon, owner, approximate member count and creation date.',
+							purpose:
+								'Operational logging, abuse handling and capacity planning.',
+						},
+						{
+							label: 'Feedback submissions',
+							detail:
+								'The text you submit through /feedback, along with your Discord tag, user ID and the server you sent it from.',
+							purpose:
+								'To reply to you, reproduce bugs and act on suggestions.',
+						},
+						{
+							label: 'Technical logs',
+							detail:
+								'Command names, errors, playback failures and timing data, kept in short-lived operational logs.',
+							purpose:
+								'To detect outages, fix bugs and protect the service from abuse.',
+						},
+						{
+							label: 'Website analytics',
+							detail:
+								'Google Analytics collects standard usage data (pages viewed, approximate region, device and browser) when you visit our website.',
+							purpose:
+								'To understand which pages are useful. The website has no login and stores no personal account data.',
+						},
+					]}
+				/>
+				<Note title="What Pepper does not collect">
+					Pepper does not read, store or analyse the content of your messages,
+					does not record voice channels, does not collect email addresses,
+					phone numbers or payment details, and does not track your activity
+					outside Discord and this website.
+				</Note>
+			</Prose>
+		),
+	},
+	{
+		id: 'how-we-use-data',
+		title: 'How we use your information',
+		icon: <BarChart3 className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>We use the information described above only to:</p>
+				<Bullets
+					items={[
+						<>
+							<Term>Run the Bot</Term> — resolve searches, queue and play
+							tracks, apply filters, loops and volume, and restore state after
+							a restart or node failover.
+						</>,
+						<>
+							<Term>Personalise autoplay</Term> — recommendations are generated
+							by our own algorithm from your stored listening history and, if
+							you linked one, your Spotify playlists.
+						</>,
+						<>
+							<Term>Show your statistics</Term> — the <Term>/chart</Term>{' '}
+							command reports your own top tracks, artists and listening time,
+							plus the same for the server you run it in.
+						</>,
+						<>
+							<Term>Localise responses</Term> — your saved language preference
+							selects one of Pepper&apos;s supported translations.
+						</>,
+						<>
+							<Term>Enforce permissions</Term> — the DJ role and command
+							cooldowns depend on stored identifiers.
+						</>,
+						<>
+							<Term>Maintain and improve the service</Term> — diagnosing bugs,
+							investigating abuse and planning capacity.
+						</>,
+						<>
+							<Term>Publish aggregate statistics</Term> — see the section on
+							public statistics below.
+						</>,
+					]}
+				/>
+				<p>
+					We do not use your data to build advertising profiles, and we do not
+					make automated decisions that have legal or similarly significant
+					effects on you.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'spotify',
+		title: 'Linking a Spotify account',
+		icon: <Music4 className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Linking Spotify is entirely optional. Pepper works fully without it.
+					When you run <Term>/login spotify</Term>, you are sent to
+					Spotify&apos;s own authorisation page — Pepper never sees your Spotify
+					password.
+				</p>
+				<Bullets
+					items={[
+						<>
+							<Term>Scope requested:</Term>{' '}
+							<Term>playlist-read-private</Term> and{' '}
+							<Term>playlist-read-collaborative</Term> — permission to read
+							your playlists, and nothing else.
+						</>,
+						<>
+							<Term>What Pepper cannot do:</Term> it cannot modify or delete
+							your playlists, cannot follow or unfollow anything, cannot post
+							to your account, and cannot see your Spotify listening activity
+							or account details beyond your display name.
+						</>,
+						<>
+							<Term>What is stored:</Term> the access and refresh tokens
+							Spotify issues, and your Spotify display name, held so the link
+							survives restarts without asking you to sign in again.
+						</>,
+						<>
+							<Term>How to revoke:</Term> run <Term>/logout</Term> and the
+							stored tokens are deleted immediately. You can also revoke access
+							at any time from your Spotify account&apos;s{' '}
+							<Term>Apps</Term> settings page.
+						</>,
+					]}
+				/>
+			</Prose>
+		),
+	},
+	{
+		id: 'public-statistics',
+		title: 'Public statistics page',
+		icon: <Globe className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Our website publishes aggregate statistics about Pepper — total tracks
+					played, popular songs and artists, active servers and a live view of
+					what is currently playing across the network.
+				</p>
+				<Note title="Worth knowing">
+					The &quot;top requesters&quot; leaderboard shows{' '}
+					<Term>Discord usernames and avatars</Term> of the people who have
+					played the most tracks. Bot accounts are excluded. If you would rather
+					not appear there, ask us in the support server and we will exclude
+					you.
+				</Note>
+				<p>
+					Server-level statistics are keyed by server ID and reflect what was
+					played by that community. Private message content, member lists and
+					voice activity are never part of these statistics.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'third-parties',
+		title: 'Third-party services',
+		icon: <Share2 className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Pepper relies on a small number of external services to work. Each one
+					receives only what it needs:
+				</p>
+				<Bullets
+					items={[
+						<>
+							<Term>Discord</Term> — the platform Pepper runs on. All
+							interactions pass through Discord and are subject to their
+							privacy policy.
+						</>,
+						<>
+							<Term>Audio (Lavalink) nodes</Term> — receive the search term or
+							track link to resolve and stream audio. They do not receive your
+							Discord identity or listening history.
+						</>,
+						<>
+							<Term>Spotify</Term> — contacted only when you have linked an
+							account, and only to read your playlists.
+						</>,
+						<>
+							<Term>Lyrics provider</Term> — the <Term>/lyrics</Term> command
+							sends the track link of the currently playing song to our lyrics
+							service. No user identifier is attached.
+						</>,
+						<>
+							<Term>Database and hosting providers</Term> — store the data
+							described in this policy on our behalf under their own security
+							commitments.
+						</>,
+						<>
+							<Term>Google Analytics</Term> — website usage measurement only.
+							It is not used inside the Bot.
+						</>,
+					]}
+				/>
+				<p>
+					We do not sell, rent or trade your information. We disclose it only to
+					these service providers, or where required to comply with a valid
+					legal obligation, or to investigate abuse and protect the safety and
+					integrity of the service.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'retention-deletion',
+		title: 'Retention & deletion',
+		icon: <Trash2 className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<Bullets
+					items={[
+						<>
+							<Term>Listening history and preferences</Term> are kept while you
+							continue to use Pepper, because they power autoplay and{' '}
+							<Term>/chart</Term>.
+						</>,
+						<>
+							<Term>Spotify tokens</Term> are deleted immediately when you run{' '}
+							<Term>/logout</Term>.
+						</>,
+						<>
+							<Term>Technical logs</Term> are short-lived and rotate out
+							automatically.
+						</>,
+						<>
+							<Term>Server data</Term> may be removed once Pepper is no longer
+							in that server.
+						</>,
+					]}
+				/>
+				<p>
+					To request deletion of your personal data, contact us in our{' '}
+					<Link
+						href={discordServerLink}
+						target="_blank"
+						rel="noreferrer"
+						className={inlineLink}
+					>
+						official Discord server
+					</Link>
+					. We will verify that the request comes from the account in question
+					and action it, keeping only what we are legally required to retain.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'your-rights',
+		title: 'Your choices and rights',
+		icon: <Scale className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>Depending on where you live, you may have the right to:</p>
+				<Bullets
+					items={[
+						'Access a copy of the personal data we hold about you.',
+						'Ask us to correct information that is inaccurate.',
+						'Ask us to delete your data.',
+						'Withdraw a connection you previously authorised, such as Spotify.',
+						'Object to, or ask us to restrict, certain processing.',
+					]}
+				/>
+				<p>
+					You can exercise all of these by contacting us in the support server.
+					You can also limit what Pepper records simply by not using it — no
+					data is collected about a member who never issues a command and whose
+					tracks are never queued.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'security',
+		title: 'How we protect your data',
+		icon: <Lock className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Access to Pepper&apos;s database is restricted to the maintainers who
+					operate it. Traffic between Pepper, Discord and our providers uses
+					encrypted connections, and the statistics API that powers our website
+					is protected by a server-side key that is never exposed to browsers.
+				</p>
+				<p>
+					No system is perfectly secure. We cannot guarantee absolute security,
+					and you share information with Pepper at your own discretion. If we
+					ever become aware of a breach affecting your data, we will inform
+					affected users through our support server and, where required, the
+					relevant authorities.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'international',
+		title: 'Where your data is processed',
+		icon: <Globe className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Pepper is operated from India and uses hosting and audio infrastructure
+					in several countries. By using the Bot, you understand that your
+					information may be transferred to and processed in countries other
+					than your own, which may have different data protection rules. We take
+					reasonable steps to ensure it remains protected as described here.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'children',
+		title: "Children's privacy",
+		icon: <Baby className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Pepper is not directed at children. Discord requires users to be at
+					least 13 years old, or older where local law sets a higher minimum,
+					and the same applies to Pepper. We do not knowingly collect
+					information from anyone below that age. If you believe a child has
+					provided us with personal information, contact us and we will delete
+					it promptly.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'changes',
+		title: 'Changes to this policy',
+		icon: <Bell className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					We may update this Policy as Pepper evolves. The &quot;last
+					updated&quot; date at the top of this page always reflects the current
+					version, and material changes will be announced in our support server.
+					Continuing to use Pepper after an update means you accept the revised
+					Policy.
+				</p>
+				<p>
+					Pepper&apos;s source code is public, so changes to what the Bot stores
+					can also be reviewed on{' '}
+					<Link
+						href={githubLink}
+						target="_blank"
+						rel="noreferrer"
+						className={inlineLink}
+					>
+						GitHub
+					</Link>
+					.
+				</p>
+			</Prose>
+		),
+	},
+	{
+		id: 'contact',
+		title: 'Contact us',
+		icon: <MessageSquare className="h-4 w-4" />,
+		content: (
+			<Prose>
+				<p>
+					Questions about this Policy, a data request, or something that looks
+					wrong? Reach us in our{' '}
+					<Link
+						href={discordServerLink}
+						target="_blank"
+						rel="noreferrer"
+						className={inlineLink}
+					>
+						official Discord server
+					</Link>
+					, or open an issue on{' '}
+					<Link
+						href={githubLink}
+						target="_blank"
+						rel="noreferrer"
+						className={inlineLink}
+					>
+						GitHub
+					</Link>
+					. We aim to respond to privacy requests within 30 days.
+				</p>
+			</Prose>
+		),
+	},
+];
+
 const PrivacyPolicy: NextPage<Props> = ({}) => {
 	return (
-		<section className="bg-black">
-			<div className="container mx-auto px-4 py-8 text-white">
-				<div className="max-w-4xl mx-auto">
-					{/* Header */}
-					<div className="mb-8 text-center">
-						<h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
-						<p className="text-gray-400">Last updated: April 2, 2025</p>
-					</div>
-
-					<Card className="shadow-lg bg-black py-0 my-6">
-						<CardContent className="p-0">
-							{/* Introduction Card */}
-							<div className="bg-white text-black p-6 rounded-t-lg border-b border-gray-800">
-								<p className="text-lg">
-									This Privacy Policy outlines how we collect, use, and handle
-									personal information when you use the
-									<span className="font-bold text-black">
-										{' '}
-										Pepper music bot
-									</span>
-									. By using the Bot, you consent to the practices described in
-									this Policy.
-								</p>
-							</div>
-
-							<ScrollArea className="p-6 h-[600px] ">
-								{/* Section 1 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Eye className="w-4 h-4" />
-										</div>
-										Information Collection
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											Personal Information: When you interact with the Bot, we
-											may collect certain personal information, such as:
-										</p>
-										<ul className="list-disc pl-6 space-y-2">
-											<li>
-												<span className="font-semibold">User ID:</span> This is
-												collected to identify users and provide personalized
-												experiences within the bot.
-											</li>
-											<li>
-												<span className="font-semibold">
-													Music Playback Data:
-												</span>{' '}
-												The Bot may collect information about the music tracks
-												played, such as the title, artist, and duration. This
-												data helps improve the user experience and is used for
-												statistical purposes.
-											</li>
-											<li>
-												<span className="font-semibold">
-													Command Usage Data:
-												</span>{' '}
-												The Bot may collect information about the commands used
-												by individual users for bug fixing, troubleshooting, and
-												improving the functionality of the Bot.
-											</li>
-											<li>
-												<span className="font-semibold">Guild ID:</span> We
-												collect the Guild ID to associate user activity with
-												specific Discord servers and provide server-specific
-												features and functionality.
-											</li>
-											<li>
-												<span className="font-semibold">User Statistics:</span>{' '}
-												The Bot may track statistics related to individual
-												users, such as the number of tracks played, total listen
-												time, and overall command usage count. These statistics
-												help in understanding user engagement and enhancing the
-												bot's features.
-											</li>
-											<li>
-												<span className="font-semibold">
-													Channel ID (Setup Command):
-												</span>{' '}
-												The Bot may collect the channel ID provided during setup
-												commands to enable specific functionality or designate
-												preferred channels for certain actions.
-											</li>
-											<li>
-												<span className="font-semibold">Server Data:</span> We
-												may collect data related to the server such as ID,
-												server name, owner ID and total members when bot is
-												added to a guild. The data we collect here is solely
-												used for debugging and upgrade purposes.
-											</li>
-											<li>
-												<span className="font-semibold">Autoplay Data:</span>
-												We collect listening history from Spotify (if connected
-												and activity sharing is enabled) and Pepper to
-												personalize autoplay recommendations.
-											</li>
-											<li>
-												<span className="font-semibold">
-													Opt-in & Opt-out Tracking:
-												</span>
-												Users can enable or disable Spotify activity tracking
-												using the /spotify config enabled command.
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 2 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Database className="w-4 h-4" />
-										</div>
-										Use of Information
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											We may use the collected information for the following
-											purposes:
-										</p>
-										<ul className="list-disc pl-6 space-y-2">
-											<li>
-												Providing and improving the functionality of the Bot.
-											</li>
-											<li>Personalizing user experiences within the Bot.</li>
-											<li>
-												Analyzing usage patterns to enhance the Bot's features
-												and performance.
-											</li>
-											<li>
-												Troubleshooting and fixing bugs reported by users.
-											</li>
-											<li>Complying with legal obligations.</li>
-											<li>
-												Autoplay recommendations are generated based on stored
-												listening history, ensuring a tailored user experience.
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 3 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Clock className="w-4 h-4" />
-										</div>
-										Data Retention
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											We retain personal information only for as long as
-											necessary to fulfill the purposes outlined in this Policy,
-											unless a longer retention period is required by law.
-										</p>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 4 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Lock className="w-4 h-4" />
-										</div>
-										Data Security
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											We take reasonable measures to protect the security of
-											your personal information against unauthorized access,
-											loss, or alteration. However, please note that no method
-											of transmission over the internet or electronic storage is
-											100% secure, and we cannot guarantee absolute security.
-										</p>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 5 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Share2 className="w-4 h-4" />
-										</div>
-										Data Sharing and Disclosure
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											We do not sell, trade, or otherwise transfer your personal
-											information to third parties without your consent, except
-											in the following circumstances:
-										</p>
-										<ul className="list-disc pl-6 space-y-2">
-											<li>
-												Trusted service providers who assist us in operating the
-												Bot and providing services to you, subject to their
-												agreement to keep the information confidential.
-											</li>
-											<li>
-												Compliance with applicable laws, regulations, or legal
-												processes.
-											</li>
-											<li>
-												We do not share user data with Lavalink servers or any
-												third-party music service. Autoplay is powered by our
-												own music algorithm developed specifically for Pepper.
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 6 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Baby className="w-4 h-4" />
-										</div>
-										Children's Privacy
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											The Bot is not intended for individuals under the age of
-											13. We do not knowingly collect or solicit personal
-											information from children. If we become aware that we have
-											collected personal information from a child without
-											parental consent, we will take steps to promptly delete
-											the information.
-										</p>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 7 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Trash2 className="w-4 h-4" />
-										</div>
-										Data Deletion Request
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											You have the right to request the deletion of your
-											personal information collected by the Bot. To submit a
-											data deletion request, please contact us through our{' '}
-											<span className="font-semibold">
-												official discord server
-											</span>
-											. We will review and respond to your request in accordance
-											with applicable laws and regulations.
-										</p>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 8 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<Bell className="w-4 h-4" />
-										</div>
-										Changes to the Privacy Policy
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											We reserve the right to modify or update this Privacy
-											Policy from time to time. Any changes will be effective
-											upon posting the revised Policy on our website. We
-											encourage you to review this Policy periodically.
-										</p>
-									</div>
-								</div>
-
-								<Separator className="my-8 bg-gray-800" />
-
-								{/* Section 9 */}
-								<div className="mb-8">
-									<h2 className="text-xl font-bold mb-4 flex items-center text-white">
-										<div className="bg-white text-black rounded-full w-8 h-8 flex items-center justify-center mr-3">
-											<MessageSquare className="w-4 h-4" />
-										</div>
-										Contact Us
-									</h2>
-									<div className="pl-11 space-y-3 text-gray-300">
-										<p>
-											If you have any questions, concerns, or requests regarding
-											this Privacy Policy or the handling of your personal
-											information, please contact us through our{' '}
-											<span className="font-semibold">
-												official discord server
-											</span>
-											.
-										</p>
-									</div>
-								</div>
-							</ScrollArea>
-
-							{/* Agreement Footer */}
-							<div className="bg-white p-6 rounded-b-lg border-t border-gray-800">
-								<p className="text-sm text-black text-center">
-									By using Pepper, you acknowledge that you have read,
-									understood, and agree to this Privacy Policy.
-								</p>
-							</div>
-						</CardContent>
-					</Card>
-				</div>
-			</div>
-		</section>
+		<LegalPage
+			eyebrow="Legal"
+			title="Privacy Policy"
+			summary="What Pepper stores when you play music on Discord, why it stores it, who else sees it, and how to have it removed."
+			updated="September 6, 2026"
+			effective="September 6, 2026"
+			highlights={highlights}
+			sections={sections}
+			related={{
+				label: 'Terms of Service',
+				href: termsLink,
+				description:
+					'The rules for using Pepper, what we promise, and what we do not.',
+			}}
+			agreement="By using Pepper, you acknowledge that you have read and understood this Privacy Policy and consent to the handling of information described in it."
+		/>
 	);
 };
 
