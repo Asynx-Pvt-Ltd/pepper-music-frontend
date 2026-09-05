@@ -89,8 +89,6 @@ export const formatSourceName = (source: string | null | undefined): string => {
 	if (!source) return 'Unknown';
 	const labels: Record<string, string> = {
 		spotify: 'Spotify',
-		youtube: 'YouTube',
-		youtubemusic: 'YouTube Music',
 		soundcloud: 'SoundCloud',
 		applemusic: 'Apple Music',
 		deezer: 'Deezer',
@@ -114,4 +112,27 @@ export const formatUptime = (milliseconds: number): string => {
 	return [days ? `${days}d` : '', hours ? `${hours}h` : '', `${minutes}m`]
 		.filter(Boolean)
 		.join(' ');
+};
+
+/**
+ * Longest a single track can plausibly be. Live streams are stored with a
+ * duration of `Long.MAX_VALUE`, so any total that implies an average track
+ * longer than this is poisoned by them rather than real listening time.
+ */
+export const MAX_PLAUSIBLE_TRACK_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Guards the `estimatedPlaytimeMs` totals the stats API reports. The bot sums
+ * `duration × plays` across every track, including live streams whose duration
+ * is `Long.MAX_VALUE` — a handful of those makes the total meaningless. When
+ * that happens we decline to render a number rather than show a wrong one.
+ */
+export const isPlausiblePlaytime = (
+	playtimeMs: number | null | undefined,
+	totalPlays: number | null | undefined
+): boolean => {
+	if (typeof playtimeMs !== 'number' || !Number.isFinite(playtimeMs)) return false;
+	if (playtimeMs < 0) return false;
+	if (!totalPlays || totalPlays <= 0) return playtimeMs === 0;
+	return playtimeMs / totalPlays <= MAX_PLAUSIBLE_TRACK_MS;
 };

@@ -1,31 +1,29 @@
-import { Card, CardContent } from '@/components/ui/card';
-
 export interface StatTileProps {
 	icon: React.ReactNode;
 	label: string;
 	value: string;
 	hint?: string;
-	accent?: string;
 }
 
-/** Shared tile used by the overview and realtime cards. */
+/** Shared tile used by the overview and realtime sections. */
 export const StatTile: React.FC<StatTileProps> = ({
 	icon,
 	label,
 	value,
 	hint,
-	accent = 'text-zinc-300',
 }) => (
-	<Card className="bg-zinc-900/60 border-zinc-800 text-white py-4 gap-2">
-		<CardContent className="px-4">
-			<div className="flex items-center gap-2 mb-2">
-				<span className={`text-lg ${accent}`}>{icon}</span>
-				<h3 className="text-sm font-medium text-zinc-400">{label}</h3>
-			</div>
-			<p className="text-2xl font-mono font-semibold tracking-tight">{value}</p>
-			{hint && <p className="mt-1 text-xs text-zinc-500">{hint}</p>}
-		</CardContent>
-	</Card>
+	<div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/20">
+		<div className="flex items-center gap-2">
+			<span className="text-white/40">{icon}</span>
+			<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">
+				{label}
+			</h3>
+		</div>
+		<p className="mt-2 font-mono text-2xl font-semibold tabular-nums text-white">
+			{value}
+		</p>
+		{hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
+	</div>
 );
 
 export default StatTile;

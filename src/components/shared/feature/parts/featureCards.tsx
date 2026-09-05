@@ -1,76 +1,59 @@
-import {
-    Card,
-    CardContent,
-    CardTitle,
-    CardDescription,
-} from '@/components/ui/card';
-import { Music, Users, Server, Zap, Award, Clock } from 'lucide-react';
-import { FeatureCardProps } from '@/types';
+import { Award, Clock, Music, Server, Users, Zap } from 'lucide-react';
 
-function FeatureCard({
-    icon,
-    title,
-    description,
-}: FeatureCardProps) {
-    return (
-        <Card className="bg-black border-zinc-700 text-white">
-            <CardContent className="pt-6">
-                <div className="flex flex-col items-center text-center">
-                    <div className="mb-4">{icon}</div>
-                    <CardTitle className="mb-2">{title}</CardTitle>
-                    <CardDescription className="text-gray-400">
-                        {description}
-                    </CardDescription>
-                </div>
-            </CardContent>
-        </Card>
-    );
-}
+import { FeatureTile } from '@/components/shared/page/parts';
 
 const FeatureCardContent = [
-    {
-        icon: <Music className="h-8 w-8 text-purple-500" />,
-        title: 'Voice Channel Music',
-        description: 'Play high-quality music directly in your Discord voice channels with simple commands.',
-    },
-    {
-        icon: <Server className="h-8 w-8 text-purple-500" />,
-        title: 'Multi-Lingual Support',
-        description: 'Search and enjoy music in multiple languages with native language support across Discord commands.',
-    },
-    {        icon: <Users className="h-8 w-8 text-purple-500" />,
-        title: 'Community Playlists',
-        description: 'Let server members add songs to the queue and create collaborative listening sessions.',
-    },
-    {        icon: <Zap className="h-8 w-8 text-purple-500" />,
-        title: 'Fast & Reliable',
-        description: 'Lightning-fast song loading and stable 24/7 uptime for uninterrupted music sessions.',
-    },
-    {
-        icon: <Award className="h-8 w-8 text-purple-500" />,
-        title: 'Premium Audio Quality',
-        description: 'Enjoy crystal-clear sound with support for high-bitrate audio streaming.',
-    },
-    {
-        icon: <Clock className="h-8 w-8 text-purple-500" />,
-        title: 'Queue Management',
-        description: 'Easily manage song queues, skip tracks, and loop your favorite songs or playlists.',
-    },
+	{
+		icon: <Music className="h-4 w-4" />,
+		title: 'Voice Channel Music',
+		description:
+			'Play high-quality music directly in your Discord voice channels with a single slash command.',
+	},
+	{
+		icon: <Server className="h-4 w-4" />,
+		title: 'Multi-Lingual Support',
+		description:
+			'Search and enjoy music in multiple languages, with every response translated to match.',
+	},
+	{
+		icon: <Users className="h-4 w-4" />,
+		title: 'Community Playlists',
+		description:
+			'Let server members add songs to the queue and build a collaborative listening session.',
+	},
+	{
+		icon: <Zap className="h-4 w-4" />,
+		title: 'Fast & Reliable',
+		description:
+			'Lightning-fast song loading and stable 24/7 uptime for uninterrupted music sessions.',
+	},
+	{
+		icon: <Award className="h-4 w-4" />,
+		title: 'Premium Audio Quality',
+		description:
+			'Crystal-clear sound with high-bitrate streaming and minimal buffering.',
+	},
+	{
+		icon: <Clock className="h-4 w-4" />,
+		title: 'Queue Management',
+		description:
+			'Reorder, skip and loop tracks or whole playlists without losing your place.',
+	},
 ];
 
 const FeatureCards: React.FC = () => {
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FeatureCardContent.map((feature, index) => (
-                <FeatureCard
-                    key={index}
-                    icon={feature.icon}
-                    title={feature.title}
-                    description={feature.description}
-                />
-            ))}
-        </div>
-    );
-}
+	return (
+		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			{FeatureCardContent.map((feature) => (
+				<FeatureTile
+					key={feature.title}
+					icon={feature.icon}
+					title={feature.title}
+					description={feature.description}
+				/>
+			))}
+		</div>
+	);
+};
 
 export default FeatureCards;

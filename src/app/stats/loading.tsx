@@ -1,24 +1,35 @@
-import FeatureCards from '@/components/shared/stats/parts/featureCards';
-import MusicHistoryLoadingSkeleton from '@/components/skeletons/musicHistoryLoadingSkeleton';
-import RealtimeStatsLoadingSkeleton from '@/components/skeletons/realtimeStatsLoadingSkeleton';
-import StatsSkeletonComponent from '@/components/skeletons/statsSkeletonComponent';
+import { Radio } from 'lucide-react';
+
+import { PageHero } from '@/components/shared/page/parts';
+import StatsPageSkeleton from '@/components/skeletons/statsPageSkeleton';
+import { statsSections } from '@/constants';
 
 export default function Loading() {
 	return (
-		<div className="w-full mx-auto px-3 space-y-8 bg-black">
-			<div className="text-center pt-6">
-				<h1 className="text-3xl font-bold text-white mb-6">Pepper Music Bot Stats</h1>
-				<p className="text-gray-400">
-					Explore Pepper&apos;s live and all-time music streaming statistics — active
-					players, top songs, top requesters and server insights.
-				</p>
-			</div>
-			<div className="py-2 md:px-8">
-				<FeatureCards />
-				<RealtimeStatsLoadingSkeleton />
-				<StatsSkeletonComponent />
-				<MusicHistoryLoadingSkeleton />
-			</div>
+		<div className="min-h-screen bg-black text-white">
+			<PageHero
+				eyebrow={
+					<>
+						<Radio className="h-3 w-3" />
+						Stats
+					</>
+				}
+				title="Pepper, by the numbers"
+				summary="Everything Pepper is playing right now, and everything it has played since day one — pulled straight from the bot, not a marketing deck."
+			>
+				<nav className="mt-8 flex flex-wrap gap-2">
+					{statsSections.map((section) => (
+						<span
+							key={section.id}
+							className="rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-gray-300"
+						>
+							{section.label}
+						</span>
+					))}
+				</nav>
+			</PageHero>
+
+			<StatsPageSkeleton />
 		</div>
 	);
 }

@@ -1,147 +1,164 @@
 import { NextPage } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import {
-	Github,
-	Twitter,
-	MessageSquare,
-	Music,
-	HeartHandshake,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { ArrowUpRight, Github, MessageSquare } from 'lucide-react';
+
 import {
 	discordServerLink,
 	featursLink,
 	githubLink,
 	inviteLink,
+	legalNavItems,
+	musicSources,
 	pepperLogoLink,
-	privacyLink,
-	termsLink,
-	twitterLink,
 } from '@/constants';
-import Image from 'next/image';
 
 interface Props {}
 
+const columns = [
+	{
+		title: 'Product',
+		links: [
+			{ label: 'Features', href: featursLink, external: false },
+			{ label: 'Live stats', href: '/stats', external: false },
+			{ label: 'Add to Discord', href: inviteLink, external: true },
+		],
+	},
+	{
+		title: 'Community',
+		links: [
+			{ label: 'Support server', href: discordServerLink, external: true },
+			{ label: 'GitHub', href: githubLink, external: true },
+			{ label: 'About us', href: '/about-us', external: false },
+		],
+	},
+	{
+		title: 'Legal',
+		links: legalNavItems.map((item) => ({
+			label: item.name,
+			href: item.value,
+			external: false,
+		})),
+	},
+];
+
 const Footer: NextPage<Props> = ({}) => {
 	return (
-		<footer className="w-full">
-			<Separator className="bg-gray-800" />
-			<div className="w-full bg-black text-white">
-				<div className="container mx-auto px-4 py-12">
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-						{/* Column 1: About */}
-						<div className="space-y-4">
-							<div className="flex items-center gap-1">
-								{/* <Music className="h-6 w-6 mr-2" /> */}
+		<footer className="relative overflow-hidden border-t border-white/10 bg-black text-white">
+			<div
+				aria-hidden
+				className="pointer-events-none absolute inset-x-0 -bottom-32 mx-auto h-64 w-[min(46rem,90%)] rounded-full bg-white/[0.05] blur-3xl"
+			/>
+
+			<div className="container relative mx-auto px-4 pt-14">
+				<div className="grid gap-12 lg:grid-cols-[1.6fr_repeat(3,minmax(0,1fr))]">
+					{/* Brand */}
+					<div className="max-w-sm">
+						<Link
+							href="/"
+							className="inline-flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+						>
+							<span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-1 ring-white/15">
 								<Image
 									src={pepperLogoLink}
-									width={25}
-									height={100}
-									className="rounded-full"
-									alt="Pepper Logo"
+									width={32}
+									height={32}
+									className="h-full w-full object-cover"
+									alt=""
 								/>
-								<h3 className="text-xl font-bold">Pepper</h3>
-							</div>
-							<p className="text-gray-400">
-								Elevate your Discord server with Pepper, the music bot that
-								delivers crystal-clear audio, intuitive controls, and a seamless
-								listening experience.
+							</span>
+							<span className="text-[17px] font-bold tracking-tight">
+								Pepper
+							</span>
+						</Link>
+
+						<p className="mt-4 text-[14px] leading-relaxed text-gray-400">
+							A free Discord music bot with high-quality playback, smart
+							autoplay and controls your moderators can trust.
+						</p>
+
+						<div className="mt-6">
+							<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">
+								Plays from
 							</p>
-							<div className="flex space-x-4 pt-2">
-								<Link href={githubLink} passHref>
-									<Button
-										variant="ghost"
-										size="icon"
-										className="h-9 w-9 rounded-full cursor-pointer"
+							<div className="mt-3 flex flex-wrap gap-1.5">
+								{musicSources.map((source) => (
+									<span
+										key={source}
+										className="rounded-full border border-white/10 px-2.5 py-1 text-[12px] text-gray-400"
 									>
-										<Github className="h-5 w-5" />
-										<span className="sr-only">GitHub</span>
-									</Button>
-								</Link>
-								<Link href={twitterLink} passHref>
-									<Button
-										variant="ghost"
-										size="icon"
-										className="h-9 w-9 rounded-full cursor-pointer"
-									>
-										<Twitter className="h-5 w-5" />
-										<span className="sr-only">Twitter</span>
-									</Button>
-								</Link>
-								<Link href={discordServerLink} passHref>
-									<Button
-										variant="ghost"
-										size="icon"
-										className="h-9 w-9 rounded-full cursor-pointer"
-									>
-										<MessageSquare className="h-5 w-5" />
-										<span className="sr-only">Discord</span>
-									</Button>
-								</Link>
-							</div>
-						</div>
-
-						<div className="space-y-4 w-fit ">
-							<h3 className="text-lg font-medium">Quick Links</h3>
-							<nav className="flex flex-col space-y-2">
-								<Link
-									href={featursLink}
-									className="text-gray-400 hover:text-white transition-colors"
-								>
-									Features
-								</Link>
-								<Link
-									href="/about-us"
-									className="text-gray-400 hover:text-white transition-colors"
-								>
-									About Us
-								</Link>
-							</nav>
-						</div>
-
-						<div className="space-y-4">
-							<h3 className="text-lg font-medium">Legal</h3>
-							<nav className="flex flex-col space-y-2">
-								<Link
-									href={termsLink}
-									className="text-gray-400 hover:text-white transition-colors"
-								>
-									Terms of Service
-								</Link>
-								<Link
-									href={privacyLink}
-									className="text-gray-400 hover:text-white transition-colors"
-								>
-									Privacy Policy
-								</Link>
-							</nav>
-
-							<div className="pt-4">
-								<Link href={inviteLink} passHref target="_blank">
-									<Button className="w-full cursor-pointer">
-										<HeartHandshake className="mr-2 h-4 w-4 " />
-										Add to Discord
-									</Button>
-								</Link>
+										{source}
+									</span>
+								))}
 							</div>
 						</div>
 					</div>
+
+					{/* Link columns */}
+					{columns.map((column) => (
+						<div key={column.title}>
+							<h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">
+								{column.title}
+							</h2>
+							<ul className="mt-4 space-y-3">
+								{column.links.map((link) => (
+									<li key={link.label}>
+										<Link
+											href={link.href}
+											{...(link.external
+												? { target: '_blank', rel: 'noreferrer' }
+												: {})}
+											className="group inline-flex items-center gap-1 text-[14px] text-gray-400 transition-colors outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-white/40"
+										>
+											{link.label}
+											{link.external && (
+												<ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-60" />
+											)}
+										</Link>
+									</li>
+								))}
+							</ul>
+						</div>
+					))}
 				</div>
 
-				<Separator className="bg-gray-900" />
-				<div className="container mx-auto px-4 py-6">
-					<div className="flex flex-col md:flex-row justify-between items-center">
-						<p className="text-gray-400 text-sm">
-							© 2025 Pepper. All rights reserved.
-						</p>
-						<div className="flex items-center space-x-2 mt-4 md:mt-0">
-							<span className="text-gray-400 text-sm">Made with</span>
-							<span className="text-white">♥</span>
-							<span className="text-gray-400 text-sm">
-								for Discord communities
-							</span>
-						</div>
+				{/* Wordmark */}
+				<div
+					aria-hidden
+					className="pointer-events-none mt-12 select-none overflow-hidden"
+				>
+					<p className="translate-y-[0.18em] text-center text-[18vw] font-bold leading-[0.8] tracking-tighter text-white/[0.045] lg:text-[13rem]">
+						Pepper
+					</p>
+				</div>
+			</div>
+
+			<div className="relative border-t border-white/10">
+				<div className="container mx-auto flex flex-col-reverse items-center justify-between gap-4 px-4 py-6 md:flex-row">
+					<p className="text-center text-[13px] text-gray-500 md:text-left">
+						© {new Date().getFullYear()} Pepper · Open source under Apache 2.0 ·
+						Not affiliated with Discord, Spotify or any other platform.
+					</p>
+
+					<div className="flex items-center gap-2">
+						<Link
+							href={githubLink}
+							target="_blank"
+							rel="noreferrer"
+							aria-label="Pepper on GitHub"
+							className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-colors outline-none hover:border-white/30 hover:bg-white/[0.06] hover:text-white focus-visible:ring-2 focus-visible:ring-white/40"
+						>
+							<Github className="h-4 w-4" />
+						</Link>
+						<Link
+							href={discordServerLink}
+							target="_blank"
+							rel="noreferrer"
+							aria-label="Pepper support server on Discord"
+							className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-colors outline-none hover:border-white/30 hover:bg-white/[0.06] hover:text-white focus-visible:ring-2 focus-visible:ring-white/40"
+						>
+							<MessageSquare className="h-4 w-4" />
+						</Link>
 					</div>
 				</div>
 			</div>

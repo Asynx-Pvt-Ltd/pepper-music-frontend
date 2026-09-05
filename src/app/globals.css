@@ -122,5 +122,7 @@
 	}
 	:root {
 		--color-accent: #111111;
+		/* Sticky navbar: 4rem of content plus its 1px bottom border. */
+		--header-height: calc(4rem + 1px);
 	}
 }

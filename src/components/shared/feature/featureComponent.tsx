@@ -1,72 +1,324 @@
-import Image from 'next/image';
 import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+	ArrowRight,
+	Clock3,
+	Globe2,
+	Headphones,
+	Languages,
+	ListMusic,
+	Mic2,
+	Radio,
+	Server,
+	Shield,
+	Sparkles,
+	Users,
+	Wand2,
+	Waves,
+} from 'lucide-react';
+
+import {
+	ActionLink,
+	CtaBand,
+	IconChip,
+	PageHero,
+	SectionHeading,
+	Surface,
+} from '@/components/shared/page/parts';
 import FeatureCards from '@/components/shared/feature/parts/featureCards';
+import {
+	botCommands,
+	discordServerLink,
+	inviteLink,
+	musicSources,
+	supportedLanguages,
+} from '@/constants';
+
+const steps = [
+	{
+		title: 'Invite Pepper',
+		body: 'One click adds the bot with only the permissions it needs. No dashboard, no configuration file.',
+	},
+	{
+		title: 'Join a voice channel',
+		body: 'Hop into any channel in your server. Pepper follows you in the moment you play something.',
+	},
+	{
+		title: 'Run /play',
+		body: 'Search by name or paste a link. The track starts, the queue builds itself, and autoplay takes over when it empties.',
+	},
+];
+
+const depth = [
+	{
+		icon: <Wand2 className="h-4 w-4" />,
+		title: 'Audio filters',
+		body: 'Bassboost, nightcore, karaoke, vaporwave and more, switched live without interrupting the track.',
+	},
+	{
+		icon: <Shield className="h-4 w-4" />,
+		title: 'DJ role',
+		body: 'Point /dj at a role and playback controls become theirs alone — everyone else can still queue.',
+	},
+	{
+		icon: <Mic2 className="h-4 w-4" />,
+		title: 'Lyrics on demand',
+		body: '/lyrics pulls up the words for whatever is playing, paginated for long songs.',
+	},
+	{
+		icon: <Clock3 className="h-4 w-4" />,
+		title: 'Listening stats',
+		body: '/chart shows your top tracks, artists and total listening time, plus the same for your server.',
+	},
+	{
+		icon: <Waves className="h-4 w-4" />,
+		title: 'Resilient streams',
+		body: 'If an audio node drops or a stream expires, Pepper refreshes it and resumes from the same position.',
+	},
+	{
+		icon: <Languages className="h-4 w-4" />,
+		title: 'Per-user language',
+		body: `Responses in ${supportedLanguages.length} languages, set for the whole server or just for you.`,
+	},
+];
 
 const FeatureComponent: React.FC = () => {
-    return (
-        <div className="flex flex-col gap-8">
-            <header className="text-center">
-                <Image
-                    src="/images/pepperLogo.png"
-                    alt="Pepper Discord Music Bot"
-                    width={100}
-                    height={100}
-                    className="rounded-full mx-auto mb-6"
-                />
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                    Pepper Discord Music Bot Features
-                </h1>
-                <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-6">
-                    Enhance your Discord servers with high-quality music and powerful bot commands.
-                </p>
-            </header>
+	return (
+		<>
+			<PageHero
+				eyebrow={
+					<>
+						<Sparkles className="h-3 w-3" />
+						Features
+					</>
+				}
+				title="Everything Pepper does"
+				summary="A music bot that gets out of the way: instant playback from the platforms you use, controls your moderators can trust, and stats worth checking."
+				actions={
+					<>
+						<ActionLink href={inviteLink} external>
+							Add to Discord
+							<ArrowRight className="h-4 w-4" />
+						</ActionLink>
+						<ActionLink href="/stats" variant="ghost">
+							<Radio className="h-4 w-4" />
+							View live stats
+						</ActionLink>
+					</>
+				}
+			/>
 
-            <section className="mt-12">
-                <FeatureCards />
-            </section>
+			{/* Core features */}
+			<section className="border-b border-white/10">
+				<div className="container mx-auto px-4 py-16 md:py-20">
+					<div className="mx-auto max-w-5xl">
+						<SectionHeading
+							label="Core"
+							title="The things you will use every day"
+						/>
+						<div className="mt-10">
+							<FeatureCards />
+						</div>
+					</div>
+				</div>
+			</section>
 
-            <section className="mt-12">
-                <h2 className="text-2xl font-bold mb-6 text-center">
-                    Why Choose Pepper for Your Discord Server?
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <Card className="bg-black border-zinc-700 text-white">
-                        <CardHeader>
-                            <CardTitle>Easy to Use Commands</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="space-y-2">
-                                <li>• Simple slash commands for all music functions</li>
-                                <li>• Intuitive song search and playlist management</li>
-                                <li>• Quick setup with minimal configuration required</li>
-                                <li>• Support for Spotify, SoundCloud and Apple Music</li>
-                            </ul>
-                        </CardContent>
-                    </Card>
-                    <Card className="bg-black border-zinc-700 text-white">
-                        <CardHeader>
-                            <CardTitle>Built for Discord Communities</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="space-y-2">
-                                <li>
-                                    • Seamless integration with Discord voice channels
-                                </li>
-                                <li>• Permissions system for better server control</li>
-                                <li>• Real-time music status and now playing updates</li>
-                                <li>• Stable performance during peak server activity</li>
-                            </ul>
-                        </CardContent>
-                    </Card>
-                </div>
-            </section>
-        </div>
-    );
-}
+			{/* How it works */}
+			<section className="border-b border-white/10">
+				<div className="container mx-auto px-4 py-16 md:py-20">
+					<div className="mx-auto max-w-5xl">
+						<SectionHeading
+							label="Getting started"
+							title="Three steps, about thirty seconds"
+						/>
+						<div className="mt-10 grid gap-5 md:grid-cols-3">
+							{steps.map((step, index) => (
+								<Surface key={step.title} className="p-6">
+									<span className="font-mono text-sm text-white/40">
+										{String(index + 1).padStart(2, '0')}
+									</span>
+									<h3 className="mt-3 text-base font-semibold text-white">
+										{step.title}
+									</h3>
+									<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+										{step.body}
+									</p>
+								</Surface>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Deeper features */}
+			<section className="border-b border-white/10">
+				<div className="container mx-auto px-4 py-16 md:py-20">
+					<div className="mx-auto max-w-5xl">
+						<SectionHeading
+							label="Going further"
+							title="The details that separate Pepper from the rest"
+						/>
+						<div className="mt-10 grid gap-4 sm:grid-cols-2">
+							{depth.map((item) => (
+								<Surface key={item.title} interactive className="flex gap-4 p-6">
+									<IconChip>{item.icon}</IconChip>
+									<div>
+										<h3 className="text-base font-semibold text-white">
+											{item.title}
+										</h3>
+										<p className="mt-1.5 text-[14px] leading-relaxed text-gray-400">
+											{item.body}
+										</p>
+									</div>
+								</Surface>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Command reference */}
+			<section className="border-b border-white/10">
+				<div className="container mx-auto px-4 py-16 md:py-20">
+					<div className="mx-auto max-w-5xl">
+						<SectionHeading
+							label="Reference"
+							title="Every command, one list"
+							description="All of them are slash commands, so Discord autocompletes the options as you type."
+						/>
+						<div className="mt-10 overflow-hidden rounded-xl border border-white/10">
+							<div className="divide-y divide-white/[0.07]">
+								{botCommands.map((command) => (
+									<div
+										key={command.name}
+										className="grid gap-1 px-5 py-3.5 transition-colors hover:bg-white/[0.04] sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-baseline sm:gap-6"
+									>
+										<code className="font-mono text-sm font-semibold text-white">
+											{command.name}
+										</code>
+										<p className="text-[14px] leading-relaxed text-gray-400">
+											{command.description}
+										</p>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Built for communities */}
+			<section className="border-b border-white/10">
+				<div className="container mx-auto px-4 py-16 md:py-20">
+					<div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+						<Surface className="p-8">
+							<IconChip>
+								<Users className="h-4 w-4" />
+							</IconChip>
+							<h3 className="mt-4 text-lg font-semibold text-white">
+								Built for Discord communities
+							</h3>
+							<ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-400">
+								{[
+									'Native voice channel integration with live now-playing updates',
+									'Permission-aware controls so moderators stay in charge',
+									'Sharded architecture that holds up during peak activity',
+									'Playback resumes automatically after restarts and node failovers',
+								].map((item) => (
+									<li key={item} className="relative pl-5">
+										<span className="absolute left-0 top-[0.6rem] h-1.5 w-1.5 rounded-full bg-white/40" />
+										{item}
+									</li>
+								))}
+							</ul>
+						</Surface>
+
+						<Surface className="p-8">
+							<IconChip>
+								<ListMusic className="h-4 w-4" />
+							</IconChip>
+							<h3 className="mt-4 text-lg font-semibold text-white">
+								Sources and languages
+							</h3>
+							<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+								Search by name or paste a link — Pepper resolves it and streams
+								the best available source.
+							</p>
+							<div className="mt-5 flex flex-wrap gap-2">
+								{musicSources.map((source) => (
+									<span
+										key={source}
+										className="rounded-full border border-white/15 px-3 py-1 text-[13px] text-gray-300"
+									>
+										{source}
+									</span>
+								))}
+							</div>
+							<div className="mt-4 flex flex-wrap gap-2">
+								{supportedLanguages.map((language) => (
+									<span
+										key={language}
+										className="rounded-full border border-white/10 px-3 py-1 text-[13px] text-gray-500"
+									>
+										{language}
+									</span>
+								))}
+							</div>
+						</Surface>
+					</div>
+				</div>
+			</section>
+
+			{/* Infrastructure + CTA */}
+			<section className="container mx-auto px-4 py-16 md:py-20">
+				<div className="mx-auto max-w-5xl space-y-10">
+					<div className="grid gap-4 sm:grid-cols-3">
+						{[
+							{
+								icon: <Server className="h-4 w-4" />,
+								title: 'Distributed nodes',
+								body: 'Audio served from the closest healthy node, with automatic failover.',
+							},
+							{
+								icon: <Headphones className="h-4 w-4" />,
+								title: 'High-bitrate audio',
+								body: 'Clean sound with minimal buffering, even on busy servers.',
+							},
+							{
+								icon: <Globe2 className="h-4 w-4" />,
+								title: 'Free, everywhere',
+								body: 'No premium tier, no locked commands, no usage limits.',
+							},
+						].map((item) => (
+							<Surface key={item.title} className="p-6">
+								<IconChip>{item.icon}</IconChip>
+								<h3 className="mt-4 text-sm font-semibold text-white">
+									{item.title}
+								</h3>
+								<p className="mt-1.5 text-[13px] leading-relaxed text-gray-400">
+									{item.body}
+								</p>
+							</Surface>
+						))}
+					</div>
+
+					<CtaBand
+						title="Try it in your server"
+						description="Invite Pepper, run /play, and hear the difference. If anything goes wrong, our support server answers fast."
+						actions={
+							<>
+								<ActionLink href={inviteLink} external>
+									Add to Discord
+									<ArrowRight className="h-4 w-4" />
+								</ActionLink>
+								<ActionLink href={discordServerLink} variant="ghost" external>
+									Join the support server
+								</ActionLink>
+							</>
+						}
+					/>
+				</div>
+			</section>
+		</>
+	);
+};
 
 export default FeatureComponent;

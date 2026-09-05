@@ -98,7 +98,7 @@ const LegalPage = ({
 	return (
 		<section className="relative bg-black text-white">
 			{/* Reading progress */}
-			<div className="sticky top-0 z-40 h-0.5 w-full bg-white/5">
+			<div className="sticky top-[var(--header-height)] z-40 h-0.5 w-full bg-white/5">
 				<div
 					className="h-full bg-white transition-[width] duration-150 ease-out"
 					style={{ width: `${progress}%` }}
