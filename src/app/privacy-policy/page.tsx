@@ -319,18 +319,13 @@ const sections: LegalSection[] = [
 							privacy policy.
 						</>,
 						<>
-							<Term>Audio (Lavalink) nodes</Term> — receive the search term or
-							track link to resolve and stream audio. They do not receive your
-							Discord identity or listening history.
+							<Term>Music platforms</Term> — our audio servers fetch the track
+							itself from the source platform. Those platforms see a request
+							from our infrastructure, not from you.
 						</>,
 						<>
 							<Term>Spotify</Term> — contacted only when you have linked an
 							account, and only to read your playlists.
-						</>,
-						<>
-							<Term>Lyrics provider</Term> — the <Term>/lyrics</Term> command
-							sends the track link of the currently playing song to our lyrics
-							service. No user identifier is attached.
 						</>,
 						<>
 							<Term>Database and hosting providers</Term> — store the data
@@ -343,6 +338,13 @@ const sections: LegalSection[] = [
 						</>,
 					]}
 				/>
+				<Note title="Run by us, not by third parties">
+					The audio (Lavalink) servers Pepper streams through and the lyrics
+					service behind <Term>/lyrics</Term> are hosted by us, and autoplay
+					recommendations are produced by our own algorithm. Those parts of the
+					service pass nothing to an outside company: <Term>/lyrics</Term> sends
+					only a track link to our own service, with no user identifier attached.
+				</Note>
 				<p>
 					We do not sell, rent or trade your information. We disclose it only to
 					these service providers, or where required to comply with a valid

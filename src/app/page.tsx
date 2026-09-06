@@ -62,7 +62,7 @@ const capabilities = [
 		icon: <AudioLines className="h-4 w-4" />,
 		title: 'Lossless-feeling playback',
 		description:
-			'High-bitrate audio streamed through Lavalink nodes in Asia and the US, with automatic failover when a node struggles.',
+			'High-bitrate audio streamed through Lavalink servers we host ourselves, with automatic failover if one struggles mid-track.',
 	},
 	{
 		icon: <Sparkles className="h-4 w-4" />,
@@ -209,8 +209,8 @@ const Page: NextPage = async () => {
 								{[
 									{
 										icon: <Gauge className="h-4 w-4" />,
-										title: 'Distributed Lavalink nodes',
-										body: 'Audio is served from the node closest to your server, with automatic failover if one goes down mid-track.',
+										title: 'Audio infrastructure we own',
+										body: 'We host our own Lavalink servers rather than renting shared public ones, so playback quality and uptime are ours to fix.',
 									},
 									{
 										icon: <Headphones className="h-4 w-4" />,
@@ -219,8 +219,8 @@ const Page: NextPage = async () => {
 									},
 									{
 										icon: <Wand2 className="h-4 w-4" />,
-										title: 'Filters and effects built in',
-										body: 'Bassboost, nightcore, karaoke and more — applied live without restarting the track.',
+										title: 'Lyrics and autoplay, in-house',
+										body: 'The lyrics service and the autoplay algorithm are both ours — no third party sees what your server is listening to.',
 									},
 								].map((item) => (
 									<div key={item.title} className="flex gap-4">

@@ -61,7 +61,7 @@ const depth = [
 	{
 		icon: <Mic2 className="h-4 w-4" />,
 		title: 'Lyrics on demand',
-		body: '/lyrics pulls up the words for whatever is playing, paginated for long songs.',
+		body: '/lyrics pulls up the words for whatever is playing, served by our own lyrics service and paginated for long songs.',
 	},
 	{
 		icon: <Clock3 className="h-4 w-4" />,
@@ -71,7 +71,7 @@ const depth = [
 	{
 		icon: <Waves className="h-4 w-4" />,
 		title: 'Resilient streams',
-		body: 'If an audio node drops or a stream expires, Pepper refreshes it and resumes from the same position.',
+		body: 'If an audio node drops or a stream expires, Pepper refreshes it and resumes from the same position — on servers we run ourselves.',
 	},
 	{
 		icon: <Languages className="h-4 w-4" />,
@@ -274,8 +274,8 @@ const FeatureComponent: React.FC = () => {
 						{[
 							{
 								icon: <Server className="h-4 w-4" />,
-								title: 'Distributed nodes',
-								body: 'Audio served from the closest healthy node, with automatic failover.',
+								title: 'Self-hosted audio',
+								body: 'We run our own Lavalink servers, with automatic failover and session resume.',
 							},
 							{
 								icon: <Headphones className="h-4 w-4" />,

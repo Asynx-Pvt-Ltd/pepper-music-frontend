@@ -6,6 +6,7 @@ import {
 	ExternalLink,
 	Heart,
 	MessageSquare,
+	Mic2,
 	Music2,
 	Server,
 	ShieldCheck,
@@ -115,11 +116,11 @@ const AboutUs: NextPage<Props> = ({}) => {
 									song at a decent bitrate.
 								</p>
 								<p>
-									It grew from there. Today it runs on distributed Lavalink
-									nodes across Asia and the US, streams from{' '}
-									{musicSources.length} major platforms, speaks{' '}
-									{supportedLanguages.length} languages, and plays for
-									communities around the world — still free, still improving.
+									It grew from there. Today it runs on audio infrastructure we
+									host ourselves, streams from {musicSources.length} major
+									platforms, speaks {supportedLanguages.length} languages, and
+									plays for communities around the world — still free, still
+									improving.
 								</p>
 								<p>
 									It is run by a small team that uses it daily. If you want to
@@ -186,24 +187,25 @@ const AboutUs: NextPage<Props> = ({}) => {
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
 							label="Under the hood"
-							title="What actually powers Pepper"
+							title="We run the whole stack ourselves"
+							description="Most music bots rent their audio infrastructure and bolt on third-party services for everything else. Pepper runs its own — which is why we can tune it, fix it ourselves when something breaks, and keep your listening data off anyone else's servers."
 						/>
 						<div className="mt-10 grid gap-4 sm:grid-cols-3">
 							{[
 								{
 									icon: <Server className="h-4 w-4" />,
-									title: 'Lavalink nodes',
-									body: 'Audio is served from the closest healthy node, with priority ordering and automatic failover mid-track.',
+									title: 'Our own audio nodes',
+									body: 'We host the Lavalink servers Pepper streams through, so nothing disappears overnight when a shared provider goes down. Sessions resume after a restart without losing your place.',
+								},
+								{
+									icon: <Mic2 className="h-4 w-4" />,
+									title: 'Our own lyrics service',
+									body: 'The /lyrics command is answered by a service we built and host. Only the track link is sent to it — never who asked for it.',
 								},
 								{
 									icon: <Sparkle className="h-4 w-4" />,
-									title: 'Our own autoplay',
-									body: 'Recommendations come from an algorithm we built around your listening history, not a third-party radio feed.',
-								},
-								{
-									icon: <Zap className="h-4 w-4" />,
-									title: 'Sharded and resilient',
-									body: 'Sessions resume after restarts, and expired streams refresh without losing your place.',
+									title: 'Our own autoplay engine',
+									body: 'Recommendations come from an algorithm we wrote around your listening history, not a third-party radio feed.',
 								},
 							].map((item) => (
 								<Surface key={item.title} className="p-6">
