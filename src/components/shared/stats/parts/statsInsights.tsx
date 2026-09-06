@@ -58,6 +58,11 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 	const playtimeMs =
 		playtime?.estimatedPlaytimeMs ?? overview.estimatedPlaytimeMs;
 	const playtimeYears = playtimeMs / (1000 * 60 * 60 * 24 * 365);
+	const playtimeDays = Math.floor(playtimeMs / (1000 * 60 * 60 * 24));
+	const headlineSpan =
+		playtimeYears >= 1
+			? `${Math.floor(playtimeYears)} ${Math.floor(playtimeYears) === 1 ? 'year' : 'years'}`
+			: `${playtimeDays} ${playtimeDays === 1 ? 'day' : 'days'}`;
 	const averageSongMs =
 		overview.totalPlays > 0 ? playtimeMs / overview.totalPlays : 0;
 	// Live streams are stored with a Long.MAX_VALUE duration, which poisons the
@@ -101,9 +106,7 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 							<p className="mt-5 text-[15px] leading-relaxed text-gray-400">
 								That&apos;s over{' '}
 								<span className="font-semibold text-white">
-									{playtimeYears >= 1
-										? `${Math.floor(playtimeYears)} years`
-										: `${Math.floor(playtimeMs / (1000 * 60 * 60 * 24))} days`}
+									{headlineSpan}
 								</span>{' '}
 								of music, played across{' '}
 								<span className="font-semibold text-white">

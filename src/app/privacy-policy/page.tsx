@@ -28,7 +28,7 @@ import {
 	Prose,
 	Term,
 } from '@/components/shared/legal/parts';
-import { discordServerLink, githubLink, termsLink } from '@/constants';
+import { discordServerLink, termsLink } from '@/constants';
 
 interface Props {}
 
@@ -488,19 +488,6 @@ const sections: LegalSection[] = [
 					Continuing to use Pepper after an update means you accept the revised
 					Policy.
 				</p>
-				<p>
-					Pepper&apos;s source code is public, so changes to what the Bot stores
-					can also be reviewed on{' '}
-					<Link
-						href={githubLink}
-						target="_blank"
-						rel="noreferrer"
-						className={inlineLink}
-					>
-						GitHub
-					</Link>
-					.
-				</p>
 			</Prose>
 		),
 	},
@@ -520,15 +507,6 @@ const sections: LegalSection[] = [
 						className={inlineLink}
 					>
 						official Discord server
-					</Link>
-					, or open an issue on{' '}
-					<Link
-						href={githubLink}
-						target="_blank"
-						rel="noreferrer"
-						className={inlineLink}
-					>
-						GitHub
 					</Link>
 					. We aim to respond to privacy requests within 30 days.
 				</p>

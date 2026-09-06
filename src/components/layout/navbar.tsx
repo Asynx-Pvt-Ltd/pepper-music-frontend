@@ -5,11 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Github, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 import {
 	discordServerLink,
-	githubLink,
 	inviteLink,
 	legalNavItems,
 	pepperLogoLink,
@@ -119,16 +118,6 @@ const Navbar = () => {
 				</nav>
 
 				<div className="ml-auto flex items-center gap-1.5">
-					<Link
-						href={githubLink}
-						target="_blank"
-						rel="noreferrer"
-						aria-label="Pepper on GitHub"
-						className="hidden h-9 w-9 items-center justify-center rounded-lg text-gray-400 transition-colors outline-none hover:bg-white/[0.06] hover:text-white focus-visible:ring-2 focus-visible:ring-white/40 sm:flex"
-					>
-						<Github className="h-[18px] w-[18px]" />
-					</Link>
-
 					<a
 						href={inviteLink}
 						target="_blank"
@@ -216,14 +205,6 @@ const Navbar = () => {
 									className="text-[13px] text-gray-500 transition-colors hover:text-gray-300"
 								>
 									Support server
-								</Link>
-								<Link
-									href={githubLink}
-									target="_blank"
-									rel="noreferrer"
-									className="text-[13px] text-gray-500 transition-colors hover:text-gray-300"
-								>
-									GitHub
 								</Link>
 							</div>
 						</div>

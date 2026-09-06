@@ -24,8 +24,6 @@ export const client_id =
 		: '871808444502540379';
 
 export const inviteLink: string = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&permissions=275443600464&scope=bot%20applications.commands`;
-export const githubLink: string =
-	'https://github.com/muralianand12345/Pepper-Bot';
 export const twitterLink: string = 'https://twitter.com';
 export const discordServerLink: string = 'https://discord.gg/XzE9hSbsNb';
 

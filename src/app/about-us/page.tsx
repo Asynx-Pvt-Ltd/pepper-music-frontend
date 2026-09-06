@@ -3,14 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
 	ArrowRight,
-	Code2,
 	ExternalLink,
-	Github,
 	Heart,
 	MessageSquare,
 	Music2,
 	Server,
+	ShieldCheck,
 	Sparkles,
+	Sparkle,
 	Users,
 	Wallet,
 	Zap,
@@ -26,10 +26,10 @@ import {
 } from '@/components/shared/page/parts';
 import {
 	discordServerLink,
-	githubLink,
 	inviteLink,
 	musicSources,
 	pepperLogoLink,
+	privacyLink,
 	supportedLanguages,
 } from '@/constants';
 
@@ -38,7 +38,7 @@ interface Props {}
 export const metadata: Metadata = {
 	title: 'About Pepper | Premium Discord Music Bot with Crystal-Clear Playback',
 	description:
-		'The story behind Pepper — an open-source, free-forever Discord music bot powered by distributed Lavalink nodes, built for communities that listen together.',
+		'The story behind Pepper — a free-forever Discord music bot powered by distributed Lavalink nodes, built for communities that listen together.',
 	keywords: [
 		'About Pepper',
 		'Pepper music bot',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 		'Lavalink music bot',
 		'Pepper bot features',
 		'Pepper bot community',
-		'open source Discord music bot',
+		'free Discord music bot',
 		'music streaming on Discord',
 	],
 };
@@ -86,16 +86,16 @@ const AboutUs: NextPage<Props> = ({}) => {
 					</>
 				}
 				title="A music bot built by people who got tired of bad ones"
-				summary="Pepper started as a fix for the same frustrations everyone has with Discord music bots: slow searches, dropped audio, features hidden behind a subscription. It is free, open source, and built to stay out of your way."
+				summary="Pepper started as a fix for the same frustrations everyone has with Discord music bots: slow searches, dropped audio, features hidden behind a subscription. It is free, actively maintained, and built to stay out of your way."
 				actions={
 					<>
 						<ActionLink href={inviteLink} external>
 							Add to Discord
 							<ArrowRight className="h-4 w-4" />
 						</ActionLink>
-						<ActionLink href={githubLink} variant="ghost" external>
-							<Github className="h-4 w-4" />
-							View the source
+						<ActionLink href={discordServerLink} variant="ghost" external>
+							<MessageSquare className="h-4 w-4" />
+							Join the support server
 						</ActionLink>
 					</>
 				}
@@ -119,12 +119,12 @@ const AboutUs: NextPage<Props> = ({}) => {
 									nodes across Asia and the US, streams from{' '}
 									{musicSources.length} major platforms, speaks{' '}
 									{supportedLanguages.length} languages, and plays for
-									communities around the world — still free, still open source.
+									communities around the world — still free, still improving.
 								</p>
 								<p>
-									The project is maintained in the open under the Apache 2.0
-									licence. If you want to know exactly what Pepper does with a
-									command or a piece of data, you can read the code.
+									It is run by a small team that uses it daily. If you want to
+									know exactly what Pepper records while it plays, our privacy
+									policy spells it out in plain language.
 								</p>
 							</div>
 						</div>
@@ -142,13 +142,11 @@ const AboutUs: NextPage<Props> = ({}) => {
 								Discord music bot
 							</p>
 							<Link
-								href={githubLink}
-								target="_blank"
-								rel="noreferrer"
+								href={privacyLink}
 								className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-gray-300 underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white"
 							>
-								<Code2 className="h-3.5 w-3.5" />
-								Apache 2.0
+								<ShieldCheck className="h-3.5 w-3.5" />
+								Privacy policy
 							</Link>
 						</Surface>
 					</div>
@@ -198,9 +196,9 @@ const AboutUs: NextPage<Props> = ({}) => {
 									body: 'Audio is served from the closest healthy node, with priority ordering and automatic failover mid-track.',
 								},
 								{
-									icon: <Code2 className="h-4 w-4" />,
-									title: 'Open source',
-									body: 'The full bot is on GitHub under Apache 2.0 — issues, pull requests and forks all welcome.',
+									icon: <Sparkle className="h-4 w-4" />,
+									title: 'Our own autoplay',
+									body: 'Recommendations come from an algorithm we built around your listening history, not a third-party radio feed.',
 								},
 								{
 									icon: <Zap className="h-4 w-4" />,

@@ -22,7 +22,7 @@ import LegalPage, {
 	LegalSection,
 } from '@/components/shared/legal/legalPage';
 import { Bullets, Note, Prose, Term } from '@/components/shared/legal/parts';
-import { discordServerLink, githubLink, privacyLink } from '@/constants';
+import { discordServerLink, privacyLink } from '@/constants';
 
 interface Props {}
 
@@ -279,20 +279,12 @@ const sections: LegalSection[] = [
 					non-transferable right to use the hosted Bot as intended — nothing
 					more.
 				</p>
-				<Note title="Open source">
-					Pepper&apos;s source code is published under the Apache License 2.0 on{' '}
-					<Link
-						href={githubLink}
-						target="_blank"
-						rel="noreferrer"
-						className={inlineLink}
-					>
-						GitHub
-					</Link>
-					. That licence governs what you may do with the code. These Terms
-					govern your use of the instance of the Bot that we operate, and do not
-					limit rights you have under that licence.
-				</Note>
+				<p>
+					The Bot&apos;s software, content and associated intellectual property
+					are owned by or licensed to us. You may not reproduce, modify,
+					distribute, sell or otherwise exploit any part of it without our prior
+					written permission.
+				</p>
 			</Prose>
 		),
 	},
@@ -304,8 +296,8 @@ const sections: LegalSection[] = [
 			<Prose>
 				<p>
 					If you send us ideas, bug reports or suggestions — through{' '}
-					<Term>/feedback</Term>, our support server or GitHub — you grant us
-					the right to use them to improve Pepper without obligation,
+					<Term>/feedback</Term> or our support server — you grant us the right
+					to use them to improve Pepper without obligation,
 					compensation or confidentiality. Do not send us anything you consider
 					confidential or that you are not free to share.
 				</p>
@@ -437,15 +429,6 @@ const sections: LegalSection[] = [
 						className={inlineLink}
 					>
 						official Discord server
-					</Link>{' '}
-					or open an issue on{' '}
-					<Link
-						href={githubLink}
-						target="_blank"
-						rel="noreferrer"
-						className={inlineLink}
-					>
-						GitHub
 					</Link>
 					.
 				</p>

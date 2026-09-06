@@ -1,12 +1,11 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Github, MessageSquare } from 'lucide-react';
+import { ArrowUpRight, MessageSquare } from 'lucide-react';
 
 import {
 	discordServerLink,
 	featursLink,
-	githubLink,
 	inviteLink,
 	legalNavItems,
 	musicSources,
@@ -28,8 +27,8 @@ const columns = [
 		title: 'Community',
 		links: [
 			{ label: 'Support server', href: discordServerLink, external: true },
-			{ label: 'GitHub', href: githubLink, external: true },
 			{ label: 'About us', href: '/about-us', external: false },
+			{ label: 'Send feedback', href: discordServerLink, external: true },
 		],
 	},
 	{
@@ -136,20 +135,11 @@ const Footer: NextPage<Props> = ({}) => {
 			<div className="relative border-t border-white/10">
 				<div className="container mx-auto flex flex-col-reverse items-center justify-between gap-4 px-4 py-6 md:flex-row">
 					<p className="text-center text-[13px] text-gray-500 md:text-left">
-						© {new Date().getFullYear()} Pepper · Open source under Apache 2.0 ·
-						Not affiliated with Discord, Spotify or any other platform.
+						© {new Date().getFullYear()} Pepper · Not affiliated with Discord,
+						Spotify or any other platform.
 					</p>
 
 					<div className="flex items-center gap-2">
-						<Link
-							href={githubLink}
-							target="_blank"
-							rel="noreferrer"
-							aria-label="Pepper on GitHub"
-							className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-colors outline-none hover:border-white/30 hover:bg-white/[0.06] hover:text-white focus-visible:ring-2 focus-visible:ring-white/40"
-						>
-							<Github className="h-4 w-4" />
-						</Link>
 						<Link
 							href={discordServerLink}
 							target="_blank"
