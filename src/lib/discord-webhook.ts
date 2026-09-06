@@ -137,7 +137,20 @@ export const sendFeedbackWebhook = async (
 	const webhookUrl = process.env.DISCORD_FEEDBACK_WEBHOOK_URL?.trim();
 	if (!webhookUrl) throw new Error('DISCORD_FEEDBACK_WEBHOOK_URL is not configured');
 
-	const response = await fetch(`${webhookUrl}?wait=true`, {
+	let endpoint: URL;
+	try {
+		endpoint = new URL(webhookUrl);
+	} catch {
+		throw new Error('DISCORD_FEEDBACK_WEBHOOK_URL is not a valid URL');
+	}
+	endpoint.searchParams.set('wait', 'true');
+	// Required, and easy to miss: a webhook created from Server Settings is not
+	// application-owned, so Discord silently DROPS `components` without this.
+	// Combined with IS_COMPONENTS_V2 (which forbids content/embeds) that leaves
+	// an empty message and the request fails with 400.
+	endpoint.searchParams.set('with_components', 'true');
+
+	const response = await fetch(endpoint, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		cache: 'no-store',

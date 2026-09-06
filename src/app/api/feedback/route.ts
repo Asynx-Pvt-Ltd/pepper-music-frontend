@@ -134,9 +134,21 @@ export const POST = async (request: NextRequest) => {
 		});
 	} catch (error) {
 		console.error('Error delivering feedback to Discord:', error);
+
+		const detail = error instanceof Error ? error.message : '';
+		const misconfigured = detail.startsWith('DISCORD_FEEDBACK_WEBHOOK_URL');
+
+		// In development the real reason (Discord's own 400 body, say) is far more
+		// use than a polite apology; production keeps it out of the browser.
+		if (process.env.NODE_ENV === 'development' && detail) {
+			return fail(detail, misconfigured ? 503 : 502);
+		}
+
 		return fail(
-			'We could not deliver that right now. Please try again shortly.',
-			502,
+			misconfigured
+				? 'Feedback is not configured on this server yet.'
+				: 'We could not deliver that right now. Please try again shortly.',
+			misconfigured ? 503 : 502,
 		);
 	}
 
