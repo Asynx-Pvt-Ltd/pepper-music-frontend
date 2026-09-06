@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mrbot-frontend
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mrbot-frontend
+  template:
+    metadata:
+      labels:
+        app: mrbot-frontend
+    spec:
+      nodeSelector:
+        role: 'worker'
+      containers:
+        - name: nextjs
+          image: ${DOCKER_IMAGE}:${TAG}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30018
+          resources:
+            limits:
+              cpu: '500m'
+              memory: '512Mi'
+            requests:
+              cpu: '100m'
+              memory: '128Mi'

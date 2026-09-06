@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mrbot-frontend-service
+  namespace: default
+spec:
+  selector:
+    app: mrbot-frontend
+  ports:
+    - port: 30018
+      targetPort: 30018
+      nodePort: 30018
+  type: NodePort
