@@ -27,6 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.7,
 		},
 		{
+			url: `${process.env.NEXT_PUBLIC_BASE_URL}/feedback`,
+			lastModified: new Date(),
+			changeFrequency: 'monthly',
+			priority: 0.6,
+		},
+		{
 			url: `${process.env.NEXT_PUBLIC_BASE_URL}/privacy-policy`,
 			lastModified: new Date(),
 			changeFrequency: 'yearly',

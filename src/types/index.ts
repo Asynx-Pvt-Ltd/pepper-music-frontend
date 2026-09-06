@@ -1,4 +1,4 @@
-import { HealthAPIStatus } from '@/enums';
+import { FeedbackCategory, HealthAPIStatus } from '@/enums';
 
 export interface MenuItemType {
 	name: string;
@@ -262,4 +262,29 @@ export interface FeatureCardProps {
 	readonly icon: React.ReactNode;
 	readonly title: string;
 	readonly description: string;
+}
+
+/**
+ * Feedback form — what the browser POSTs to `/api/feedback`. The route
+ * re-validates every field before anything reaches the Discord webhook.
+ */
+export interface FeedbackSubmission {
+	rating: number;
+	category: FeedbackCategory;
+	message: string;
+	/** Optional, so we can credit the reporter in release notes. */
+	discordUsername?: string;
+	/** Honeypot — hidden from real users, filled in by most bots. */
+	website?: string;
+}
+
+export interface FeedbackResponse {
+	success: boolean;
+	message: string;
+}
+
+export interface FeedbackCategoryOption {
+	value: FeedbackCategory;
+	label: string;
+	hint: string;
 }

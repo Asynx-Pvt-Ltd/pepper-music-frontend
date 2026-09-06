@@ -1,10 +1,12 @@
-import { MenuItemType } from '@/types';
+import { FeedbackCategory } from '@/enums';
+import { FeedbackCategoryOption, MenuItemType } from '@/types';
 
 /** Product pages, shown as the header's primary navigation. */
 export const primaryNavItems: MenuItemType[] = [
 	{ name: 'Features', value: '/bot-features' },
 	{ name: 'Stats', value: '/stats' },
 	{ name: 'About', value: '/about-us' },
+	{ name: 'Feedback', value: '/feedback' },
 ];
 
 /** Legal pages — reachable from the footer and the mobile menu, not the top nav. */
@@ -30,6 +32,7 @@ export const discordServerLink: string = 'https://discord.gg/XzE9hSbsNb';
 export const featursLink = '/bot-features';
 export const termsLink = '/terms-of-service';
 export const privacyLink = '/privacy-policy';
+export const feedbackLink = '/feedback';
 export const pepperLogoLink = '/images/pepperLogo.png';
 
 export const features = [
@@ -115,3 +118,45 @@ export const statsSections = [
 	{ id: 'servers', label: 'Servers' },
 ];
 
+
+/** Categories offered on the feedback form; the order is the order they render in. */
+export const feedbackCategories: FeedbackCategoryOption[] = [
+	{
+		value: FeedbackCategory.BUG,
+		label: 'Bug report',
+		hint: 'Something broke or behaved unexpectedly.',
+	},
+	{
+		value: FeedbackCategory.FEATURE,
+		label: 'Feature idea',
+		hint: 'A command or option you wish Pepper had.',
+	},
+	{
+		value: FeedbackCategory.AUDIO,
+		label: 'Audio quality',
+		hint: 'Stuttering, dropouts or anything that sounds wrong.',
+	},
+	{
+		value: FeedbackCategory.GENERAL,
+		label: 'Something else',
+		hint: 'General thoughts, praise or a question.',
+	},
+];
+
+/** Shared by the form and the API route so both agree on what is acceptable. */
+export const feedbackLimits = {
+	messageMin: 15,
+	messageMax: 1000,
+	usernameMax: 40,
+	ratingMin: 1,
+	ratingMax: 5,
+} as const;
+
+/** Wording used next to each star, and on the Discord post. */
+export const feedbackRatingLabels: Record<number, string> = {
+	1: 'Rough',
+	2: 'Needs work',
+	3: 'Does the job',
+	4: 'Really good',
+	5: 'Love it',
+};
