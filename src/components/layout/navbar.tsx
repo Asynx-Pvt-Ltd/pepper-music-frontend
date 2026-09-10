@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
@@ -11,12 +10,12 @@ import {
 	discordServerLink,
 	inviteLink,
 	legalNavItems,
-	pepperLogoLink,
 	primaryNavItems,
 } from '@/constants';
 import { MenuItemType } from '@/types';
 import { cn } from '@/lib/utils';
 import ThemeToggle from '@/components/layout/themeToggle';
+import PepperMascot from '@/components/shared/pepperMascot';
 
 const Navbar = () => {
 	const pathname = usePathname();
@@ -72,16 +71,11 @@ const Navbar = () => {
 					className="group flex shrink-0 items-center gap-2.5 rounded-lg text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
 					aria-label="Pepper home"
 				>
-					<span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-1 ring-foreground/15 transition-all group-hover:ring-foreground/40">
-						<Image
-							src={pepperLogoLink}
-							width={32}
-							height={32}
-							className="h-full w-full object-cover"
-							alt=""
-							priority
-						/>
-					</span>
+					<PepperMascot
+						decorative
+						idle={false}
+						className="h-8 w-8 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5"
+					/>
 					<span className="text-[17px] font-bold tracking-tight">Pepper</span>
 				</Link>
 
@@ -161,9 +155,7 @@ const Navbar = () => {
 										<li key={item.value}>
 											<Link
 												href={item.value}
-												aria-current={
-													isActive(item.value) ? 'page' : undefined
-												}
+												aria-current={isActive(item.value) ? 'page' : undefined}
 												className={cn(
 													'flex items-center justify-between rounded-lg px-4 py-3 text-[15px] transition-colors',
 													isActive(item.value)

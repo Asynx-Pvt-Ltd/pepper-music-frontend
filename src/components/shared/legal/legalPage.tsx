@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, ArrowUp, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { discordServerLink } from '@/constants';
+import { Cell, CellGrid } from '@/components/shared/page/parts';
 
 export interface LegalSection {
 	id: string;
@@ -60,7 +61,9 @@ const LegalPage = ({
 			const scrolled = window.scrollY - start;
 
 			setProgress(
-				distance <= 0 ? 100 : Math.min(100, Math.max(0, (scrolled / distance) * 100))
+				distance <= 0
+					? 100
+					: Math.min(100, Math.max(0, (scrolled / distance) * 100))
 			);
 			setShowTopButton(window.scrollY > 600);
 
@@ -113,10 +116,10 @@ const LegalPage = ({
 				/>
 				<div className="container relative mx-auto px-4 py-14 md:py-20">
 					<div className="mx-auto max-w-5xl">
-						<span className="inline-flex items-center rounded-full border border-foreground/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/75">
+						<span className="inline-flex items-center rounded-full border border-border px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/70">
 							{eyebrow}
 						</span>
-						<h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">
+						<h1 className="mt-5 text-balance text-4xl font-bold tracking-[-0.03em] md:text-5xl">
 							{title}
 						</h1>
 						<p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
@@ -125,19 +128,19 @@ const LegalPage = ({
 
 						<dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
 							<div>
-								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+								<dt className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 									Last updated
 								</dt>
 								<dd className="mt-1 text-sm text-foreground">{updated}</dd>
 							</div>
 							<div>
-								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+								<dt className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 									Effective
 								</dt>
 								<dd className="mt-1 text-sm text-foreground">{effective}</dd>
 							</div>
 							<div>
-								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+								<dt className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 									Applies to
 								</dt>
 								<dd className="mt-1 text-sm text-foreground">
@@ -152,24 +155,21 @@ const LegalPage = ({
 			{/* Highlights */}
 			<div className="border-b border-border">
 				<div className="container mx-auto px-4 py-10">
-					<div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+					<CellGrid className="mx-auto max-w-5xl sm:grid-cols-2 lg:grid-cols-4">
 						{highlights.map((highlight) => (
-							<div
-								key={highlight.title}
-								className="rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
-							>
-								<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+							<Cell key={highlight.title} interactive className="p-5">
+								<div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
 									{highlight.icon}
 								</div>
-								<h2 className="mt-4 text-sm font-semibold text-foreground">
+								<h2 className="mt-4 text-sm font-semibold tracking-[-0.01em] text-foreground">
 									{highlight.title}
 								</h2>
 								<p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
 									{highlight.body}
 								</p>
-							</div>
+							</Cell>
 						))}
-					</div>
+					</CellGrid>
 				</div>
 			</div>
 
@@ -178,7 +178,7 @@ const LegalPage = ({
 				<div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
 					{/* Table of contents */}
 					<aside className="lg:sticky lg:top-10 lg:self-start">
-						<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+						<p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 							On this page
 						</p>
 						<nav className="mt-4 border-l border-border">
@@ -211,14 +211,14 @@ const LegalPage = ({
 								className="scroll-mt-24 border-b border-border pb-12 last:border-0 last:pb-0"
 							>
 								<div className="mb-5 flex items-center gap-3">
-									<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+									<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
 										{section.icon}
 									</span>
 									<div>
-										<span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/55">
+										<span className="block font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 											Section {String(index + 1).padStart(2, '0')}
 										</span>
-										<h2 className="text-xl font-bold text-foreground">
+										<h2 className="text-xl font-bold tracking-[-0.02em] text-foreground">
 											{section.title}
 										</h2>
 									</div>
@@ -231,9 +231,9 @@ const LegalPage = ({
 						<div className="grid gap-4 sm:grid-cols-2">
 							<Link
 								href={related.href}
-								className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
+								className="group rounded-lg border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 							>
-								<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+								<p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 									Read next
 								</p>
 								<p className="mt-2 flex items-center gap-2 text-base font-semibold text-foreground">
@@ -249,9 +249,9 @@ const LegalPage = ({
 								href={discordServerLink}
 								target="_blank"
 								rel="noreferrer"
-								className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
+								className="group rounded-lg border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 							>
-								<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+								<p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 									Questions?
 								</p>
 								<p className="mt-2 flex items-center gap-2 text-base font-semibold text-foreground">
@@ -265,8 +265,10 @@ const LegalPage = ({
 							</Link>
 						</div>
 
-						<div className="rounded-xl bg-primary p-6 text-center">
-							<p className="text-sm leading-relaxed text-primary-foreground">{agreement}</p>
+						<div className="rounded-lg bg-primary p-6 text-center">
+							<p className="text-sm leading-relaxed text-primary-foreground">
+								{agreement}
+							</p>
 						</div>
 					</div>
 				</div>
@@ -278,7 +280,7 @@ const LegalPage = ({
 				onClick={scrollToTop}
 				aria-label="Back to top"
 				className={cn(
-					'fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-foreground/15 bg-background/80 text-foreground backdrop-blur transition-all hover:bg-primary hover:text-primary-foreground',
+					'fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur transition-all hover:bg-primary hover:text-primary-foreground',
 					showTopButton
 						? 'translate-y-0 opacity-100'
 						: 'pointer-events-none translate-y-3 opacity-0'

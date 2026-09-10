@@ -30,7 +30,7 @@ const StatsServersCard: React.FC<StatsServersProps> = ({ servers }) => {
 				{servers.servers.map((server, index) => (
 					<div
 						key={server.guildId}
-						className="rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
+						className="rounded-lg border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 					>
 						<div className="flex items-start gap-3">
 							<Rank position={index + 1} />

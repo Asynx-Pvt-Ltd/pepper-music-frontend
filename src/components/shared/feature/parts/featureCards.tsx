@@ -1,6 +1,6 @@
 import { Award, Clock, Music, Server, Users, Zap } from 'lucide-react';
 
-import { FeatureTile } from '@/components/shared/page/parts';
+import { Cell, CellGrid, IconChip } from '@/components/shared/page/parts';
 
 const FeatureCardContent = [
 	{
@@ -43,16 +43,19 @@ const FeatureCardContent = [
 
 const FeatureCards: React.FC = () => {
 	return (
-		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<CellGrid className="sm:grid-cols-2 lg:grid-cols-3">
 			{FeatureCardContent.map((feature) => (
-				<FeatureTile
-					key={feature.title}
-					icon={feature.icon}
-					title={feature.title}
-					description={feature.description}
-				/>
+				<Cell key={feature.title} interactive className="p-6">
+					<IconChip>{feature.icon}</IconChip>
+					<h3 className="mt-4 text-base font-semibold tracking-[-0.01em] text-foreground">
+						{feature.title}
+					</h3>
+					<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
+						{feature.description}
+					</p>
+				</Cell>
 			))}
-		</div>
+		</CellGrid>
 	);
 };
 

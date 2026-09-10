@@ -24,6 +24,7 @@ import {
 
 import { ErrorComponent } from '../../errorComponent';
 import { StatsSection } from './section';
+import { CellGrid } from '@/components/shared/page/parts';
 import { StatTile } from './statTile';
 
 interface StatsInsightsProps {
@@ -83,10 +84,10 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 		>
 			<div className="grid gap-4 lg:grid-cols-2">
 				{/* Playtime */}
-				<div className="rounded-xl border border-border bg-surface p-6">
+				<div className="rounded-lg border border-border bg-surface p-6">
 					<div className="flex items-center gap-2">
 						<Clock3 className="h-4 w-4 text-foreground/55" />
-						<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/60">
+						<h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 							Total playtime
 						</h3>
 					</div>
@@ -96,7 +97,7 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 								{formatDurationParts(playtimeMs).map((part) => (
 									<span
 										key={part}
-										className="flex items-center gap-1.5 rounded-full border border-foreground/15 px-3 py-1 text-sm text-foreground/80"
+										className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-sm text-foreground/80"
 									>
 										<Hourglass className="h-3 w-3 text-foreground/55" />
 										{part}
@@ -137,10 +138,10 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 
 				{/* Top requester */}
 				{topRequester ? (
-					<div className="rounded-xl border border-border bg-surface p-6">
+					<div className="rounded-lg border border-border bg-surface p-6">
 						<div className="flex items-center gap-2">
 							<Crown className="h-4 w-4 text-foreground/55" />
-							<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/60">
+							<h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 								Most active requester
 							</h3>
 						</div>
@@ -179,14 +180,14 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 						</p>
 					</div>
 				) : (
-					<div className="rounded-xl border border-border bg-surface p-6 text-sm text-muted-foreground/85">
+					<div className="rounded-lg border border-border bg-surface p-6 text-sm text-muted-foreground/85">
 						No requester data yet.
 					</div>
 				)}
 			</div>
 
 			{/* Tiles */}
-			<div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			<CellGrid className="mt-4 sm:grid-cols-2 lg:grid-cols-4">
 				<StatTile
 					icon={<Music className="h-4 w-4" />}
 					label="Unique songs"
@@ -229,11 +230,13 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 					value={formatNumber(overview.songsLastPlayed7d)}
 					hint="Unique tracks touched in the last week"
 				/>
-			</div>
+			</CellGrid>
 
 			<p className="mt-6 text-center text-[13px] italic text-muted-foreground/70">
 				{quote.quote} —{' '}
-				<span className="not-italic text-muted-foreground/85">{quote.author}</span>
+				<span className="not-italic text-muted-foreground/85">
+					{quote.author}
+				</span>
 			</p>
 		</StatsSection>
 	);

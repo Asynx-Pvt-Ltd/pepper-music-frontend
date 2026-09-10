@@ -39,12 +39,12 @@ const StatsMusicPage: React.FC<StatsMusicPageProps> = ({ songs }) => {
 				songs.totalPlays
 			)} plays counted.`}
 			action={
-				<span className="rounded-full border border-foreground/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">
+				<span className="rounded-full border border-border px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/70">
 					Top {songs.topSongs.length} of {formatNumber(songs.uniqueSongs)}
 				</span>
 			}
 		>
-			<div className="overflow-hidden rounded-xl border border-border">
+			<div className="overflow-hidden rounded-lg border border-border">
 				<div className="divide-y divide-border">
 					{songs.topSongs.map((song, index) => {
 						const artwork = song.artworkUrl || song.thumbnail;
@@ -84,7 +84,9 @@ const StatsMusicPage: React.FC<StatsMusicPageProps> = ({ songs }) => {
 										</span>
 									</div>
 									<div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted-foreground/85">
-										<span className="max-w-[14rem] truncate">{song.author}</span>
+										<span className="max-w-[14rem] truncate">
+											{song.author}
+										</span>
 										<span aria-hidden>·</span>
 										<span>{formatTime(song.duration)}</span>
 										<span aria-hidden>·</span>

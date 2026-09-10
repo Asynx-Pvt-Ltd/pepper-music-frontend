@@ -10,7 +10,7 @@ export const ErrorComponent: React.FC<ErrorComponentProps> = ({
 	customAction,
 }) => {
 	return (
-		<div className="rounded-xl border border-border bg-surface px-6 py-12 text-center">
+		<div className="rounded-lg border border-border bg-surface px-6 py-12 text-center">
 			<AlertTriangle className="mx-auto h-8 w-8 text-foreground/55" />
 			<h3 className="mt-4 text-lg font-semibold text-foreground">{title}</h3>
 			<p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-muted-foreground">
@@ -22,7 +22,7 @@ export const ErrorComponent: React.FC<ErrorComponentProps> = ({
 						<button
 							type="button"
 							onClick={retryAction}
-							className="rounded-lg border border-foreground/15 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
+							className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
 						>
 							Try again
 						</button>
@@ -31,7 +31,7 @@ export const ErrorComponent: React.FC<ErrorComponentProps> = ({
 						<button
 							type="button"
 							onClick={customAction.onClick}
-							className="rounded-lg border border-foreground/15 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
+							className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
 						>
 							{customAction.label}
 						</button>

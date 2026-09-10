@@ -22,6 +22,7 @@ import {
 } from '@/utils/format';
 
 import { EmptyState, StatsSection } from './section';
+import { CellGrid } from '@/components/shared/page/parts';
 import { StatTile } from './statTile';
 
 const POLL_INTERVAL_MS = 15_000;
@@ -83,14 +84,16 @@ const NowPlayingRow: React.FC<{
 								{track.title}
 							</span>
 						)}
-						<p className="truncate text-sm text-muted-foreground/85">{track.author}</p>
+						<p className="truncate text-sm text-muted-foreground/85">
+							{track.author}
+						</p>
 					</div>
 
 					<div className="flex shrink-0 items-center gap-2">
 						<span
 							className={`rounded-full border px-2 py-0.5 text-[11px] font-medium ${
 								track.paused
-									? 'border-foreground/15 text-muted-foreground'
+									? 'border-border text-muted-foreground'
 									: 'border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
 							}`}
 						>
@@ -166,18 +169,24 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 
 		const backOff = () => {
 			failures += 1;
-			const exponential = Math.min(POLL_INTERVAL_MS * 2 ** failures, MAX_POLL_INTERVAL_MS);
+			const exponential = Math.min(
+				POLL_INTERVAL_MS * 2 ** failures,
+				MAX_POLL_INTERVAL_MS
+			);
 			delay = Math.max(exponential, retryAfterSeconds * 1000);
 			retryAfterSeconds = 0;
 		};
 
 		async function poll() {
 			// Nobody is looking — do not spend a request on it.
-			if (document.visibilityState === 'hidden') return schedule(POLL_INTERVAL_MS);
+			if (document.visibilityState === 'hidden')
+				return schedule(POLL_INTERVAL_MS);
 
 			setRefreshing(true);
 			try {
-				const response = await fetch('/api/stats/realtime', { cache: 'no-store' });
+				const response = await fetch('/api/stats/realtime', {
+					cache: 'no-store',
+				});
 
 				if (response.status === 429) {
 					const header = Number(response.headers.get('retry-after'));
@@ -238,7 +247,7 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 				title="Live activity"
 				description="A direct read from the bot, refreshed every few seconds."
 			>
-				<div className="flex items-center gap-3 rounded-xl border border-border bg-surface px-6 py-10 text-sm text-muted-foreground">
+				<div className="flex items-center gap-3 rounded-lg border border-border bg-surface px-6 py-10 text-sm text-muted-foreground">
 					<WifiOff className="h-5 w-5 text-muted-foreground/85" />
 					Live stats are unavailable right now.
 				</div>
@@ -262,9 +271,9 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 			} seconds.`}
 			action={
 				<span
-					className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${
+					className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.18em] ${
 						stale
-							? 'border-foreground/15 text-muted-foreground'
+							? 'border-border text-muted-foreground'
 							: 'border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
 					}`}
 				>
@@ -284,7 +293,7 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 				</span>
 			}
 		>
-			<div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
+			<CellGrid className="grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 				<StatTile
 					icon={<Disc3 className="h-4 w-4" />}
 					label="Active players"
@@ -317,11 +326,11 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 					label="Uptime"
 					value={formatUptime(data.uptime)}
 				/>
-			</div>
+			</CellGrid>
 
 			<div className="mt-8">
 				<div className="mb-4 flex items-center justify-between">
-					<h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
+					<h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 						Now playing ({data.nowPlaying.length})
 					</h3>
 				</div>
@@ -330,7 +339,7 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 					<EmptyState message="Nothing is playing at the moment. Start a track and it will show up here." />
 				) : (
 					<>
-						<div className="overflow-hidden rounded-xl border border-border">
+						<div className="overflow-hidden rounded-lg border border-border">
 							<div className="divide-y divide-border">
 								{tracks.map((track) => (
 									<NowPlayingRow

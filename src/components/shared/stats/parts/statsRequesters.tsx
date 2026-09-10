@@ -27,7 +27,7 @@ const StatsRequestersCard: React.FC<StatsRequestersProps> = ({
 			title="Top requesters"
 			description="The listeners keeping the queue alive across every server."
 		>
-			<div className="overflow-hidden rounded-xl border border-border">
+			<div className="overflow-hidden rounded-lg border border-border">
 				<div className="divide-y divide-border">
 					{requesters.requesters.map((requester) => (
 						<div

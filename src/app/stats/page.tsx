@@ -44,7 +44,7 @@ const StatsPage: NextPage<Props> = async ({}) => {
 						<a
 							key={section.id}
 							href={`#${section.id}`}
-							className="rounded-full border border-foreground/15 px-3.5 py-1.5 text-[13px] text-foreground/80 transition-colors hover:border-foreground/40 hover:bg-surface-hover hover:text-foreground"
+							className="rounded-full border border-border px-3.5 py-1.5 text-[13px] text-foreground/80 transition-colors hover:border-foreground/40 hover:bg-surface-hover hover:text-foreground"
 						>
 							{section.label}
 						</a>

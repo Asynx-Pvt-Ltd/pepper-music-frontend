@@ -5,7 +5,7 @@ const Bar = ({ className = '' }: { className?: string }) => (
 );
 
 const TileSkeleton = () => (
-	<div className="rounded-xl border border-border bg-surface p-4">
+	<div className="rounded-lg border border-border bg-surface p-4">
 		<Bar className="h-3 w-20" />
 		<Bar className="mt-3 h-6 w-16" />
 	</div>
@@ -43,7 +43,7 @@ const SectionSkeleton = ({
 		)}
 
 		{rows > 0 && (
-			<div className="mt-8 overflow-hidden rounded-xl border border-border">
+			<div className="mt-8 overflow-hidden rounded-lg border border-border">
 				<div className="divide-y divide-border">
 					{Array.from({ length: rows }).map((_, index) => (
 						<RowSkeleton key={index} />

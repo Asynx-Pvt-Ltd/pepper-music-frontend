@@ -8,6 +8,7 @@ import {
 	Surface,
 } from '@/components/shared/page/parts';
 import FeedbackComponent from '@/components/shared/feedback/feedbackComponent';
+import Reveal from '@/components/shared/reveal';
 import { discordServerLink } from '@/constants';
 
 interface Props {}
@@ -62,61 +63,69 @@ const FeedbackPage: NextPage<Props> = ({}) => {
 					<FeedbackComponent />
 
 					<aside className="space-y-4 lg:sticky lg:top-24">
-						<Surface className="p-6">
-							<IconChip>
-								<Gift className="h-4 w-4" />
-							</IconChip>
-							<h2 className="mt-4 text-base font-semibold text-foreground">
-								There is something in it for you
-							</h2>
-							<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
-								Reports that turn into a fix or a feature get called out by name
-								in the release announcement, and the most useful ones earn perks
-								in the support server. Add your Discord username to be eligible
-								— it is the only reason we ask for it.
-							</p>
-						</Surface>
+						<Reveal>
+							<Surface className="p-6">
+								<IconChip>
+									<Gift className="h-4 w-4" />
+								</IconChip>
+								<h2 className="mt-4 text-base font-semibold text-foreground">
+									There is something in it for you
+								</h2>
+								<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
+									Reports that turn into a fix or a feature get called out by
+									name in the release announcement, and the most useful ones
+									earn perks in the support server. Add your Discord username to
+									be eligible — it is the only reason we ask for it.
+								</p>
+							</Surface>
+						</Reveal>
 
-						<Surface className="p-6">
-							<h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
-								What happens next
-							</h2>
-							<ol className="mt-5 space-y-5">
-								{steps.map((step) => (
-									<li key={step.title} className="flex gap-3">
-										<IconChip className="h-8 w-8">{step.icon}</IconChip>
-										<div>
-											<h3 className="text-[15px] font-semibold text-foreground">
-												{step.title}
-											</h3>
-											<p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
-												{step.body}
-											</p>
-										</div>
-									</li>
-								))}
-							</ol>
-						</Surface>
+						<Reveal delay={0.06}>
+							<Surface className="p-6">
+								<h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+									What happens next
+								</h2>
+								<ol className="mt-5 space-y-5">
+									{steps.map((step) => (
+										<li key={step.title} className="flex gap-3">
+											<IconChip className="h-8 w-8">{step.icon}</IconChip>
+											<div>
+												<h3 className="text-[15px] font-semibold text-foreground">
+													{step.title}
+												</h3>
+												<p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
+													{step.body}
+												</p>
+											</div>
+										</li>
+									))}
+								</ol>
+							</Surface>
+						</Reveal>
 
-						<Surface className="p-6">
-							<h2 className="text-base font-semibold text-foreground">
-								Would rather just chat?
-							</h2>
-							<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
-								Ask in the support server, or run{' '}
-								<code className="font-mono text-foreground/80">/feedback</code> in
-								any server Pepper is in — it lands in the same place.
-							</p>
-							<ActionLink
-								href={discordServerLink}
-								variant="ghost"
-								external
-								className="mt-4 w-full"
-							>
-								<MessageSquare className="h-4 w-4" />
-								Open the support server
-							</ActionLink>
-						</Surface>
+						<Reveal delay={0.12}>
+							<Surface className="p-6">
+								<h2 className="text-base font-semibold text-foreground">
+									Would rather just chat?
+								</h2>
+								<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
+									Ask in the support server, or run{' '}
+									<code className="font-mono text-foreground/80">
+										/feedback
+									</code>{' '}
+									in any server Pepper is in — it lands in the same place.
+								</p>
+								<ActionLink
+									href={discordServerLink}
+									variant="ghost"
+									external
+									className="mt-4 w-full"
+								>
+									<MessageSquare className="h-4 w-4" />
+									Open the support server
+								</ActionLink>
+							</Surface>
+						</Reveal>
 					</aside>
 				</div>
 			</section>

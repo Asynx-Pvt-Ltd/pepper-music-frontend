@@ -2,7 +2,7 @@
 const MetricStripSkeleton = () => (
 	<div
 		aria-hidden
-		className="mt-14 grid animate-pulse gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
+		className="mt-14 grid animate-pulse gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
 	>
 		{Array.from({ length: 4 }).map((_, index) => (
 			<div key={index} className="bg-background px-5 py-6">

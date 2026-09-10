@@ -38,7 +38,7 @@ const FieldLabel = ({
 }) => (
 	<label
 		htmlFor={htmlFor}
-		className="flex items-baseline gap-2 text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/70"
+		className="flex items-baseline gap-2 font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-foreground/70"
 	>
 		{children}
 		{optional && (
@@ -186,7 +186,7 @@ export const FeedbackComponent: React.FC = () => {
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.2 }}
-				className="rounded-xl border border-border bg-surface p-8 text-center md:p-12"
+				className="rounded-lg border border-border bg-surface p-8 text-center md:p-12"
 			>
 				<span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
 					<CheckCircle2 className="h-6 w-6" />
@@ -207,7 +207,7 @@ export const FeedbackComponent: React.FC = () => {
 					<button
 						type="button"
 						onClick={reset}
-						className="inline-flex items-center justify-center gap-2 rounded-lg border border-foreground/15 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
+						className="inline-flex items-center justify-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
 					>
 						Send more feedback
 					</button>
@@ -220,17 +220,19 @@ export const FeedbackComponent: React.FC = () => {
 		<form
 			onSubmit={handleSubmit}
 			noValidate
-			className="space-y-10 rounded-xl border border-border bg-surface p-6 md:p-8"
+			className="space-y-10 rounded-lg border border-border bg-surface p-6 md:p-8"
 		>
 			{/* Rating */}
 			<fieldset disabled={submitting}>
-				<legend className="text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/70">
+				<legend className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-foreground/70">
 					How is Pepper treating you?
 				</legend>
 				<div className="mt-4">
 					<StarRating
 						value={form.rating}
-						onChange={(rating) => setForm((current) => ({ ...current, rating }))}
+						onChange={(rating) =>
+							setForm((current) => ({ ...current, rating }))
+						}
 						disabled={submitting}
 					/>
 				</div>
@@ -238,7 +240,7 @@ export const FeedbackComponent: React.FC = () => {
 
 			{/* Category */}
 			<fieldset disabled={submitting}>
-				<legend className="text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/70">
+				<legend className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-foreground/70">
 					What is this about?
 				</legend>
 				<div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -313,9 +315,10 @@ export const FeedbackComponent: React.FC = () => {
 					className={cn(fieldClass, 'mt-4')}
 				/>
 				<p className="mt-2 text-[13px] leading-relaxed text-muted-foreground/85">
-					Leave it and we can follow up in the support server, credit you by name
-					in the release announcement when your report ships, and send perks for
-					the reports that help most. Leave it blank to stay anonymous.
+					Leave it and we can follow up in the support server, credit you by
+					name in the release announcement when your report ships, and send
+					perks for the reports that help most. Leave it blank to stay
+					anonymous.
 				</p>
 			</div>
 

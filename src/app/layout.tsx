@@ -35,6 +35,12 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<GoogleAnalytics gaId="G-NCWY5GH7E9" />
+			{/* Without JS the reveal class never resolves; show those sections. */}
+			<noscript>
+				<style>
+					{'.reveal{opacity:1 !important;transform:none !important}'}
+				</style>
+			</noscript>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>

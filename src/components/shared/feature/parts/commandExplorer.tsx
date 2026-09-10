@@ -26,13 +26,19 @@ interface CommandExplorerProps {
 
 const ALL_CATEGORIES = 'all';
 
-const OptionChip = ({ label, required }: { label: string; required: boolean }) => (
+const OptionChip = ({
+	label,
+	required,
+}: {
+	label: string;
+	required: boolean;
+}) => (
 	<span
 		className={cn(
 			'rounded border px-1.5 py-0.5 font-mono text-[11px]',
 			required
 				? 'border-foreground/25 text-foreground/80'
-				: 'border-border text-muted-foreground/85',
+				: 'border-border text-muted-foreground/85'
 		)}
 	>
 		{required ? `<${label}>` : `[${label}]`}
@@ -41,7 +47,8 @@ const OptionChip = ({ label, required }: { label: string; required: boolean }) =
 
 const CommandRow = ({ command }: { command: BotCommand }) => {
 	const [open, setOpen] = React.useState(false);
-	const hasDetail = command.subcommands.length > 0 || command.options.length > 0;
+	const hasDetail =
+		command.subcommands.length > 0 || command.options.length > 0;
 
 	return (
 		<div className="transition-colors hover:bg-surface-hover">
@@ -51,7 +58,7 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 						/{command.name}
 					</code>
 					{command.dj && (
-						<span className="rounded-full border border-foreground/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="rounded-full border border-border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
 							DJ
 						</span>
 					)}
@@ -70,7 +77,10 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 							className="mt-2 inline-flex items-center gap-1 rounded text-[12px] font-medium text-muted-foreground/85 transition-colors outline-none hover:text-foreground/80 focus-visible:ring-2 focus-visible:ring-ring"
 						>
 							<ChevronDown
-								className={cn('h-3 w-3 transition-transform', open && 'rotate-180')}
+								className={cn(
+									'h-3 w-3 transition-transform',
+									open && 'rotate-180'
+								)}
 							/>
 							{command.subcommands.length > 0
 								? `${command.subcommands.length} subcommand${command.subcommands.length === 1 ? '' : 's'}`
@@ -121,7 +131,10 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 	);
 };
 
-const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages }) => {
+const CommandExplorer: React.FC<CommandExplorerProps> = ({
+	initial,
+	languages,
+}) => {
 	const [catalogue, setCatalogue] = React.useState(initial);
 	const [locale, setLocale] = React.useState(initial.locale);
 	const [category, setCategory] = React.useState(ALL_CATEGORIES);
@@ -129,7 +142,9 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 	const [loading, setLoading] = React.useState(false);
 
 	// Locales already fetched, so going back to one is instant and free.
-	const loaded = React.useRef(new Map<string, CommandCatalogue>([[initial.locale, initial]]));
+	const loaded = React.useRef(
+		new Map<string, CommandCatalogue>([[initial.locale, initial]])
+	);
 	const request = React.useRef<AbortController | null>(null);
 
 	React.useEffect(() => () => request.current?.abort(), []);
@@ -152,9 +167,12 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 		setLoading(true);
 
 		try {
-			const response = await fetch(`/api/commands?locale=${encodeURIComponent(next)}`, {
-				signal: controller.signal,
-			});
+			const response = await fetch(
+				`/api/commands?locale=${encodeURIComponent(next)}`,
+				{
+					signal: controller.signal,
+				}
+			);
 			if (!response.ok) throw new Error(`status ${response.status}`);
 
 			const payload = (await response.json()) as CommandCatalogue;
@@ -164,9 +182,13 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 			if (controller.signal.aborted) return;
 			console.error('[commands] locale fetch failed:', error);
 			setLocale(catalogue.locale);
-			showToast('Could not load that language', 'Showing the previous list instead.', {
-				type: 'error',
-			});
+			showToast(
+				'Could not load that language',
+				'Showing the previous list instead.',
+				{
+					type: 'error',
+				}
+			);
 		} finally {
 			if (!controller.signal.aborted) setLoading(false);
 		}
@@ -175,7 +197,8 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 	const visible = React.useMemo(() => {
 		const needle = query.trim().toLowerCase();
 		return catalogue.commands.filter((command) => {
-			if (category !== ALL_CATEGORIES && command.category !== category) return false;
+			if (category !== ALL_CATEGORIES && command.category !== category)
+				return false;
 			if (!needle) return true;
 			return (
 				command.name.toLowerCase().includes(needle) ||
@@ -209,7 +232,11 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 						className="appearance-none rounded-lg border border-border bg-surface py-2.5 pl-3 pr-8 text-[14px] text-foreground outline-none transition-colors focus:border-foreground/30 disabled:opacity-60"
 					>
 						{languages.map((language) => (
-							<option key={language.code} value={language.code} className="bg-background">
+							<option
+								key={language.code}
+								value={language.code}
+								className="bg-background"
+							>
 								{language.nativeName}
 							</option>
 						))}
@@ -235,7 +262,7 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 									'rounded-full border px-3.5 py-1.5 text-[13px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
 									category === ALL_CATEGORIES
 										? 'border-foreground/40 bg-surface-strong text-foreground'
-										: 'border-foreground/15 text-muted-foreground hover:border-foreground/30 hover:text-foreground',
+										: 'border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground'
 								)}
 							>
 								All {catalogue.total}
@@ -249,7 +276,7 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 										'rounded-full border px-3.5 py-1.5 text-[13px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
 										category === entry.id
 											? 'border-foreground/40 bg-surface-strong text-foreground'
-											: 'border-foreground/15 text-muted-foreground hover:border-foreground/30 hover:text-foreground',
+											: 'border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground'
 									)}
 								>
 									<span aria-hidden>{entry.emoji} </span>
@@ -258,7 +285,7 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 							))}
 						</div>
 
-						<div className="mt-6 overflow-hidden rounded-xl border border-border">
+						<div className="mt-6 overflow-hidden rounded-lg border border-border">
 							{visible.length === 0 ? (
 								<p className="px-5 py-10 text-center text-[14px] text-muted-foreground/85">
 									No command matches “{query}”.

@@ -150,3 +150,282 @@
 		color-scheme: dark;
 	}
 }
+
+/* ---------------------------------------------------------------------------
+ * Pepper mascot
+ *
+ * Palette for the vector mascot in `components/shared/pepperMascot.tsx`. The
+ * red is the one saturated colour on the marketing pages, so it is defined here
+ * rather than inline: everything else stays on the neutral ramp above, and the
+ * mascot is what carries the warmth. Dark theme lifts the lightness of the
+ * headphone greys so the gear does not sink into a near-black ground.
+ * ------------------------------------------------------------------------- */
+
+:root {
+	--pepper-red: oklch(0.585 0.203 25.5);
+	--pepper-red-light: oklch(0.685 0.178 31);
+	--pepper-red-dark: oklch(0.455 0.168 24);
+	--pepper-green: oklch(0.655 0.145 145);
+	--pepper-green-dark: oklch(0.53 0.13 147);
+	--pepper-gear: oklch(0.335 0.021 250);
+	--pepper-gear-light: oklch(0.435 0.024 250);
+	--pepper-face: oklch(0.21 0.03 25);
+	--pepper-glint: oklch(1 0 0 / 85%);
+	--pepper-shadow: oklch(0 0 0 / 9%);
+}
+
+.dark {
+	--pepper-red: oklch(0.625 0.198 26);
+	--pepper-red-light: oklch(0.72 0.17 32);
+	--pepper-red-dark: oklch(0.48 0.17 24);
+	--pepper-green: oklch(0.7 0.15 145);
+	--pepper-green-dark: oklch(0.57 0.135 147);
+	--pepper-gear: oklch(0.5 0.022 250);
+	--pepper-gear-light: oklch(0.61 0.024 250);
+	--pepper-face: oklch(0.16 0.025 25);
+	--pepper-glint: oklch(1 0 0 / 75%);
+	--pepper-shadow: oklch(0 0 0 / 32%);
+}
+
+/*
+ * `transform-box: fill-box` is what makes percentage transform-origins resolve
+ * against each part's own bounding box instead of the SVG viewport — without it
+ * the stem pivots around the canvas corner rather than its own base.
+ */
+.pepper [class*='pepper__'] {
+	transform-box: fill-box;
+}
+
+.pepper__rig {
+	transform-origin: 50% 100%;
+}
+.pepper__body {
+	transform-origin: 50% 100%;
+}
+.pepper__stem {
+	transform-origin: 50% 100%;
+}
+.pepper__eyes {
+	transform-origin: 50% 50%;
+}
+.pepper__cup {
+	transform-origin: 50% 50%;
+}
+.pepper__shadow {
+	transform-origin: 50% 50%;
+}
+
+.pepper--idle .pepper__rig {
+	animation: pepper-bob 3.4s ease-in-out infinite;
+}
+.pepper--idle .pepper__body {
+	animation: pepper-breathe 3.4s ease-in-out infinite;
+}
+.pepper--idle .pepper__stem {
+	animation: pepper-sway 4.6s ease-in-out infinite;
+}
+.pepper--idle .pepper__eyes {
+	animation: pepper-blink 6.2s ease-in-out infinite;
+}
+.pepper--idle .pepper__shadow {
+	animation: pepper-shadow 3.4s ease-in-out infinite;
+}
+/* The two cups run the same beat a half-cycle apart, so the head reads as
+ * tracking a rhythm rather than throbbing symmetrically. */
+.pepper--idle .pepper__cup--left {
+	animation: pepper-pulse 1.7s ease-in-out infinite;
+}
+.pepper--idle .pepper__cup--right {
+	animation: pepper-pulse 1.7s ease-in-out infinite;
+	animation-delay: -0.85s;
+}
+
+@keyframes pepper-bob {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-6px);
+	}
+}
+
+@keyframes pepper-breathe {
+	0%,
+	100% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(0.985, 1.015);
+	}
+}
+
+@keyframes pepper-sway {
+	0%,
+	100% {
+		transform: rotate(-4deg);
+	}
+	50% {
+		transform: rotate(4deg);
+	}
+}
+
+@keyframes pepper-blink {
+	0%,
+	94%,
+	100% {
+		transform: scaleY(1);
+	}
+	96%,
+	96.5% {
+		transform: scaleY(0.08);
+	}
+	98% {
+		transform: scaleY(1);
+	}
+}
+
+@keyframes pepper-pulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.055);
+	}
+}
+
+@keyframes pepper-shadow {
+	0%,
+	100% {
+		transform: scaleX(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scaleX(0.9);
+		opacity: 0.65;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+ * Entrance motion
+ *
+ * The hero animates on load rather than on scroll: it is already in view, so an
+ * observer would only delay the largest paint on the page we most want indexed.
+ * Below-fold sections use the framer-motion `Reveal` wrapper instead.
+ * ------------------------------------------------------------------------- */
+
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.rise {
+	animation: rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/*
+ * Scroll reveal. The `reveal` component in `components/shared` only toggles the
+ * classes; the motion lives here so no animation library is pulled into a route
+ * that would not otherwise need one. `--instant` covers sections that were
+ * already on screen when they mounted, which should appear as part of the page
+ * rather than replay an entrance nobody saw.
+ */
+.reveal {
+	opacity: 0;
+	transform: translateY(14px);
+	transition:
+		opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+		transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal--shown {
+	opacity: 1;
+	transform: none;
+}
+
+.reveal--instant {
+	transition: none;
+}
+
+/* Fine grid wash. Sits behind the hero to give the flat ground some structure
+ * without introducing another colour. */
+.grid-wash {
+	background-image:
+		linear-gradient(to right, var(--border) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+	background-size: 56px 56px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	/* Fail open: never leave a section parked at opacity 0. */
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+
+	.pepper--idle .pepper__rig,
+	.pepper--idle .pepper__body,
+	.pepper--idle .pepper__stem,
+	.pepper--idle .pepper__eyes,
+	.pepper--idle .pepper__cup,
+	.pepper--idle .pepper__shadow,
+	.rise {
+		animation: none;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+ * Equalizer
+ *
+ * Five bars on staggered, deliberately non-harmonic durations so the group
+ * never settles into a visible loop. Used in the now-playing panel.
+ * ------------------------------------------------------------------------- */
+
+.eq__bar {
+	transform-origin: 50% 100%;
+	animation: eq-bounce 900ms ease-in-out infinite alternate;
+}
+.eq__bar:nth-child(1) {
+	animation-duration: 780ms;
+	animation-delay: -120ms;
+}
+.eq__bar:nth-child(2) {
+	animation-duration: 1120ms;
+	animation-delay: -420ms;
+}
+.eq__bar:nth-child(3) {
+	animation-duration: 660ms;
+	animation-delay: -260ms;
+}
+.eq__bar:nth-child(4) {
+	animation-duration: 980ms;
+	animation-delay: -540ms;
+}
+.eq__bar:nth-child(5) {
+	animation-duration: 840ms;
+	animation-delay: -80ms;
+}
+
+@keyframes eq-bounce {
+	from {
+		transform: scaleY(0.22);
+	}
+	to {
+		transform: scaleY(1);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.eq__bar {
+		animation: none;
+		transform: scaleY(0.6);
+	}
+}

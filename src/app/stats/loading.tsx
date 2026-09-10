@@ -21,7 +21,7 @@ export default function Loading() {
 					{statsSections.map((section) => (
 						<span
 							key={section.id}
-							className="rounded-full border border-foreground/15 px-3.5 py-1.5 text-[13px] text-foreground/80"
+							className="rounded-full border border-border px-3.5 py-1.5 text-[13px] text-foreground/80"
 						>
 							{section.label}
 						</span>

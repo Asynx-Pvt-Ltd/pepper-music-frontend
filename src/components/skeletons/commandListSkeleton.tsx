@@ -11,7 +11,7 @@ const CommandListSkeleton = ({ rows = 8 }: { rows?: number }) => (
 				<Bar key={index} className="h-8 w-28 rounded-full" />
 			))}
 		</div>
-		<div className="mt-6 overflow-hidden rounded-xl border border-border">
+		<div className="mt-6 overflow-hidden rounded-lg border border-border">
 			<div className="divide-y divide-border">
 				{Array.from({ length: rows }).map((_, index) => (
 					<div

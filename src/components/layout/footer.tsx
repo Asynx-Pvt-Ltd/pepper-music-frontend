@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, MessageSquare } from 'lucide-react';
 
@@ -10,8 +9,8 @@ import {
 	inviteLink,
 	legalNavItems,
 	musicSources,
-	pepperLogoLink,
 } from '@/constants';
+import PepperMascot from '@/components/shared/pepperMascot';
 
 interface Props {}
 
@@ -58,27 +57,23 @@ const Footer: NextPage<Props> = ({}) => {
 							href="/"
 							className="inline-flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-ring"
 						>
-							<span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-1 ring-foreground/15">
-								<Image
-									src={pepperLogoLink}
-									width={32}
-									height={32}
-									className="h-full w-full object-cover"
-									alt=""
-								/>
-							</span>
+							<PepperMascot
+								decorative
+								idle={false}
+								className="h-8 w-8 shrink-0"
+							/>
 							<span className="text-[17px] font-bold tracking-tight">
 								Pepper
 							</span>
 						</Link>
 
 						<p className="mt-4 text-[14px] leading-relaxed text-muted-foreground">
-							A free Discord music bot with high-quality playback, autoplay
-							and controls your moderators can trust.
+							A free Discord music bot with high-quality playback, autoplay and
+							controls your moderators can trust.
 						</p>
 
 						<div className="mt-6">
-							<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/55">
+							<p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 								Plays from
 							</p>
 							<div className="mt-3 flex flex-wrap gap-1.5">
@@ -97,7 +92,7 @@ const Footer: NextPage<Props> = ({}) => {
 					{/* Link columns */}
 					{columns.map((column) => (
 						<div key={column.title}>
-							<h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/55">
+							<h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
 								{column.title}
 							</h2>
 							<ul className="mt-4 space-y-3">
