@@ -39,23 +39,23 @@ const StatsMusicPage: React.FC<StatsMusicPageProps> = ({ songs }) => {
 				songs.totalPlays
 			)} plays counted.`}
 			action={
-				<span className="rounded-full border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/60">
+				<span className="rounded-full border border-foreground/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">
 					Top {songs.topSongs.length} of {formatNumber(songs.uniqueSongs)}
 				</span>
 			}
 		>
-			<div className="overflow-hidden rounded-xl border border-white/10">
-				<div className="divide-y divide-white/[0.07]">
+			<div className="overflow-hidden rounded-xl border border-border">
+				<div className="divide-y divide-border">
 					{songs.topSongs.map((song, index) => {
 						const artwork = song.artworkUrl || song.thumbnail;
 						return (
 							<div
 								key={song.uri || song.identifier}
-								className="flex items-center px-4 py-3 transition-colors hover:bg-white/[0.04]"
+								className="flex items-center px-4 py-3 transition-colors hover:bg-surface-hover"
 							>
 								<Rank position={index + 1} />
 
-								<div className="relative mx-3 h-11 w-11 shrink-0 overflow-hidden rounded bg-white/[0.06]">
+								<div className="relative mx-3 h-11 w-11 shrink-0 overflow-hidden rounded bg-surface-hover">
 									{artwork ? (
 										<Image
 											src={artwork}
@@ -65,7 +65,7 @@ const StatsMusicPage: React.FC<StatsMusicPageProps> = ({ songs }) => {
 											className="object-cover"
 										/>
 									) : (
-										<Disc3 className="absolute inset-0 m-auto h-5 w-5 text-white/30" />
+										<Disc3 className="absolute inset-0 m-auto h-5 w-5 text-foreground/45" />
 									)}
 								</div>
 
@@ -75,15 +75,15 @@ const StatsMusicPage: React.FC<StatsMusicPageProps> = ({ songs }) => {
 											href={song.uri}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="truncate font-medium text-white transition-colors hover:text-gray-400"
+											className="truncate font-medium text-foreground transition-colors hover:text-muted-foreground"
 										>
 											{song.title}
 										</a>
-										<span className="shrink-0 font-mono text-sm tabular-nums text-gray-400">
+										<span className="shrink-0 font-mono text-sm tabular-nums text-muted-foreground">
 											{formatNumber(song.played_number)} plays
 										</span>
 									</div>
-									<div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-gray-500">
+									<div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted-foreground/85">
 										<span className="max-w-[14rem] truncate">{song.author}</span>
 										<span aria-hidden>·</span>
 										<span>{formatTime(song.duration)}</span>

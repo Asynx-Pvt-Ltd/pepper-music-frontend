@@ -38,7 +38,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
 						key={star}
 						onMouseEnter={() => !disabled && setPreview(star)}
 						className={cn(
-							'group rounded-md p-1 focus-within:ring-2 focus-within:ring-white/40',
+							'group rounded-md p-1 focus-within:ring-2 focus-within:ring-foreground/40',
 							disabled ? 'cursor-not-allowed' : 'cursor-pointer'
 						)}
 					>
@@ -61,12 +61,12 @@ export const StarRating: React.FC<StarRatingProps> = ({
 							className={cn(
 								'h-7 w-7 transition-colors',
 								star <= value
-									? 'fill-amber-400 text-amber-400'
+									? 'fill-amber-500 text-amber-500 dark:fill-amber-400 dark:text-amber-400'
 									: star <= preview
 										// Dimmer while only previewing, so the committed
 										// score stays distinguishable from a hover.
-										? 'fill-amber-400/50 text-amber-400/50'
-										: 'fill-transparent text-white/25 group-hover:text-white/45'
+										? 'fill-amber-500/50 text-amber-500/50 dark:fill-amber-400/50 dark:text-amber-400/50'
+										: 'fill-transparent text-foreground/40 group-hover:text-foreground/55'
 							)}
 						/>
 						<span className="sr-only">
@@ -79,7 +79,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
 			<span
 				className={cn(
 					'text-sm transition-colors',
-					value ? 'font-medium text-amber-200' : 'text-gray-400'
+					value ? 'font-medium text-amber-600 dark:text-amber-200' : 'text-muted-foreground'
 				)}
 			>
 				{active ? feedbackRatingLabels[active] : 'Pick a star'}

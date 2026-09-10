@@ -51,8 +51,8 @@ const NowPlayingRow: React.FC<{
 		: 0;
 
 	return (
-		<div className="flex items-start gap-3 px-4 py-3.5 transition-colors hover:bg-white/[0.04]">
-			<div className="relative h-12 w-12 shrink-0 overflow-hidden rounded bg-white/[0.06]">
+		<div className="flex items-start gap-3 px-4 py-3.5 transition-colors hover:bg-surface-hover">
+			<div className="relative h-12 w-12 shrink-0 overflow-hidden rounded bg-surface-hover">
 				{track.artworkUrl ? (
 					<Image
 						src={track.artworkUrl}
@@ -62,7 +62,7 @@ const NowPlayingRow: React.FC<{
 						className="object-cover"
 					/>
 				) : (
-					<Disc3 className="absolute inset-0 m-auto h-5 w-5 text-white/30" />
+					<Disc3 className="absolute inset-0 m-auto h-5 w-5 text-foreground/45" />
 				)}
 			</div>
 
@@ -74,43 +74,43 @@ const NowPlayingRow: React.FC<{
 								href={track.uri}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="block truncate font-medium text-white transition-colors hover:text-gray-400"
+								className="block truncate font-medium text-foreground transition-colors hover:text-muted-foreground"
 							>
 								{track.title}
 							</a>
 						) : (
-							<span className="block truncate font-medium text-white">
+							<span className="block truncate font-medium text-foreground">
 								{track.title}
 							</span>
 						)}
-						<p className="truncate text-sm text-gray-500">{track.author}</p>
+						<p className="truncate text-sm text-muted-foreground/85">{track.author}</p>
 					</div>
 
 					<div className="flex shrink-0 items-center gap-2">
 						<span
 							className={`rounded-full border px-2 py-0.5 text-[11px] font-medium ${
 								track.paused
-									? 'border-white/15 text-gray-400'
-									: 'border-emerald-500/40 text-emerald-300'
+									? 'border-foreground/15 text-muted-foreground'
+									: 'border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
 							}`}
 						>
 							{track.paused ? 'Paused' : 'Playing'}
 						</span>
-						<span className="flex items-center gap-1 text-xs text-gray-500">
+						<span className="flex items-center gap-1 text-xs text-muted-foreground/85">
 							<Headphones className="h-3 w-3" />
 							{track.listeners}
 						</span>
 					</div>
 				</div>
 
-				<div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+				<div className="mt-2 h-1 overflow-hidden rounded-full bg-border">
 					<div
-						className="h-full rounded-full bg-white/70"
+						className="h-full rounded-full bg-foreground/70"
 						style={{ width: `${percentage}%` }}
 					/>
 				</div>
 
-				<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+				<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground/85">
 					<span className="font-mono tabular-nums">
 						{formatTime(position)} / {formatTime(track.duration)}
 					</span>
@@ -238,8 +238,8 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 				title="Live activity"
 				description="A direct read from the bot, refreshed every few seconds."
 			>
-				<div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-6 py-10 text-sm text-gray-400">
-					<WifiOff className="h-5 w-5 text-gray-500" />
+				<div className="flex items-center gap-3 rounded-xl border border-border bg-surface px-6 py-10 text-sm text-muted-foreground">
+					<WifiOff className="h-5 w-5 text-muted-foreground/85" />
 					Live stats are unavailable right now.
 				</div>
 			</StatsSection>
@@ -264,8 +264,8 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 				<span
 					className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${
 						stale
-							? 'border-white/15 text-gray-400'
-							: 'border-emerald-500/40 text-emerald-300'
+							? 'border-foreground/15 text-muted-foreground'
+							: 'border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
 					}`}
 				>
 					{stale ? (
@@ -321,7 +321,7 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 
 			<div className="mt-8">
 				<div className="mb-4 flex items-center justify-between">
-					<h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+					<h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 						Now playing ({data.nowPlaying.length})
 					</h3>
 				</div>
@@ -330,8 +330,8 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 					<EmptyState message="Nothing is playing at the moment. Start a track and it will show up here." />
 				) : (
 					<>
-						<div className="overflow-hidden rounded-xl border border-white/10">
-							<div className="divide-y divide-white/[0.07]">
+						<div className="overflow-hidden rounded-xl border border-border">
+							<div className="divide-y divide-border">
 								{tracks.map((track) => (
 									<NowPlayingRow
 										key={`${track.guildId}-${track.uri}`}
@@ -346,7 +346,7 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 							<button
 								type="button"
 								onClick={() => setExpanded((value) => !value)}
-								className="mt-4 w-full rounded-lg border border-white/10 py-2.5 text-sm font-medium text-gray-300 transition-colors hover:border-white/30 hover:bg-white/[0.04] hover:text-white"
+								className="mt-4 w-full rounded-lg border border-border py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:border-foreground/30 hover:bg-surface-hover hover:text-foreground"
 							>
 								{expanded
 									? 'Show fewer'

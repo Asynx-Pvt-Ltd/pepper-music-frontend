@@ -25,7 +25,7 @@ const initialForm = {
 };
 
 const fieldClass =
-	'w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white outline-none transition-colors placeholder:text-gray-600 focus:border-white/30 focus:bg-white/[0.05] disabled:opacity-60';
+	'w-full rounded-lg border border-border bg-surface px-4 py-3 text-[15px] text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-foreground/30 focus:bg-surface-hover disabled:opacity-60';
 
 const FieldLabel = ({
 	htmlFor,
@@ -38,11 +38,11 @@ const FieldLabel = ({
 }) => (
 	<label
 		htmlFor={htmlFor}
-		className="flex items-baseline gap-2 text-[13px] font-semibold uppercase tracking-[0.14em] text-white/60"
+		className="flex items-baseline gap-2 text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/70"
 	>
 		{children}
 		{optional && (
-			<span className="text-[11px] font-medium normal-case tracking-normal text-gray-500">
+			<span className="text-[11px] font-medium normal-case tracking-normal text-muted-foreground/85">
 				optional
 			</span>
 		)}
@@ -62,10 +62,10 @@ const CategoryChip = ({
 }) => (
 	<label
 		className={cn(
-			'cursor-pointer rounded-lg border p-4 transition-colors focus-within:ring-2 focus-within:ring-white/40',
+			'cursor-pointer rounded-lg border p-4 transition-colors focus-within:ring-2 focus-within:ring-foreground/40',
 			checked
-				? 'border-white/40 bg-white/[0.07]'
-				: 'border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.05]',
+				? 'border-foreground/40 bg-surface-strong'
+				: 'border-border bg-surface hover:border-foreground/25 hover:bg-surface-hover',
 			disabled && 'cursor-not-allowed opacity-60'
 		)}
 	>
@@ -81,17 +81,17 @@ const CategoryChip = ({
 			onClick={onSelect}
 			className="sr-only"
 		/>
-		<span className="flex items-center gap-2 text-[15px] font-semibold text-white">
+		<span className="flex items-center gap-2 text-[15px] font-semibold text-foreground">
 			<span
 				aria-hidden
 				className={cn(
 					'h-1.5 w-1.5 rounded-full',
-					checked ? 'bg-white' : 'bg-white/25'
+					checked ? 'bg-primary' : 'bg-foreground/25'
 				)}
 			/>
 			{option.label}
 		</span>
-		<span className="mt-1.5 block text-[13px] leading-relaxed text-gray-400">
+		<span className="mt-1.5 block text-[13px] leading-relaxed text-muted-foreground">
 			{option.hint}
 		</span>
 	</label>
@@ -186,15 +186,15 @@ export const FeedbackComponent: React.FC = () => {
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.2 }}
-				className="rounded-xl border border-white/10 bg-white/[0.03] p-8 text-center md:p-12"
+				className="rounded-xl border border-border bg-surface p-8 text-center md:p-12"
 			>
-				<span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-black">
+				<span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
 					<CheckCircle2 className="h-6 w-6" />
 				</span>
-				<h2 className="mt-5 text-2xl font-bold tracking-tight text-white">
+				<h2 className="mt-5 text-2xl font-bold tracking-tight text-foreground">
 					Thanks — that landed with the team
 				</h2>
-				<p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-gray-400">
+				<p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-muted-foreground">
 					Every submission is read. If yours turns into a fix or a feature, you
 					will see it in the release notes — with your name on it if you left a
 					Discord handle.
@@ -207,7 +207,7 @@ export const FeedbackComponent: React.FC = () => {
 					<button
 						type="button"
 						onClick={reset}
-						className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/[0.06]"
+						className="inline-flex items-center justify-center gap-2 rounded-lg border border-foreground/15 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/40 hover:bg-surface-hover"
 					>
 						Send more feedback
 					</button>
@@ -220,11 +220,11 @@ export const FeedbackComponent: React.FC = () => {
 		<form
 			onSubmit={handleSubmit}
 			noValidate
-			className="space-y-10 rounded-xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
+			className="space-y-10 rounded-xl border border-border bg-surface p-6 md:p-8"
 		>
 			{/* Rating */}
 			<fieldset disabled={submitting}>
-				<legend className="text-[13px] font-semibold uppercase tracking-[0.14em] text-white/60">
+				<legend className="text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/70">
 					How is Pepper treating you?
 				</legend>
 				<div className="mt-4">
@@ -238,7 +238,7 @@ export const FeedbackComponent: React.FC = () => {
 
 			{/* Category */}
 			<fieldset disabled={submitting}>
-				<legend className="text-[13px] font-semibold uppercase tracking-[0.14em] text-white/60">
+				<legend className="text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/70">
 					What is this about?
 				</legend>
 				<div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -273,7 +273,7 @@ export const FeedbackComponent: React.FC = () => {
 					placeholder="What happened, what you expected, and which command you were using. Specifics help us reproduce it."
 					className={cn(fieldClass, 'mt-4 resize-y leading-relaxed')}
 				/>
-				<div className="mt-2 flex items-center justify-between text-[12px] text-gray-500">
+				<div className="mt-2 flex items-center justify-between text-[12px] text-muted-foreground/85">
 					<span>
 						{tooShort
 							? `At least ${feedbackLimits.messageMin} characters`
@@ -282,7 +282,7 @@ export const FeedbackComponent: React.FC = () => {
 					<span
 						className={cn(
 							'font-mono tabular-nums',
-							remaining < 100 && 'text-gray-400'
+							remaining < 100 && 'text-muted-foreground'
 						)}
 					>
 						{remaining}
@@ -312,7 +312,7 @@ export const FeedbackComponent: React.FC = () => {
 					placeholder="yourname"
 					className={cn(fieldClass, 'mt-4')}
 				/>
-				<p className="mt-2 text-[13px] leading-relaxed text-gray-500">
+				<p className="mt-2 text-[13px] leading-relaxed text-muted-foreground/85">
 					Leave it and we can follow up in the support server, credit you by name
 					in the release announcement when your report ships, and send perks for
 					the reports that help most. Leave it blank to stay anonymous.
@@ -333,11 +333,11 @@ export const FeedbackComponent: React.FC = () => {
 				/>
 			</div>
 
-			<div className="border-t border-white/10 pt-6">
+			<div className="border-t border-border pt-6">
 				<button
 					type="submit"
 					disabled={submitting}
-					className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-60"
+					className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
 				>
 					{submitting ? (
 						<>
@@ -351,7 +351,7 @@ export const FeedbackComponent: React.FC = () => {
 						</>
 					)}
 				</button>
-				<p className="mt-3 text-center text-[13px] text-gray-500">
+				<p className="mt-3 text-center text-[13px] text-muted-foreground/85">
 					Goes straight to the maintainers. No account needed.
 				</p>
 			</div>

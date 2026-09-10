@@ -96,51 +96,51 @@ const LegalPage = ({
 	}, []);
 
 	return (
-		<section className="relative bg-black text-white">
+		<section className="relative bg-background text-foreground">
 			{/* Reading progress */}
-			<div className="sticky top-[var(--header-height)] z-40 h-0.5 w-full bg-white/5">
+			<div className="sticky top-[var(--header-height)] z-40 h-0.5 w-full bg-surface-hover">
 				<div
-					className="h-full bg-white transition-[width] duration-150 ease-out"
+					className="h-full bg-primary transition-[width] duration-150 ease-out"
 					style={{ width: `${progress}%` }}
 				/>
 			</div>
 
 			{/* Hero */}
-			<div className="relative overflow-hidden border-b border-white/10">
+			<div className="relative overflow-hidden border-b border-border">
 				<div
 					aria-hidden
-					className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-80 w-[min(48rem,90%)] rounded-full bg-white/[0.07] blur-3xl"
+					className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-80 w-[min(48rem,90%)] rounded-full bg-glow blur-3xl"
 				/>
 				<div className="container relative mx-auto px-4 py-14 md:py-20">
 					<div className="mx-auto max-w-5xl">
-						<span className="inline-flex items-center rounded-full border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+						<span className="inline-flex items-center rounded-full border border-foreground/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/75">
 							{eyebrow}
 						</span>
 						<h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">
 							{title}
 						</h1>
-						<p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-400 md:text-lg">
+						<p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
 							{summary}
 						</p>
 
 						<dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
 							<div>
-								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 									Last updated
 								</dt>
-								<dd className="mt-1 text-sm text-white">{updated}</dd>
+								<dd className="mt-1 text-sm text-foreground">{updated}</dd>
 							</div>
 							<div>
-								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 									Effective
 								</dt>
-								<dd className="mt-1 text-sm text-white">{effective}</dd>
+								<dd className="mt-1 text-sm text-foreground">{effective}</dd>
 							</div>
 							<div>
-								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+								<dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 									Applies to
 								</dt>
-								<dd className="mt-1 text-sm text-white">
+								<dd className="mt-1 text-sm text-foreground">
 									Pepper bot &amp; pepper.mrbotz.com
 								</dd>
 							</div>
@@ -150,21 +150,21 @@ const LegalPage = ({
 			</div>
 
 			{/* Highlights */}
-			<div className="border-b border-white/10">
+			<div className="border-b border-border">
 				<div className="container mx-auto px-4 py-10">
 					<div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
 						{highlights.map((highlight) => (
 							<div
 								key={highlight.title}
-								className="rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+								className="rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 							>
-								<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-black">
+								<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
 									{highlight.icon}
 								</div>
-								<h2 className="mt-4 text-sm font-semibold text-white">
+								<h2 className="mt-4 text-sm font-semibold text-foreground">
 									{highlight.title}
 								</h2>
-								<p className="mt-1.5 text-[13px] leading-relaxed text-gray-400">
+								<p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
 									{highlight.body}
 								</p>
 							</div>
@@ -178,10 +178,10 @@ const LegalPage = ({
 				<div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
 					{/* Table of contents */}
 					<aside className="lg:sticky lg:top-10 lg:self-start">
-						<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+						<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 							On this page
 						</p>
-						<nav className="mt-4 border-l border-white/10">
+						<nav className="mt-4 border-l border-border">
 							{sections.map((section, index) => (
 								<a
 									key={section.id}
@@ -189,11 +189,11 @@ const LegalPage = ({
 									className={cn(
 										'-ml-px flex items-baseline gap-2.5 border-l py-1.5 pl-4 text-sm transition-colors',
 										activeId === section.id
-											? 'border-white font-medium text-white'
-											: 'border-transparent text-gray-500 hover:border-white/30 hover:text-gray-300'
+											? 'border-foreground font-medium text-foreground'
+											: 'border-transparent text-muted-foreground/85 hover:border-foreground/30 hover:text-foreground/80'
 									)}
 								>
-									<span className="text-[11px] tabular-nums text-white/40">
+									<span className="text-[11px] tabular-nums text-foreground/55">
 										{String(index + 1).padStart(2, '0')}
 									</span>
 									<span>{section.title}</span>
@@ -208,17 +208,17 @@ const LegalPage = ({
 							<article
 								key={section.id}
 								id={section.id}
-								className="scroll-mt-24 border-b border-white/[0.07] pb-12 last:border-0 last:pb-0"
+								className="scroll-mt-24 border-b border-border pb-12 last:border-0 last:pb-0"
 							>
 								<div className="mb-5 flex items-center gap-3">
-									<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-black">
+									<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
 										{section.icon}
 									</span>
 									<div>
-										<span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">
+										<span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/55">
 											Section {String(index + 1).padStart(2, '0')}
 										</span>
-										<h2 className="text-xl font-bold text-white">
+										<h2 className="text-xl font-bold text-foreground">
 											{section.title}
 										</h2>
 									</div>
@@ -231,16 +231,16 @@ const LegalPage = ({
 						<div className="grid gap-4 sm:grid-cols-2">
 							<Link
 								href={related.href}
-								className="group rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+								className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 							>
-								<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+								<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 									Read next
 								</p>
-								<p className="mt-2 flex items-center gap-2 text-base font-semibold text-white">
+								<p className="mt-2 flex items-center gap-2 text-base font-semibold text-foreground">
 									{related.label}
 									<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 								</p>
-								<p className="mt-1.5 text-[13px] leading-relaxed text-gray-400">
+								<p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
 									{related.description}
 								</p>
 							</Link>
@@ -249,24 +249,24 @@ const LegalPage = ({
 								href={discordServerLink}
 								target="_blank"
 								rel="noreferrer"
-								className="group rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+								className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 							>
-								<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+								<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 									Questions?
 								</p>
-								<p className="mt-2 flex items-center gap-2 text-base font-semibold text-white">
+								<p className="mt-2 flex items-center gap-2 text-base font-semibold text-foreground">
 									Ask on Discord
 									<MessageSquare className="h-4 w-4" />
 								</p>
-								<p className="mt-1.5 text-[13px] leading-relaxed text-gray-400">
+								<p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
 									Our support server is the fastest way to reach the team about
 									anything on this page.
 								</p>
 							</Link>
 						</div>
 
-						<div className="rounded-xl bg-white p-6 text-center">
-							<p className="text-sm leading-relaxed text-black">{agreement}</p>
+						<div className="rounded-xl bg-primary p-6 text-center">
+							<p className="text-sm leading-relaxed text-primary-foreground">{agreement}</p>
 						</div>
 					</div>
 				</div>
@@ -278,7 +278,7 @@ const LegalPage = ({
 				onClick={scrollToTop}
 				aria-label="Back to top"
 				className={cn(
-					'fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/80 text-white backdrop-blur transition-all hover:bg-white hover:text-black',
+					'fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-foreground/15 bg-background/80 text-foreground backdrop-blur transition-all hover:bg-primary hover:text-primary-foreground',
 					showTopButton
 						? 'translate-y-0 opacity-100'
 						: 'pointer-events-none translate-y-3 opacity-0'

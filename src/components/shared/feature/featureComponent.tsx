@@ -118,7 +118,7 @@ const FeatureComponent: React.FC = () => {
 			/>
 
 			{/* Core features */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -133,7 +133,7 @@ const FeatureComponent: React.FC = () => {
 			</section>
 
 			{/* How it works */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -143,13 +143,13 @@ const FeatureComponent: React.FC = () => {
 						<div className="mt-10 grid gap-5 md:grid-cols-3">
 							{steps.map((step, index) => (
 								<Surface key={step.title} className="p-6">
-									<span className="font-mono text-sm text-white/40">
+									<span className="font-mono text-sm text-foreground/55">
 										{String(index + 1).padStart(2, '0')}
 									</span>
-									<h3 className="mt-3 text-base font-semibold text-white">
+									<h3 className="mt-3 text-base font-semibold text-foreground">
 										{step.title}
 									</h3>
-									<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+									<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 										{step.body}
 									</p>
 								</Surface>
@@ -160,7 +160,7 @@ const FeatureComponent: React.FC = () => {
 			</section>
 
 			{/* Deeper features */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -172,10 +172,10 @@ const FeatureComponent: React.FC = () => {
 								<Surface key={item.title} interactive className="flex gap-4 p-6">
 									<IconChip>{item.icon}</IconChip>
 									<div>
-										<h3 className="text-base font-semibold text-white">
+										<h3 className="text-base font-semibold text-foreground">
 											{item.title}
 										</h3>
-										<p className="mt-1.5 text-[14px] leading-relaxed text-gray-400">
+										<p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground">
 											{item.body}
 										</p>
 									</div>
@@ -187,7 +187,7 @@ const FeatureComponent: React.FC = () => {
 			</section>
 
 			{/* Command reference */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -205,17 +205,17 @@ const FeatureComponent: React.FC = () => {
 			</section>
 
 			{/* Built for communities */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
 						<Surface className="p-8">
 							<IconChip>
 								<Users className="h-4 w-4" />
 							</IconChip>
-							<h3 className="mt-4 text-lg font-semibold text-white">
+							<h3 className="mt-4 text-lg font-semibold text-foreground">
 								Built for Discord communities
 							</h3>
-							<ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-400">
+							<ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-muted-foreground">
 								{[
 									'Native voice channel integration with live now-playing updates',
 									'Permission-aware controls so moderators stay in charge',
@@ -223,7 +223,7 @@ const FeatureComponent: React.FC = () => {
 									'Playback resumes automatically after restarts and node failovers',
 								].map((item) => (
 									<li key={item} className="relative pl-5">
-										<span className="absolute left-0 top-[0.6rem] h-1.5 w-1.5 rounded-full bg-white/40" />
+										<span className="absolute left-0 top-[0.6rem] h-1.5 w-1.5 rounded-full bg-foreground/40" />
 										{item}
 									</li>
 								))}
@@ -234,10 +234,10 @@ const FeatureComponent: React.FC = () => {
 							<IconChip>
 								<ListMusic className="h-4 w-4" />
 							</IconChip>
-							<h3 className="mt-4 text-lg font-semibold text-white">
+							<h3 className="mt-4 text-lg font-semibold text-foreground">
 								Sources and languages
 							</h3>
-							<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+							<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 								Search by name or paste a link — Pepper resolves it and streams
 								the best available source.
 							</p>
@@ -245,24 +245,24 @@ const FeatureComponent: React.FC = () => {
 								{musicSources.map((source) => (
 									<span
 										key={source}
-										className="rounded-full border border-white/15 px-3 py-1 text-[13px] text-gray-300"
+										className="rounded-full border border-foreground/15 px-3 py-1 text-[13px] text-foreground/80"
 									>
 										{source}
 									</span>
 								))}
 							</div>
 
-							<div className="mt-5 flex gap-3 rounded-lg border border-white/10 bg-white/[0.02] p-4">
-								<Ban className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" />
-								<p className="text-[13px] leading-relaxed text-gray-400">
-									<span className="font-semibold text-gray-300">
+							<div className="mt-5 flex gap-3 rounded-lg border border-border bg-surface p-4">
+								<Ban className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/85" />
+								<p className="text-[13px] leading-relaxed text-muted-foreground">
+									<span className="font-semibold text-foreground/80">
 										{unsupportedSource.summary}
 									</span>{' '}
 									{unsupportedSource.detail}
 								</p>
 							</div>
 
-							<p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+							<p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 								Languages
 							</p>
 							<Suspense fallback={<BadgeRowSkeleton count={7} />}>
@@ -296,10 +296,10 @@ const FeatureComponent: React.FC = () => {
 						].map((item) => (
 							<Surface key={item.title} className="p-6">
 								<IconChip>{item.icon}</IconChip>
-								<h3 className="mt-4 text-sm font-semibold text-white">
+								<h3 className="mt-4 text-sm font-semibold text-foreground">
 									{item.title}
 								</h3>
-								<p className="mt-1.5 text-[13px] leading-relaxed text-gray-400">
+								<p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
 									{item.body}
 								</p>
 							</Surface>

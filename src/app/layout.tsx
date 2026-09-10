@@ -4,8 +4,9 @@ import './globals.css';
 import Navbar from '@/components/layout/navbar';
 import Footer from '@/components/layout/footer';
 import RouteProgress from '@/components/layout/routeProgress';
+import ThemeProvider from '@/components/layout/themeProvider';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { Toaster } from 'sonner';
+import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -32,16 +33,23 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<GoogleAnalytics gaId="G-NCWY5GH7E9" />
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<RouteProgress />
-				<Navbar />
-				{children}
-				<Footer />
-				<Toaster />
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="light"
+					enableSystem={false}
+					disableTransitionOnChange
+				>
+					<RouteProgress />
+					<Navbar />
+					{children}
+					<Footer />
+					<Toaster />
+				</ThemeProvider>
 			</body>
 		</html>
 	);

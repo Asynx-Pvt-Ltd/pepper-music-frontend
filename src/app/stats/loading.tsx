@@ -6,7 +6,7 @@ import { statsSections } from '@/constants';
 
 export default function Loading() {
 	return (
-		<div className="min-h-screen bg-black text-white">
+		<div className="min-h-screen bg-background text-foreground">
 			<PageHero
 				eyebrow={
 					<>
@@ -21,7 +21,7 @@ export default function Loading() {
 					{statsSections.map((section) => (
 						<span
 							key={section.id}
-							className="rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-gray-300"
+							className="rounded-full border border-foreground/15 px-3.5 py-1.5 text-[13px] text-foreground/80"
 						>
 							{section.label}
 						</span>

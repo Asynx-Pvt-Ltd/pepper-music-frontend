@@ -9,7 +9,7 @@ interface Props {
 
 const Features: NextPage<Props> = ({ feature }) => {
 	return (
-		<figure className="group overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/25">
+		<figure className="group overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-foreground/25">
 			<div className="relative aspect-[4/3] overflow-hidden">
 				<Image
 					src={feature.imgSrc}
@@ -20,12 +20,12 @@ const Features: NextPage<Props> = ({ feature }) => {
 				/>
 				<div
 					aria-hidden
-					className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"
+					className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent"
 				/>
 			</div>
 			<figcaption className="p-5">
-				<h3 className="text-base font-semibold text-white">{feature.name}</h3>
-				<p className="mt-1.5 text-[14px] leading-relaxed text-gray-400">
+				<h3 className="text-base font-semibold text-foreground">{feature.name}</h3>
+				<p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground">
 					{feature.value}
 				</p>
 			</figcaption>

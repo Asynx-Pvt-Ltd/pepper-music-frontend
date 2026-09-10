@@ -45,7 +45,7 @@ const steps = [
 
 const FeedbackPage: NextPage<Props> = ({}) => {
 	return (
-		<div className="min-h-screen bg-black text-white">
+		<div className="min-h-screen bg-background text-foreground">
 			<PageHero
 				eyebrow={
 					<>
@@ -66,10 +66,10 @@ const FeedbackPage: NextPage<Props> = ({}) => {
 							<IconChip>
 								<Gift className="h-4 w-4" />
 							</IconChip>
-							<h2 className="mt-4 text-base font-semibold text-white">
+							<h2 className="mt-4 text-base font-semibold text-foreground">
 								There is something in it for you
 							</h2>
-							<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+							<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 								Reports that turn into a fix or a feature get called out by name
 								in the release announcement, and the most useful ones earn perks
 								in the support server. Add your Discord username to be eligible
@@ -78,7 +78,7 @@ const FeedbackPage: NextPage<Props> = ({}) => {
 						</Surface>
 
 						<Surface className="p-6">
-							<h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+							<h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 								What happens next
 							</h2>
 							<ol className="mt-5 space-y-5">
@@ -86,10 +86,10 @@ const FeedbackPage: NextPage<Props> = ({}) => {
 									<li key={step.title} className="flex gap-3">
 										<IconChip className="h-8 w-8">{step.icon}</IconChip>
 										<div>
-											<h3 className="text-[15px] font-semibold text-white">
+											<h3 className="text-[15px] font-semibold text-foreground">
 												{step.title}
 											</h3>
-											<p className="mt-1 text-[13px] leading-relaxed text-gray-400">
+											<p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
 												{step.body}
 											</p>
 										</div>
@@ -99,12 +99,12 @@ const FeedbackPage: NextPage<Props> = ({}) => {
 						</Surface>
 
 						<Surface className="p-6">
-							<h2 className="text-base font-semibold text-white">
+							<h2 className="text-base font-semibold text-foreground">
 								Would rather just chat?
 							</h2>
-							<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+							<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 								Ask in the support server, or run{' '}
-								<code className="font-mono text-gray-300">/feedback</code> in
+								<code className="font-mono text-foreground/80">/feedback</code> in
 								any server Pepper is in — it lands in the same place.
 							</p>
 							<ActionLink

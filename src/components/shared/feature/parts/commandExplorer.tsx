@@ -31,8 +31,8 @@ const OptionChip = ({ label, required }: { label: string; required: boolean }) =
 		className={cn(
 			'rounded border px-1.5 py-0.5 font-mono text-[11px]',
 			required
-				? 'border-white/25 text-gray-300'
-				: 'border-white/10 text-gray-500',
+				? 'border-foreground/25 text-foreground/80'
+				: 'border-border text-muted-foreground/85',
 		)}
 	>
 		{required ? `<${label}>` : `[${label}]`}
@@ -44,21 +44,21 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 	const hasDetail = command.subcommands.length > 0 || command.options.length > 0;
 
 	return (
-		<div className="transition-colors hover:bg-white/[0.04]">
+		<div className="transition-colors hover:bg-surface-hover">
 			<div className="grid gap-1 px-5 py-3.5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-baseline sm:gap-6">
 				<div className="flex items-center gap-2">
-					<code className="font-mono text-sm font-semibold text-white">
+					<code className="font-mono text-sm font-semibold text-foreground">
 						/{command.name}
 					</code>
 					{command.dj && (
-						<span className="rounded-full border border-white/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+						<span className="rounded-full border border-foreground/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
 							DJ
 						</span>
 					)}
 				</div>
 
 				<div className="min-w-0">
-					<p className="text-[14px] leading-relaxed text-gray-400">
+					<p className="text-[14px] leading-relaxed text-muted-foreground">
 						{command.description}
 					</p>
 
@@ -67,7 +67,7 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 							type="button"
 							onClick={() => setOpen((value) => !value)}
 							aria-expanded={open}
-							className="mt-2 inline-flex items-center gap-1 rounded text-[12px] font-medium text-gray-500 transition-colors outline-none hover:text-gray-300 focus-visible:ring-2 focus-visible:ring-white/40"
+							className="mt-2 inline-flex items-center gap-1 rounded text-[12px] font-medium text-muted-foreground/85 transition-colors outline-none hover:text-foreground/80 focus-visible:ring-2 focus-visible:ring-ring"
 						>
 							<ChevronDown
 								className={cn('h-3 w-3 transition-transform', open && 'rotate-180')}
@@ -79,7 +79,7 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 					)}
 
 					{open && (
-						<div className="mt-3 space-y-2 border-l border-white/10 pl-4">
+						<div className="mt-3 space-y-2 border-l border-border pl-4">
 							{command.options.length > 0 && (
 								<div className="flex flex-wrap items-center gap-1.5">
 									{command.options.map((option) => (
@@ -95,7 +95,7 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 							{command.subcommands.map((subcommand) => (
 								<div key={`${subcommand.group ?? ''}-${subcommand.name}`}>
 									<div className="flex flex-wrap items-center gap-1.5">
-										<code className="font-mono text-[12px] text-gray-300">
+										<code className="font-mono text-[12px] text-foreground/80">
 											/{command.name}
 											{subcommand.group ? ` ${subcommand.group}` : ''}{' '}
 											{subcommand.name}
@@ -108,7 +108,7 @@ const CommandRow = ({ command }: { command: BotCommand }) => {
 											/>
 										))}
 									</div>
-									<p className="mt-0.5 text-[12px] leading-relaxed text-gray-500">
+									<p className="mt-0.5 text-[12px] leading-relaxed text-muted-foreground/85">
 										{subcommand.description}
 									</p>
 								</div>
@@ -188,36 +188,36 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 		<div>
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<div className="relative sm:max-w-xs sm:flex-1">
-					<Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600" />
+					<Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
 					<input
 						type="search"
 						value={query}
 						onChange={(event) => setQuery(event.target.value)}
 						placeholder="Filter commands"
 						aria-label="Filter commands"
-						className="w-full rounded-lg border border-white/10 bg-white/[0.03] py-2.5 pl-9 pr-3 text-[14px] text-white outline-none transition-colors placeholder:text-gray-600 focus:border-white/30 focus:bg-white/[0.05]"
+						className="w-full rounded-lg border border-border bg-surface py-2.5 pl-9 pr-3 text-[14px] text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-foreground/30 focus:bg-surface-hover"
 					/>
 				</div>
 
-				<label className="relative flex items-center gap-2 text-[13px] text-gray-400">
-					<Languages className="h-4 w-4 shrink-0 text-gray-500" />
+				<label className="relative flex items-center gap-2 text-[13px] text-muted-foreground">
+					<Languages className="h-4 w-4 shrink-0 text-muted-foreground/85" />
 					<span className="sr-only">Command language</span>
 					<select
 						value={locale}
 						onChange={(event) => selectLocale(event.target.value)}
 						disabled={loading}
-						className="appearance-none rounded-lg border border-white/10 bg-white/[0.03] py-2.5 pl-3 pr-8 text-[14px] text-white outline-none transition-colors focus:border-white/30 disabled:opacity-60"
+						className="appearance-none rounded-lg border border-border bg-surface py-2.5 pl-3 pr-8 text-[14px] text-foreground outline-none transition-colors focus:border-foreground/30 disabled:opacity-60"
 					>
 						{languages.map((language) => (
-							<option key={language.code} value={language.code} className="bg-black">
+							<option key={language.code} value={language.code} className="bg-background">
 								{language.nativeName}
 							</option>
 						))}
 					</select>
 					{loading ? (
-						<Loader2 className="pointer-events-none absolute right-2.5 h-4 w-4 animate-spin text-gray-400" />
+						<Loader2 className="pointer-events-none absolute right-2.5 h-4 w-4 animate-spin text-muted-foreground" />
 					) : (
-						<ChevronDown className="pointer-events-none absolute right-2.5 h-4 w-4 text-gray-600" />
+						<ChevronDown className="pointer-events-none absolute right-2.5 h-4 w-4 text-muted-foreground/70" />
 					)}
 				</label>
 			</div>
@@ -232,10 +232,10 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 								type="button"
 								onClick={() => setCategory(ALL_CATEGORIES)}
 								className={cn(
-									'rounded-full border px-3.5 py-1.5 text-[13px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+									'rounded-full border px-3.5 py-1.5 text-[13px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
 									category === ALL_CATEGORIES
-										? 'border-white/40 bg-white/[0.08] text-white'
-										: 'border-white/15 text-gray-400 hover:border-white/30 hover:text-white',
+										? 'border-foreground/40 bg-surface-strong text-foreground'
+										: 'border-foreground/15 text-muted-foreground hover:border-foreground/30 hover:text-foreground',
 								)}
 							>
 								All {catalogue.total}
@@ -246,10 +246,10 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 									type="button"
 									onClick={() => setCategory(entry.id)}
 									className={cn(
-										'rounded-full border px-3.5 py-1.5 text-[13px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+										'rounded-full border px-3.5 py-1.5 text-[13px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
 										category === entry.id
-											? 'border-white/40 bg-white/[0.08] text-white'
-											: 'border-white/15 text-gray-400 hover:border-white/30 hover:text-white',
+											? 'border-foreground/40 bg-surface-strong text-foreground'
+											: 'border-foreground/15 text-muted-foreground hover:border-foreground/30 hover:text-foreground',
 									)}
 								>
 									<span aria-hidden>{entry.emoji} </span>
@@ -258,13 +258,13 @@ const CommandExplorer: React.FC<CommandExplorerProps> = ({ initial, languages })
 							))}
 						</div>
 
-						<div className="mt-6 overflow-hidden rounded-xl border border-white/10">
+						<div className="mt-6 overflow-hidden rounded-xl border border-border">
 							{visible.length === 0 ? (
-								<p className="px-5 py-10 text-center text-[14px] text-gray-500">
+								<p className="px-5 py-10 text-center text-[14px] text-muted-foreground/85">
 									No command matches “{query}”.
 								</p>
 							) : (
-								<div className="divide-y divide-white/[0.07]">
+								<div className="divide-y divide-border">
 									{visible.map((command) => (
 										<CommandRow key={command.name} command={command} />
 									))}

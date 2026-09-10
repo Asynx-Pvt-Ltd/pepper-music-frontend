@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 const inlineLink =
-	'font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white';
+	'font-medium text-foreground underline decoration-foreground/35 underline-offset-4 transition-colors hover:decoration-foreground';
 
 const highlights: LegalHighlight[] = [
 	{

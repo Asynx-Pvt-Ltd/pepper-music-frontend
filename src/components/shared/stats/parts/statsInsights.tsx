@@ -83,10 +83,10 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 		>
 			<div className="grid gap-4 lg:grid-cols-2">
 				{/* Playtime */}
-				<div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+				<div className="rounded-xl border border-border bg-surface p-6">
 					<div className="flex items-center gap-2">
-						<Clock3 className="h-4 w-4 text-white/40" />
-						<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">
+						<Clock3 className="h-4 w-4 text-foreground/55" />
+						<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/60">
 							Total playtime
 						</h3>
 					</div>
@@ -96,20 +96,20 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 								{formatDurationParts(playtimeMs).map((part) => (
 									<span
 										key={part}
-										className="flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-sm text-gray-300"
+										className="flex items-center gap-1.5 rounded-full border border-foreground/15 px-3 py-1 text-sm text-foreground/80"
 									>
-										<Hourglass className="h-3 w-3 text-white/40" />
+										<Hourglass className="h-3 w-3 text-foreground/55" />
 										{part}
 									</span>
 								))}
 							</div>
-							<p className="mt-5 text-[15px] leading-relaxed text-gray-400">
+							<p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
 								That&apos;s over{' '}
-								<span className="font-semibold text-white">
+								<span className="font-semibold text-foreground">
 									{headlineSpan}
 								</span>{' '}
 								of music, played across{' '}
-								<span className="font-semibold text-white">
+								<span className="font-semibold text-foreground">
 									{formatNumber(
 										playtime?.trackedGuilds ?? overview.activeGuilds
 									)}
@@ -119,12 +119,12 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 						</>
 					) : (
 						<>
-							<p className="mt-4 font-mono text-2xl font-semibold tabular-nums text-white/40">
+							<p className="mt-4 font-mono text-2xl font-semibold tabular-nums text-foreground/55">
 								—
 							</p>
-							<p className="mt-3 text-[15px] leading-relaxed text-gray-400">
+							<p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
 								Playtime totals are unavailable right now. Music played across{' '}
-								<span className="font-semibold text-white">
+								<span className="font-semibold text-foreground">
 									{formatNumber(
 										playtime?.trackedGuilds ?? overview.activeGuilds
 									)}
@@ -137,23 +137,23 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 
 				{/* Top requester */}
 				{topRequester ? (
-					<div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+					<div className="rounded-xl border border-border bg-surface p-6">
 						<div className="flex items-center gap-2">
-							<Crown className="h-4 w-4 text-white/40" />
-							<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">
+							<Crown className="h-4 w-4 text-foreground/55" />
+							<h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/60">
 								Most active requester
 							</h3>
 						</div>
 
 						<div className="mt-4 flex items-center gap-3">
-							<Avatar className="size-11 border border-white/10">
+							<Avatar className="size-11 border border-border">
 								{topRequester.avatar && (
 									<AvatarImage
 										src={topRequester.avatar}
 										alt={topRequester.username ?? topRequester.userId}
 									/>
 								)}
-								<AvatarFallback className="bg-white/[0.06] text-gray-400">
+								<AvatarFallback className="bg-surface-hover text-muted-foreground">
 									<User className="h-4 w-4" />
 								</AvatarFallback>
 							</Avatar>
@@ -162,24 +162,24 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 									href={`https://discord.com/users/${topRequester.userId}`}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="block truncate font-medium text-white transition-colors hover:text-gray-400"
+									className="block truncate font-medium text-foreground transition-colors hover:text-muted-foreground"
 								>
 									{topRequester.username ?? topRequester.userId}
 								</a>
-								<p className="font-mono text-sm tabular-nums text-gray-500">
+								<p className="font-mono text-sm tabular-nums text-muted-foreground/85">
 									{formatNumber(topRequester.totalPlays)} plays
 								</p>
 							</div>
 						</div>
 
-						<p className="mt-4 text-[14px] leading-relaxed text-gray-400">
+						<p className="mt-4 text-[14px] leading-relaxed text-muted-foreground">
 							{formatNumber(topRequester.uniqueSongs)} unique songs across{' '}
 							{formatNumber(topRequester.uniqueArtists)} artists — last request{' '}
 							{formatRelativeTime(topRequester.lastPlayedAt)}.
 						</p>
 					</div>
 				) : (
-					<div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-gray-500">
+					<div className="rounded-xl border border-border bg-surface p-6 text-sm text-muted-foreground/85">
 						No requester data yet.
 					</div>
 				)}
@@ -231,9 +231,9 @@ export const StatsInsights: React.FC<StatsInsightsProps> = ({
 				/>
 			</div>
 
-			<p className="mt-6 text-center text-[13px] italic text-gray-600">
+			<p className="mt-6 text-center text-[13px] italic text-muted-foreground/70">
 				{quote.quote} —{' '}
-				<span className="not-italic text-gray-500">{quote.author}</span>
+				<span className="not-italic text-muted-foreground/85">{quote.author}</span>
 			</p>
 		</StatsSection>
 	);

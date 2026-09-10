@@ -12,10 +12,10 @@ const CommandGrid: React.FC = async () => {
 		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 			{commands.map((command) => (
 				<Surface key={command.name} interactive className="px-4 py-3.5">
-					<code className="font-mono text-sm font-semibold text-white">
+					<code className="font-mono text-sm font-semibold text-foreground">
 						/{command.name}
 					</code>
-					<p className="mt-1 text-[13px] leading-relaxed text-gray-400">
+					<p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
 						{command.description}
 					</p>
 				</Surface>

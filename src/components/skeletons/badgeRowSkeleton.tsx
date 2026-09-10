@@ -4,7 +4,7 @@ const BadgeRowSkeleton = ({ count = 6 }: { count?: number }) => (
 		{Array.from({ length: count }).map((_, index) => (
 			<div
 				key={index}
-				className="h-7 rounded-full bg-white/[0.08]"
+				className="h-7 rounded-full bg-surface-strong"
 				style={{ width: `${4.5 + (index % 3)}rem` }}
 			/>
 		))}

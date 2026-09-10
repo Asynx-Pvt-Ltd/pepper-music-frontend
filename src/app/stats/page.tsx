@@ -28,7 +28,7 @@ export const metadata = {
 
 const StatsPage: NextPage<Props> = async ({}) => {
 	return (
-		<div className="min-h-screen bg-black text-white">
+		<div className="min-h-screen bg-background text-foreground">
 			<PageHero
 				eyebrow={
 					<>
@@ -44,7 +44,7 @@ const StatsPage: NextPage<Props> = async ({}) => {
 						<a
 							key={section.id}
 							href={`#${section.id}`}
-							className="rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-gray-300 transition-colors hover:border-white/40 hover:bg-white/[0.06] hover:text-white"
+							className="rounded-full border border-foreground/15 px-3.5 py-1.5 text-[13px] text-foreground/80 transition-colors hover:border-foreground/40 hover:bg-surface-hover hover:text-foreground"
 						>
 							{section.label}
 						</a>

@@ -91,7 +91,7 @@ const RouteProgress: React.FC = () => {
 			className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-0.5"
 		>
 			<div
-				className="h-full bg-white transition-[width,opacity] duration-200 ease-out"
+				className="h-full bg-primary transition-[width,opacity] duration-200 ease-out"
 				style={{ width: `${progress}%`, opacity: active ? 1 : 0 }}
 			/>
 		</div>

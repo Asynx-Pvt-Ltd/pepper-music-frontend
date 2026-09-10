@@ -81,7 +81,7 @@ const AboutUs: NextPage<Props> = async ({}) => {
 	const { total: languageCount } = await getLanguagesOrFallback();
 
 	return (
-		<div className="min-h-screen bg-black text-white">
+		<div className="min-h-screen bg-background text-foreground">
 			<PageHero
 				eyebrow={
 					<>
@@ -106,12 +106,12 @@ const AboutUs: NextPage<Props> = async ({}) => {
 			/>
 
 			{/* Story */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
 						<div>
 							<SectionHeading label="Our story" title="Where Pepper came from" />
-							<div className="mt-6 space-y-4 text-[15px] leading-relaxed text-gray-400">
+							<div className="mt-6 space-y-4 text-[15px] leading-relaxed text-muted-foreground">
 								<p>
 									Pepper began as a small project for one Discord server, built
 									because the bots available at the time kept buffering,
@@ -140,13 +140,13 @@ const AboutUs: NextPage<Props> = async ({}) => {
 								height={112}
 								className="mx-auto rounded-full"
 							/>
-							<p className="mt-5 text-sm font-semibold text-white">Pepper</p>
-							<p className="mt-1 text-[13px] text-gray-400">
+							<p className="mt-5 text-sm font-semibold text-foreground">Pepper</p>
+							<p className="mt-1 text-[13px] text-muted-foreground">
 								Discord music bot
 							</p>
 							<Link
 								href={privacyLink}
-								className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-gray-300 underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white"
+								className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-foreground/80 underline decoration-foreground/35 underline-offset-4 transition-colors hover:decoration-foreground"
 							>
 								<ShieldCheck className="h-3.5 w-3.5" />
 								Privacy policy
@@ -157,7 +157,7 @@ const AboutUs: NextPage<Props> = async ({}) => {
 			</section>
 
 			{/* Values */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -169,10 +169,10 @@ const AboutUs: NextPage<Props> = async ({}) => {
 								<Surface key={value.title} interactive className="flex gap-4 p-6">
 									<IconChip>{value.icon}</IconChip>
 									<div>
-										<h3 className="text-base font-semibold text-white">
+										<h3 className="text-base font-semibold text-foreground">
 											{value.title}
 										</h3>
-										<p className="mt-1.5 text-[14px] leading-relaxed text-gray-400">
+										<p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground">
 											{value.body}
 										</p>
 									</div>
@@ -184,7 +184,7 @@ const AboutUs: NextPage<Props> = async ({}) => {
 			</section>
 
 			{/* What powers Pepper */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -212,10 +212,10 @@ const AboutUs: NextPage<Props> = async ({}) => {
 							].map((item) => (
 								<Surface key={item.title} className="p-6">
 									<IconChip>{item.icon}</IconChip>
-									<h3 className="mt-4 text-base font-semibold text-white">
+									<h3 className="mt-4 text-base font-semibold text-foreground">
 										{item.title}
 									</h3>
-									<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+									<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 										{item.body}
 									</p>
 								</Surface>
@@ -226,7 +226,7 @@ const AboutUs: NextPage<Props> = async ({}) => {
 			</section>
 
 			{/* Support */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<Surface className="p-8 md:p-10">
@@ -235,28 +235,28 @@ const AboutUs: NextPage<Props> = async ({}) => {
 									<IconChip>
 										<MessageSquare className="h-4 w-4" />
 									</IconChip>
-									<h2 className="mt-4 text-2xl font-bold tracking-tight text-white">
+									<h2 className="mt-4 text-2xl font-bold tracking-tight text-foreground">
 										Support server
 									</h2>
-									<p className="mt-3 text-[15px] leading-relaxed text-gray-400">
+									<p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
 										Stuck on setup, hit a bug, or want a feature? Our support
 										server is where the maintainers and the community answer
 										questions — usually within the hour. It is also where
 										release notes and outage updates get posted first.
 									</p>
-									<p className="mt-3 text-[15px] leading-relaxed text-gray-400">
+									<p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
 										Joining it also unlocks account linking, so you can queue
 										your own Spotify playlists with{' '}
-										<code className="font-mono text-gray-300">/login</code>.
+										<code className="font-mono text-foreground/80">/login</code>.
 									</p>
 								</div>
 
 								<div className="shrink-0 lg:w-72">
-									<div className="rounded-lg border border-white/10 bg-black p-4">
-										<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+									<div className="rounded-lg border border-border bg-background p-4">
+										<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 											Invite link
 										</p>
-										<p className="mt-2 break-all font-mono text-[13px] text-gray-300">
+										<p className="mt-2 break-all font-mono text-[13px] text-foreground/80">
 											{discordServerLink}
 										</p>
 									</div>

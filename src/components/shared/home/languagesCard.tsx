@@ -15,10 +15,10 @@ const LanguagesCard: React.FC = async () => {
 			<IconChip>
 				<Globe2 className="h-4 w-4" />
 			</IconChip>
-			<h3 className="mt-4 text-lg font-semibold text-white">
+			<h3 className="mt-4 text-lg font-semibold text-foreground">
 				Speaks {languages.length} languages
 			</h3>
-			<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+			<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 				Set a language for the whole server, or let each member pick their own
 				with <code className="font-mono">/language</code>.
 			</p>
@@ -27,7 +27,7 @@ const LanguagesCard: React.FC = async () => {
 					<span
 						key={language.code}
 						title={language.name}
-						className="rounded-full border border-white/15 px-3 py-1 text-[13px] text-gray-300"
+						className="rounded-full border border-foreground/15 px-3 py-1 text-[13px] text-foreground/80"
 					>
 						{language.nativeName}
 					</span>

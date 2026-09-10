@@ -3,8 +3,9 @@ import { cn } from '@/lib/utils';
 
 /**
  * Shared building blocks for the marketing pages. Mirrors the design language
- * introduced on the legal pages: black canvas, hairline borders, white icon
- * chips and uppercase eyebrows.
+ * introduced on the legal pages: a bare page canvas, hairline borders,
+ * inverted-ink icon chips and uppercase eyebrows. Everything is expressed in
+ * theme tokens, so the same markup reads correctly in light and dark.
  */
 
 export const Eyebrow = ({
@@ -16,7 +17,7 @@ export const Eyebrow = ({
 }) => (
 	<span
 		className={cn(
-			'inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70',
+			'inline-flex items-center gap-2 rounded-full border border-foreground/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/75',
 			className
 		)}
 	>
@@ -35,9 +36,9 @@ export const Surface = ({
 }) => (
 	<div
 		className={cn(
-			'rounded-xl border border-white/10 bg-white/[0.03]',
+			'rounded-xl border border-border bg-surface',
 			interactive &&
-				'transition-colors hover:border-white/25 hover:bg-white/[0.06]',
+				'transition-colors hover:border-foreground/25 hover:bg-surface-hover',
 			className
 		)}
 	>
@@ -54,7 +55,7 @@ export const IconChip = ({
 }) => (
 	<span
 		className={cn(
-			'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-black',
+			'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground',
 			className
 		)}
 	>
@@ -75,10 +76,10 @@ export const PageHero = ({
 	actions?: ReactNode;
 	children?: ReactNode;
 }) => (
-	<div className="relative overflow-hidden border-b border-white/10">
+	<div className="relative overflow-hidden border-b border-border">
 		<div
 			aria-hidden
-			className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-80 w-[min(48rem,90%)] rounded-full bg-white/[0.07] blur-3xl"
+			className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-80 w-[min(48rem,90%)] rounded-full bg-glow blur-3xl"
 		/>
 		<div className="container relative mx-auto px-4 py-14 md:py-20">
 			<div className="mx-auto max-w-5xl">
@@ -86,7 +87,7 @@ export const PageHero = ({
 				<h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">
 					{title}
 				</h1>
-				<p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-400 md:text-lg">
+				<p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
 					{summary}
 				</p>
 				{actions && (
@@ -113,15 +114,15 @@ export const SectionHeading = ({
 }) => (
 	<div className={cn('max-w-2xl', className)}>
 		{label && (
-			<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+			<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 				{label}
 			</p>
 		)}
-		<h2 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+		<h2 className="mt-2 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
 			{title}
 		</h2>
 		{description && (
-			<p className="mt-3 text-[15px] leading-relaxed text-gray-400">
+			<p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
 				{description}
 			</p>
 		)}
@@ -139,8 +140,8 @@ export const FeatureTile = ({
 }) => (
 	<Surface interactive className="p-6">
 		<IconChip>{icon}</IconChip>
-		<h3 className="mt-4 text-base font-semibold text-white">{title}</h3>
-		<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+		<h3 className="mt-4 text-base font-semibold text-foreground">{title}</h3>
+		<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 			{description}
 		</p>
 	</Surface>
@@ -155,20 +156,20 @@ export const MetricStrip = ({
 }) => (
 	<div
 		className={cn(
-			'grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4',
+			'grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4',
 			className
 		)}
 	>
 		{metrics.map((metric) => (
-			<div key={metric.label} className="bg-black px-5 py-6">
-				<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+			<div key={metric.label} className="bg-background px-5 py-6">
+				<p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/60">
 					{metric.label}
 				</p>
-				<p className="mt-2 font-mono text-2xl font-semibold tabular-nums text-white">
+				<p className="mt-2 font-mono text-2xl font-semibold tabular-nums text-foreground">
 					{metric.value}
 				</p>
 				{metric.hint && (
-					<p className="mt-1 text-[12px] text-gray-500">{metric.hint}</p>
+					<p className="mt-1 text-[12px] text-muted-foreground/85">{metric.hint}</p>
 				)}
 			</div>
 		))}
@@ -184,16 +185,16 @@ export const CtaBand = ({
 	description: string;
 	actions: ReactNode;
 }) => (
-	<div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-12 text-center md:px-12">
+	<div className="relative overflow-hidden rounded-2xl border border-border bg-surface-hover px-6 py-12 text-center md:px-12">
 		<div
 			aria-hidden
-			className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-48 w-[min(32rem,80%)] rounded-full bg-white/10 blur-3xl"
+			className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-48 w-[min(32rem,80%)] rounded-full bg-glow blur-3xl"
 		/>
 		<div className="relative">
-			<h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+			<h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
 				{title}
 			</h2>
-			<p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-gray-400">
+			<p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
 				{description}
 			</p>
 			<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
@@ -222,8 +223,8 @@ export const ActionLink = ({
 		className={cn(
 			'inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
 			variant === 'primary'
-				? 'bg-white text-black hover:bg-gray-200'
-				: 'border border-white/15 text-white hover:border-white/40 hover:bg-white/[0.06]',
+				? 'bg-primary text-primary-foreground hover:bg-primary/90'
+				: 'border border-foreground/15 text-foreground hover:border-foreground/40 hover:bg-surface-hover',
 			className
 		)}
 	>

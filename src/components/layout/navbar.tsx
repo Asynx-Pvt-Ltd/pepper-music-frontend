@@ -16,6 +16,7 @@ import {
 } from '@/constants';
 import { MenuItemType } from '@/types';
 import { cn } from '@/lib/utils';
+import ThemeToggle from '@/components/layout/themeToggle';
 
 const Navbar = () => {
 	const pathname = usePathname();
@@ -61,17 +62,17 @@ const Navbar = () => {
 			className={cn(
 				'sticky top-0 z-50 border-b transition-colors duration-300',
 				isScrolled || isMenuOpen
-					? 'border-white/10 bg-black/70 backdrop-blur-xl'
-					: 'border-transparent bg-black'
+					? 'border-border bg-background/70 backdrop-blur-xl'
+					: 'border-transparent bg-background'
 			)}
 		>
 			<div className="container mx-auto flex h-16 items-center gap-4 px-4">
 				<Link
 					href="/"
-					className="group flex shrink-0 items-center gap-2.5 rounded-lg text-white outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+					className="group flex shrink-0 items-center gap-2.5 rounded-lg text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
 					aria-label="Pepper home"
 				>
-					<span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-1 ring-white/15 transition-all group-hover:ring-white/40">
+					<span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-1 ring-foreground/15 transition-all group-hover:ring-foreground/40">
 						<Image
 							src={pepperLogoLink}
 							width={32}
@@ -93,10 +94,10 @@ const Navbar = () => {
 									href={item.value}
 									aria-current={isActive(item.value) ? 'page' : undefined}
 									className={cn(
-										'relative flex items-center rounded-lg px-3 py-2 text-sm transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+										'relative flex items-center rounded-lg px-3 py-2 text-sm transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
 										isActive(item.value)
-											? 'text-white'
-											: 'text-gray-400 hover:text-white'
+											? 'text-foreground'
+											: 'text-muted-foreground hover:text-foreground'
 									)}
 								>
 									{isActive(item.value) && (
@@ -107,7 +108,7 @@ const Navbar = () => {
 												stiffness: 400,
 												damping: 32,
 											}}
-											className="absolute inset-0 -z-10 rounded-lg bg-white/[0.08]"
+											className="absolute inset-0 -z-10 rounded-lg bg-surface-strong"
 										/>
 									)}
 									{item.name}
@@ -118,11 +119,13 @@ const Navbar = () => {
 				</nav>
 
 				<div className="ml-auto flex items-center gap-1.5">
+					<ThemeToggle />
+
 					<a
 						href={inviteLink}
 						target="_blank"
 						rel="noreferrer"
-						className="hidden items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black transition-colors outline-none hover:bg-gray-200 focus-visible:ring-2 focus-visible:ring-white/60 sm:inline-flex"
+						className="hidden items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors outline-none hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
 					>
 						Add to Discord
 						<ArrowUpRight className="h-4 w-4" />
@@ -133,7 +136,7 @@ const Navbar = () => {
 						onClick={() => setIsMenuOpen((open) => !open)}
 						aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
 						aria-expanded={isMenuOpen}
-						className="flex h-10 w-10 items-center justify-center rounded-lg text-white transition-colors outline-none hover:bg-white/[0.06] focus-visible:ring-2 focus-visible:ring-white/40 md:hidden"
+						className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors outline-none hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-ring md:hidden"
 					>
 						{isMenuOpen ? <X size={20} /> : <Menu size={20} />}
 					</button>
@@ -149,7 +152,7 @@ const Navbar = () => {
 						animate={{ opacity: 1, height: 'auto' }}
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.22, ease: 'easeOut' }}
-						className="overflow-hidden border-t border-white/10 bg-black md:hidden"
+						className="overflow-hidden border-t border-border bg-background md:hidden"
 					>
 						<div className="container mx-auto px-4 py-5">
 							<nav>
@@ -164,13 +167,13 @@ const Navbar = () => {
 												className={cn(
 													'flex items-center justify-between rounded-lg px-4 py-3 text-[15px] transition-colors',
 													isActive(item.value)
-														? 'bg-white/[0.08] font-medium text-white'
-														: 'text-gray-400 hover:bg-white/[0.04] hover:text-white'
+														? 'bg-surface-strong font-medium text-foreground'
+														: 'text-muted-foreground hover:bg-surface-hover hover:text-foreground'
 												)}
 											>
 												{item.name}
 												{isActive(item.value) && (
-													<span className="h-1.5 w-1.5 rounded-full bg-white" />
+													<span className="h-1.5 w-1.5 rounded-full bg-primary" />
 												)}
 											</Link>
 										</li>
@@ -182,18 +185,18 @@ const Navbar = () => {
 								href={inviteLink}
 								target="_blank"
 								rel="noreferrer"
-								className="mt-4 flex items-center justify-center gap-1.5 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-gray-200"
+								className="mt-4 flex items-center justify-center gap-1.5 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 							>
 								Add to Discord
 								<ArrowUpRight className="h-4 w-4" />
 							</a>
 
-							<div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 pt-5">
+							<div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border pt-5">
 								{legalNavItems.map((item: MenuItemType) => (
 									<Link
 										key={item.value}
 										href={item.value}
-										className="text-[13px] text-gray-500 transition-colors hover:text-gray-300"
+										className="text-[13px] text-muted-foreground/85 transition-colors hover:text-foreground/80"
 									>
 										{item.name}
 									</Link>
@@ -202,7 +205,7 @@ const Navbar = () => {
 									href={discordServerLink}
 									target="_blank"
 									rel="noreferrer"
-									className="text-[13px] text-gray-500 transition-colors hover:text-gray-300"
+									className="text-[13px] text-muted-foreground/85 transition-colors hover:text-foreground/80"
 								>
 									Support server
 								</Link>

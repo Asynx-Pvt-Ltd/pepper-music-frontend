@@ -25,7 +25,7 @@ const GlobalButton: NextPage<Props> = ({
 	return (
 		<Button
 			variant={variant}
-			className={`bg-white text-black hover:bg-gray-200 cursor-pointer ${className}`}
+			className={`bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer ${className}`}
 			size={size ? size : 'lg'}
 			{...props}
 		>

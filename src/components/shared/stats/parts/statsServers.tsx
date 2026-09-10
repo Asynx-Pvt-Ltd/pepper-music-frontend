@@ -30,43 +30,43 @@ const StatsServersCard: React.FC<StatsServersProps> = ({ servers }) => {
 				{servers.servers.map((server, index) => (
 					<div
 						key={server.guildId}
-						className="rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+						className="rounded-xl border border-border bg-surface p-5 transition-colors hover:border-foreground/25 hover:bg-surface-hover"
 					>
 						<div className="flex items-start gap-3">
 							<Rank position={index + 1} />
 
-							<Avatar className="size-10 border border-white/10">
+							<Avatar className="size-10 border border-border">
 								{server.guildIcon && (
 									<AvatarImage
 										src={server.guildIcon}
 										alt={server.guildName ?? server.guildId}
 									/>
 								)}
-								<AvatarFallback className="bg-white/[0.06] text-xs text-gray-400">
+								<AvatarFallback className="bg-surface-hover text-xs text-muted-foreground">
 									{(server.guildName ?? 'S').slice(0, 2).toUpperCase()}
 								</AvatarFallback>
 							</Avatar>
 
 							<div className="min-w-0 flex-1">
 								<div className="flex flex-wrap items-center gap-2">
-									<span className="truncate font-medium text-white">
+									<span className="truncate font-medium text-foreground">
 										{server.guildName ?? `Guild ${server.guildId}`}
 									</span>
 									{server.live && (
-										<span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
+										<span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 px-2 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
 											<Radio className="h-3 w-3" /> Live
 										</span>
 									)}
 									{server.memberCount !== null && (
-										<span className="flex items-center gap-1 text-xs text-gray-500">
+										<span className="flex items-center gap-1 text-xs text-muted-foreground/85">
 											<Users className="h-3 w-3" />
 											{formatNumber(server.memberCount)}
 										</span>
 									)}
 								</div>
 
-								<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-gray-500">
-									<span className="font-mono tabular-nums text-gray-300">
+								<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted-foreground/85">
+									<span className="font-mono tabular-nums text-foreground/80">
 										{formatNumber(server.totalPlays)} plays
 									</span>
 									<span aria-hidden>·</span>
@@ -86,7 +86,7 @@ const StatsServersCard: React.FC<StatsServersProps> = ({ servers }) => {
 										{server.sources.map((source) => (
 											<span
 												key={source}
-												className="rounded-full border border-white/10 px-2.5 py-0.5 text-[12px] text-gray-400"
+												className="rounded-full border border-border px-2.5 py-0.5 text-[12px] text-muted-foreground"
 											>
 												{formatSourceName(source)}
 											</span>
@@ -95,13 +95,13 @@ const StatsServersCard: React.FC<StatsServersProps> = ({ servers }) => {
 								)}
 
 								{server.topSong && (
-									<p className="mt-3 truncate text-[13px] text-gray-500">
+									<p className="mt-3 truncate text-[13px] text-muted-foreground/85">
 										Top track:{' '}
 										<a
 											href={server.topSong.uri}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="text-gray-300 underline decoration-white/20 underline-offset-4 hover:decoration-white"
+											className="text-foreground/80 underline decoration-foreground/25 underline-offset-4 hover:decoration-foreground"
 										>
 											{server.topSong.title}
 										</a>{' '}

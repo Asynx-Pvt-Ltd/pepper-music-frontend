@@ -31,7 +31,7 @@ export const StatsSection = ({
 export const Rank = ({ position }: { position: number }) => (
 	<span
 		className={`w-7 shrink-0 text-center font-mono text-sm tabular-nums ${
-			position <= 3 ? 'text-white' : 'text-white/30'
+			position <= 3 ? 'text-foreground' : 'text-foreground/45'
 		}`}
 	>
 		{position}
@@ -39,7 +39,7 @@ export const Rank = ({ position }: { position: number }) => (
 );
 
 export const EmptyState = ({ message }: { message: string }) => (
-	<div className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-12 text-center text-sm text-gray-500">
+	<div className="rounded-xl border border-border bg-surface px-6 py-12 text-center text-sm text-muted-foreground/85">
 		{message}
 	</div>
 );

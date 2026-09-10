@@ -98,12 +98,12 @@ const capabilities = [
 
 const Page: NextPage = async () => {
 	return (
-		<div className="min-h-screen bg-black text-white">
+		<div className="min-h-screen bg-background text-foreground">
 			{/* Hero */}
-			<section className="relative overflow-hidden border-b border-white/10">
+			<section className="relative overflow-hidden border-b border-border">
 				<div
 					aria-hidden
-					className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-80 w-[min(52rem,90%)] rounded-full bg-white/[0.08] blur-3xl"
+					className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-80 w-[min(52rem,90%)] rounded-full bg-glow blur-3xl"
 				/>
 				<div className="container relative mx-auto px-4 py-16 md:py-24">
 					<div className="mx-auto max-w-5xl">
@@ -114,7 +114,7 @@ const Page: NextPage = async () => {
 						<h1 className="mt-6 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl">
 							Music for your Discord, without the friction.
 						</h1>
-						<p className="mt-5 max-w-2xl text-base leading-relaxed text-gray-400 md:text-lg">
+						<p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
 							Pepper joins your voice channel, finds the track and plays it in
 							seconds — from Spotify, Apple Music, Deezer and SoundCloud. No
 							setup, no paywall, no queue babysitting.
@@ -139,11 +139,11 @@ const Page: NextPage = async () => {
 			</section>
 
 			{/* Product panel */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-2">
 						<Surface className="overflow-hidden p-2">
-							<div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-white/[0.04]">
+							<div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-surface-hover">
 								<Image
 									src="/images/pepper.png"
 									alt="Pepper playing music in a Discord voice channel"
@@ -182,10 +182,10 @@ const Page: NextPage = async () => {
 									<div key={item.title} className="flex gap-4">
 										<IconChip>{item.icon}</IconChip>
 										<div>
-											<h3 className="text-base font-semibold text-white">
+											<h3 className="text-base font-semibold text-foreground">
 												{item.title}
 											</h3>
-											<p className="mt-1 text-[14px] leading-relaxed text-gray-400">
+											<p className="mt-1 text-[14px] leading-relaxed text-muted-foreground">
 												{item.body}
 											</p>
 										</div>
@@ -198,7 +198,7 @@ const Page: NextPage = async () => {
 			</section>
 
 			{/* Capabilities */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -216,7 +216,7 @@ const Page: NextPage = async () => {
 			</section>
 
 			{/* Highlights with imagery */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -233,7 +233,7 @@ const Page: NextPage = async () => {
 			</section>
 
 			{/* Commands */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto max-w-5xl">
 						<SectionHeading
@@ -251,17 +251,17 @@ const Page: NextPage = async () => {
 			</section>
 
 			{/* Sources & languages */}
-			<section className="border-b border-white/10">
+			<section className="border-b border-border">
 				<div className="container mx-auto px-4 py-16 md:py-20">
 					<div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
 						<Surface className="p-8">
 							<IconChip>
 								<ListMusic className="h-4 w-4" />
 							</IconChip>
-							<h3 className="mt-4 text-lg font-semibold text-white">
+							<h3 className="mt-4 text-lg font-semibold text-foreground">
 								Plays from the platforms you already use
 							</h3>
-							<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
+							<p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
 								Paste a link or search by name — Pepper resolves the track and
 								streams the best available source.
 							</p>
@@ -269,17 +269,17 @@ const Page: NextPage = async () => {
 								{musicSources.map((source) => (
 									<span
 										key={source}
-										className="rounded-full border border-white/15 px-3 py-1 text-[13px] text-gray-300"
+										className="rounded-full border border-foreground/15 px-3 py-1 text-[13px] text-foreground/80"
 									>
 										{source}
 									</span>
 								))}
 							</div>
 
-							<div className="mt-5 flex gap-3 rounded-lg border border-white/10 bg-white/[0.02] p-4">
-								<Ban className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" />
-								<p className="text-[13px] leading-relaxed text-gray-400">
-									<span className="font-semibold text-gray-300">
+							<div className="mt-5 flex gap-3 rounded-lg border border-border bg-surface p-4">
+								<Ban className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/85" />
+								<p className="text-[13px] leading-relaxed text-muted-foreground">
+									<span className="font-semibold text-foreground/80">
 										{unsupportedSource.summary}
 									</span>{' '}
 									{unsupportedSource.detail}
@@ -312,11 +312,11 @@ const Page: NextPage = async () => {
 							</>
 						}
 					/>
-					<p className="mt-6 text-center text-[13px] text-gray-500">
+					<p className="mt-6 text-center text-[13px] text-muted-foreground/85">
 						Curious what Pepper does with your data?{' '}
 						<Link
 							href="/privacy-policy"
-							className="font-medium text-gray-300 underline decoration-white/30 underline-offset-4 hover:decoration-white"
+							className="font-medium text-foreground/80 underline decoration-foreground/35 underline-offset-4 hover:decoration-foreground"
 						>
 							Read the privacy policy
 						</Link>

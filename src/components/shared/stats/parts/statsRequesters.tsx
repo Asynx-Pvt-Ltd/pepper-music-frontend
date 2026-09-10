@@ -27,23 +27,23 @@ const StatsRequestersCard: React.FC<StatsRequestersProps> = ({
 			title="Top requesters"
 			description="The listeners keeping the queue alive across every server."
 		>
-			<div className="overflow-hidden rounded-xl border border-white/10">
-				<div className="divide-y divide-white/[0.07]">
+			<div className="overflow-hidden rounded-xl border border-border">
+				<div className="divide-y divide-border">
 					{requesters.requesters.map((requester) => (
 						<div
 							key={requester.userId}
-							className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-white/[0.04]"
+							className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-hover"
 						>
 							<Rank position={requester.rank} />
 
-							<Avatar className="size-10 border border-white/10">
+							<Avatar className="size-10 border border-border">
 								{requester.avatar && (
 									<AvatarImage
 										src={requester.avatar}
 										alt={requester.username ?? requester.userId}
 									/>
 								)}
-								<AvatarFallback className="bg-white/[0.06] text-gray-400">
+								<AvatarFallback className="bg-surface-hover text-muted-foreground">
 									<UserRound className="h-4 w-4" />
 								</AvatarFallback>
 							</Avatar>
@@ -54,15 +54,15 @@ const StatsRequestersCard: React.FC<StatsRequestersProps> = ({
 										href={`https://discord.com/users/${requester.userId}`}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="truncate font-medium text-white transition-colors hover:text-gray-400"
+										className="truncate font-medium text-foreground transition-colors hover:text-muted-foreground"
 									>
 										{requester.username ?? requester.userId}
 									</a>
-									<span className="shrink-0 font-mono text-sm tabular-nums text-gray-400">
+									<span className="shrink-0 font-mono text-sm tabular-nums text-muted-foreground">
 										{formatNumber(requester.totalPlays)} plays
 									</span>
 								</div>
-								<div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-gray-500">
+								<div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted-foreground/85">
 									<span>{formatNumber(requester.uniqueSongs)} songs</span>
 									<span aria-hidden>·</span>
 									<span>{formatNumber(requester.uniqueArtists)} artists</span>

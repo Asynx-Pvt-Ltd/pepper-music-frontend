@@ -1,7 +1,7 @@
 /** Loading placeholder for the command catalogue while a locale is fetched. */
 
 const Bar = ({ className = '' }: { className?: string }) => (
-	<div className={`rounded bg-white/[0.08] ${className}`} />
+	<div className={`rounded bg-surface-strong ${className}`} />
 );
 
 const CommandListSkeleton = ({ rows = 8 }: { rows?: number }) => (
@@ -11,8 +11,8 @@ const CommandListSkeleton = ({ rows = 8 }: { rows?: number }) => (
 				<Bar key={index} className="h-8 w-28 rounded-full" />
 			))}
 		</div>
-		<div className="mt-6 overflow-hidden rounded-xl border border-white/10">
-			<div className="divide-y divide-white/[0.07]">
+		<div className="mt-6 overflow-hidden rounded-xl border border-border">
+			<div className="divide-y divide-border">
 				{Array.from({ length: rows }).map((_, index) => (
 					<div
 						key={index}
