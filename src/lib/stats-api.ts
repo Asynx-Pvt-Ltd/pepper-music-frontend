@@ -1,6 +1,5 @@
 import {
 	StatsBundle,
-	StatsEnvelope,
 	StatsOverview,
 	StatsPlaytime,
 	StatsRealtime,
@@ -10,79 +9,77 @@ import {
 	StatsSongs,
 } from '@/types';
 
+import { fetchUpstream, withCache } from './upstream';
+
 /**
  * Server-side client for the bot's stats API (`/api/v1/stats/*`).
  * Never import this from a client component — it reads STATS_API_KEY.
+ *
+ * Every endpoint here is aggregated from MongoDB on the bot's side, so each of
+ * these calls is genuinely expensive for it. `withCache` makes sure the cost
+ * scales with time rather than with traffic: no matter how many visitors are on
+ * the page, the bot sees at most one request per endpoint per TTL.
  */
 
 const DEFAULT_LIMIT = 10;
-const REVALIDATE_SECONDS = 60; // matches the bot's 60s stats cache
+/** Matches the bot's own 60s stats cache. */
+const STATS_TTL_MS = 60_000;
+/** Realtime is genuinely live, but not 15-browsers-at-once live. */
+const REALTIME_TTL_MS = 10_000;
 
-/**
- * BACKEND_API_ENDPOINT may be given as the bare origin
- * (`http://pepper-bot:3000`) or already versioned (`.../api/v1`).
- */
-const resolveBaseUrl = (): string => {
-	const raw = process.env.BACKEND_API_ENDPOINT?.trim();
-	if (!raw) throw new Error('BACKEND_API_ENDPOINT is not configured');
-	const base = raw.replace(/\/+$/, '');
-	return /\/api\/v\d+$/.test(base) ? base : `${base}/api/v1`;
-};
-
-const buildUrl = (path: string, params?: Record<string, string | number>): string => {
-	const url = new URL(`${resolveBaseUrl()}/stats${path}`);
-	for (const [key, value] of Object.entries(params ?? {})) {
-		url.searchParams.set(key, String(value));
-	}
-	return url.toString();
-};
-
-interface StatsFetchOptions {
-	params?: Record<string, string | number>;
-	/** Pass 0 to bypass the cache entirely (used for realtime). */
-	revalidate?: number;
-}
-
-export const fetchStats = async <T>(path: string, options: StatsFetchOptions = {}): Promise<T> => {
+const authHeaders = (): Record<string, string> => {
 	const apiKey = process.env.STATS_API_KEY?.trim();
 	if (!apiKey) throw new Error('STATS_API_KEY is not configured');
-
-	const { params, revalidate = REVALIDATE_SECONDS } = options;
-	const response = await fetch(buildUrl(path, params), {
-		headers: { 'x-api-key': apiKey },
-		...(revalidate > 0 ? { next: { revalidate } } : { cache: 'no-store' }),
-	});
-
-	if (!response.ok) {
-		throw new Error(`Stats endpoint ${path} responded with ${response.status}`);
-	}
-
-	const payload = (await response.json()) as StatsEnvelope<T> & { error?: string };
-	if (!payload.success) {
-		throw new Error(payload.error ?? `Stats endpoint ${path} returned an unsuccessful response`);
-	}
-	return payload.data;
+	return { 'x-api-key': apiKey };
 };
 
-export const getRealtime = (): Promise<StatsRealtime> =>
-	fetchStats<StatsRealtime>('/realtime', { revalidate: 0 });
+const readStats = <T>(
+	path: string,
+	{ key, ttlMs, params }: { key: string; ttlMs: number; params?: Record<string, number> },
+): Promise<T> =>
+	withCache(key, { ttlMs }, () =>
+		fetchUpstream<T>(`/stats${path}`, { params, headers: authHeaders() }),
+	);
 
-export const getOverview = (): Promise<StatsOverview> => fetchStats<StatsOverview>('/overview');
+export const getRealtime = (): Promise<StatsRealtime> =>
+	readStats<StatsRealtime>('/realtime', { key: 'stats:realtime', ttlMs: REALTIME_TTL_MS });
+
+export const getOverview = (): Promise<StatsOverview> =>
+	readStats<StatsOverview>('/overview', { key: 'stats:overview', ttlMs: STATS_TTL_MS });
 
 export const getSongs = (limit: number = DEFAULT_LIMIT): Promise<StatsSongs> =>
-	fetchStats<StatsSongs>('/songs', { params: { limit } });
+	readStats<StatsSongs>('/songs', {
+		key: `stats:songs:${limit}`,
+		ttlMs: STATS_TTL_MS,
+		params: { limit },
+	});
 
 export const getRequesters = (limit: number = DEFAULT_LIMIT): Promise<StatsRequesters> =>
-	fetchStats<StatsRequesters>('/requesters', { params: { limit } });
+	readStats<StatsRequesters>('/requesters', {
+		key: `stats:requesters:${limit}`,
+		ttlMs: STATS_TTL_MS,
+		params: { limit },
+	});
 
 export const getPlaytime = (limit: number = DEFAULT_LIMIT): Promise<StatsPlaytime> =>
-	fetchStats<StatsPlaytime>('/playtime', { params: { limit } });
+	readStats<StatsPlaytime>('/playtime', {
+		key: `stats:playtime:${limit}`,
+		ttlMs: STATS_TTL_MS,
+		params: { limit },
+	});
 
 export const getServers = (limit: number = DEFAULT_LIMIT): Promise<StatsServers> =>
-	fetchStats<StatsServers>('/servers', { params: { limit } });
+	readStats<StatsServers>('/servers', {
+		key: `stats:servers:${limit}`,
+		ttlMs: STATS_TTL_MS,
+		params: { limit },
+	});
 
 export const getServer = (guildId: string): Promise<StatsServerInsight> =>
-	fetchStats<StatsServerInsight>(`/servers/${encodeURIComponent(guildId)}`);
+	readStats<StatsServerInsight>(`/servers/${encodeURIComponent(guildId)}`, {
+		key: `stats:server:${guildId}`,
+		ttlMs: STATS_TTL_MS,
+	});
 
 const settled = <T>(result: PromiseSettledResult<T>, label: string): T | null => {
 	if (result.status === 'fulfilled') return result.value;

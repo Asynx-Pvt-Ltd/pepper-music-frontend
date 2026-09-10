@@ -125,6 +125,12 @@ const sections: LegalSection[] = [
 					recommendations, shows listening statistics and lyrics, and can be
 					localised into the languages it supports.
 				</p>
+				<Note title="No YouTube">
+					Pepper does not stream from YouTube or YouTube Music — YouTube's terms
+					of service do not permit it. If you give it a YouTube link, Pepper
+					resolves the same track on Spotify and plays that instead; a link that
+					does not point at music will not play at all.
+				</Note>
 				<Note title="No paid plans">
 					Pepper is free. Some features — such as linking a Spotify account with{' '}
 					<Term>/login</Term> and unlimited playlist queueing — are unlocked by

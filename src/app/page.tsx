@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import { Metadata, NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
 	ArrowRight,
 	AudioLines,
+	Ban,
 	Gauge,
 	Globe2,
 	Headphones,
@@ -20,30 +22,28 @@ import {
 	Eyebrow,
 	FeatureTile,
 	IconChip,
-	MetricStrip,
 	SectionHeading,
 	Surface,
 } from '@/components/shared/page/parts';
 import Features from '@/components/shared/features';
+import CommandGrid from '@/components/shared/home/commandGrid';
+import HeroMetrics from '@/components/shared/home/heroMetrics';
+import LanguagesCard from '@/components/shared/home/languagesCard';
+import CommandGridSkeleton from '@/components/skeletons/commandGridSkeleton';
+import LanguagesCardSkeleton from '@/components/skeletons/languagesCardSkeleton';
+import MetricStripSkeleton from '@/components/skeletons/metricStripSkeleton';
 import {
-	botCommands,
 	discordServerLink,
 	features,
 	inviteLink,
 	musicSources,
-	supportedLanguages,
+	unsupportedSource,
 } from '@/constants';
-import { getOverview, getRealtime } from '@/lib/stats-api';
-import {
-	formatCompactNumber,
-	formatDuration,
-	isPlausiblePlaytime,
-} from '@/utils/format';
 
 export const metadata: Metadata = {
 	title: 'Pepper | Best Discord Music Bot for Seamless Streaming',
 	description:
-		'Add Pepper to your Discord server for high-quality music streaming from Spotify, Apple Music, Deezer and SoundCloud. Lag-free playback, smart autoplay, queue management and slash commands.',
+		'Add Pepper to your Discord server for high-quality music streaming from Spotify, Apple Music, Deezer and SoundCloud. Lag-free playback, autoplay, queue management and slash commands.',
 	keywords: [
 		'Discord music bot',
 		'Pepper music bot',
@@ -66,9 +66,9 @@ const capabilities = [
 	},
 	{
 		icon: <Sparkles className="h-4 w-4" />,
-		title: 'Autoplay that learns',
+		title: 'Autoplay when the queue runs dry',
 		description:
-			'When the queue runs dry, Pepper keeps going using your own listening history — not a generic radio feed.',
+			"Pepper keeps the room going using Lavalink's recommendations across Spotify and SoundCloud. A recommendation algorithm of our own is on the way.",
 	},
 	{
 		icon: <ListMusic className="h-4 w-4" />,
@@ -86,7 +86,7 @@ const capabilities = [
 		icon: <Globe2 className="h-4 w-4" />,
 		title: 'Speaks your language',
 		description:
-			`Every response is translated across ${supportedLanguages.length} languages, set per server or per user.`,
+			'Every response is translated into each locale Pepper ships, set per server or per user.',
 	},
 	{
 		icon: <Gauge className="h-4 w-4" />,
@@ -96,53 +96,7 @@ const capabilities = [
 	},
 ];
 
-/** Live numbers for the hero strip; falls back to static copy if the bot API is unreachable. */
-const loadHeroMetrics = async () => {
-	const [overview, realtime] = await Promise.all([
-		getOverview().catch(() => null),
-		getRealtime().catch(() => null),
-	]);
-
-	if (!overview && !realtime) return null;
-
-	// Playtime is only shown when the bot's total is not skewed by live streams.
-	const playtimeIsUsable =
-		overview !== null &&
-		isPlausiblePlaytime(overview.estimatedPlaytimeMs, overview.totalPlays);
-
-	return [
-		{
-			label: 'Servers',
-			value: formatCompactNumber(realtime?.guilds ?? overview?.activeGuilds),
-			hint: 'Communities using Pepper',
-		},
-		{
-			label: 'Members reached',
-			value: formatCompactNumber(realtime?.members),
-			hint: 'Across every server',
-		},
-		{
-			label: 'Tracks played',
-			value: formatCompactNumber(overview?.totalPlays),
-			hint: `${formatCompactNumber(overview?.uniqueSongs)} unique songs`,
-		},
-		playtimeIsUsable
-			? {
-					label: 'Music streamed',
-					value: formatDuration(overview.estimatedPlaytimeMs, 1),
-					hint: 'Total listening time',
-				}
-			: {
-					label: 'Artists played',
-					value: formatCompactNumber(overview?.uniqueArtists),
-					hint: 'Distinct artists in the library',
-				},
-	];
-};
-
 const Page: NextPage = async () => {
-	const metrics = await loadHeroMetrics();
-
 	return (
 		<div className="min-h-screen bg-black text-white">
 			{/* Hero */}
@@ -177,7 +131,9 @@ const Page: NextPage = async () => {
 							</ActionLink>
 						</div>
 
-						{metrics && <MetricStrip metrics={metrics} className="mt-14" />}
+						<Suspense fallback={<MetricStripSkeleton />}>
+							<HeroMetrics />
+						</Suspense>
 					</div>
 				</div>
 			</section>
@@ -219,8 +175,8 @@ const Page: NextPage = async () => {
 									},
 									{
 										icon: <Wand2 className="h-4 w-4" />,
-										title: 'Lyrics and autoplay, in-house',
-										body: 'The lyrics service and the autoplay algorithm are both ours — no third party sees what your server is listening to.',
+										title: 'Our own lyrics service',
+										body: 'Lyrics are answered by infrastructure we run, so no third party sees what your server is listening to. Autoplay still leans on Lavalink while we build a recommendation engine of our own.',
 									},
 								].map((item) => (
 									<div key={item.title} className="flex gap-4">
@@ -285,21 +241,10 @@ const Page: NextPage = async () => {
 							title="Slash commands, no prefixes to remember"
 							description="Type a slash and Discord does the rest. Here is the full set."
 						/>
-						<div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-							{botCommands.map((command) => (
-								<Surface
-									key={command.name}
-									interactive
-									className="px-4 py-3.5"
-								>
-									<code className="font-mono text-sm font-semibold text-white">
-										{command.name}
-									</code>
-									<p className="mt-1 text-[13px] leading-relaxed text-gray-400">
-										{command.description}
-									</p>
-								</Surface>
-							))}
+						<div className="mt-10">
+							<Suspense fallback={<CommandGridSkeleton />}>
+								<CommandGrid />
+							</Suspense>
 						</div>
 					</div>
 				</div>
@@ -330,30 +275,21 @@ const Page: NextPage = async () => {
 									</span>
 								))}
 							</div>
-						</Surface>
 
-						<Surface className="p-8">
-							<IconChip>
-								<Globe2 className="h-4 w-4" />
-							</IconChip>
-							<h3 className="mt-4 text-lg font-semibold text-white">
-								Speaks {supportedLanguages.length} languages
-							</h3>
-							<p className="mt-2 text-[14px] leading-relaxed text-gray-400">
-								Set a language for the whole server, or let each member pick
-								their own with <code className="font-mono">/language</code>.
-							</p>
-							<div className="mt-5 flex flex-wrap gap-2">
-								{supportedLanguages.map((language) => (
-									<span
-										key={language}
-										className="rounded-full border border-white/15 px-3 py-1 text-[13px] text-gray-300"
-									>
-										{language}
-									</span>
-								))}
+							<div className="mt-5 flex gap-3 rounded-lg border border-white/10 bg-white/[0.02] p-4">
+								<Ban className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" />
+								<p className="text-[13px] leading-relaxed text-gray-400">
+									<span className="font-semibold text-gray-300">
+										{unsupportedSource.summary}
+									</span>{' '}
+									{unsupportedSource.detail}
+								</p>
 							</div>
 						</Surface>
+
+						<Suspense fallback={<LanguagesCardSkeleton />}>
+							<LanguagesCard />
+						</Suspense>
 					</div>
 				</div>
 			</section>

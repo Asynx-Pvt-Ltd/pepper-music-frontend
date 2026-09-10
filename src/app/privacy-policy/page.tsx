@@ -135,7 +135,7 @@ const sections: LegalSection[] = [
 							detail:
 								'Track title, artist, duration, ISRC, source platform, artwork URL, track link, play count and the time it was played — recorded per user and per server.',
 							purpose:
-								'To power autoplay recommendations, the /chart command, queue features and aggregate statistics.',
+								'To power the /chart command, queue features and aggregate statistics.',
 						},
 						{
 							label: 'Connected Spotify account',
@@ -198,9 +198,10 @@ const sections: LegalSection[] = [
 							a restart or node failover.
 						</>,
 						<>
-							<Term>Personalise autoplay</Term> — recommendations are generated
-							by our own algorithm from your stored listening history and, if
-							you linked one, your Spotify playlists.
+							<Term>Continue playback</Term> — when the queue empties, autoplay
+							picks the next track from the audio platform's own
+							recommendations for what is playing. It does not read your stored
+							listening history.
 						</>,
 						<>
 							<Term>Show your statistics</Term> — the <Term>/chart</Term>{' '}
@@ -340,8 +341,7 @@ const sections: LegalSection[] = [
 				/>
 				<Note title="Run by us, not by third parties">
 					The audio (Lavalink) servers Pepper streams through and the lyrics
-					service behind <Term>/lyrics</Term> are hosted by us, and autoplay
-					recommendations are produced by our own algorithm. Those parts of the
+					service behind <Term>/lyrics</Term> are hosted by us. Those parts of the
 					service pass nothing to an outside company: <Term>/lyrics</Term> sends
 					only a track link to our own service, with no user identifier attached.
 				</Note>
@@ -364,8 +364,8 @@ const sections: LegalSection[] = [
 					items={[
 						<>
 							<Term>Listening history and preferences</Term> are kept while you
-							continue to use Pepper, because they power autoplay and{' '}
-							<Term>/chart</Term>.
+							continue to use Pepper, because they power <Term>/chart</Term> and
+							the statistics on this site.
 						</>,
 						<>
 							<Term>Spotify tokens</Term> are deleted immediately when you run{' '}

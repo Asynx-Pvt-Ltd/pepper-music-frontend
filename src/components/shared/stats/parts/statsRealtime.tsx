@@ -5,6 +5,7 @@ import Image from 'next/image';
 import {
 	Disc3,
 	Headphones,
+	Loader2,
 	Radio,
 	Server,
 	Users,
@@ -24,6 +25,8 @@ import { EmptyState, StatsSection } from './section';
 import { StatTile } from './statTile';
 
 const POLL_INTERVAL_MS = 15_000;
+/** Backoff ceiling once the endpoint starts refusing us. */
+const MAX_POLL_INTERVAL_MS = 120_000;
 const INITIAL_VISIBLE_TRACKS = 12;
 
 interface StatsRealtimeCardProps {
@@ -139,30 +142,85 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 	const [fetchedAt, setFetchedAt] = React.useState(() => Date.now());
 	const [now, setNow] = React.useState(() => Date.now());
 	const [expanded, setExpanded] = React.useState(false);
+	const [refreshing, setRefreshing] = React.useState(false);
 
+	/**
+	 * Polling is scheduled one tick at a time rather than on a fixed interval, so
+	 * it can do three things a plain `setInterval` cannot: stop entirely while
+	 * the tab is in the background, back off when the endpoint pushes back, and
+	 * honour a `Retry-After` instead of hammering through it.
+	 */
 	React.useEffect(() => {
 		let cancelled = false;
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		let failures = 0;
+		let delay = POLL_INTERVAL_MS;
+		/** Seconds the server asked us to wait, when it bothered to say. */
+		let retryAfterSeconds = 0;
 
-		const poll = async () => {
+		const schedule = (wait: number) => {
+			if (cancelled) return;
+			clearTimeout(timer);
+			timer = setTimeout(poll, wait);
+		};
+
+		const backOff = () => {
+			failures += 1;
+			const exponential = Math.min(POLL_INTERVAL_MS * 2 ** failures, MAX_POLL_INTERVAL_MS);
+			delay = Math.max(exponential, retryAfterSeconds * 1000);
+			retryAfterSeconds = 0;
+		};
+
+		async function poll() {
+			// Nobody is looking — do not spend a request on it.
+			if (document.visibilityState === 'hidden') return schedule(POLL_INTERVAL_MS);
+
+			setRefreshing(true);
 			try {
-				const response = await fetch('/api/stats/realtime', {
-					cache: 'no-store',
-				});
+				const response = await fetch('/api/stats/realtime', { cache: 'no-store' });
+
+				if (response.status === 429) {
+					const header = Number(response.headers.get('retry-after'));
+					retryAfterSeconds = Number.isFinite(header) ? header : 0;
+					throw new Error('rate limited');
+				}
 				if (!response.ok) throw new Error(`status ${response.status}`);
+
 				const payload = (await response.json()) as StatsRealtime;
 				if (cancelled) return;
+
 				setData(payload);
 				setFetchedAt(Date.now());
 				setStale(false);
+				failures = 0;
+				delay = POLL_INTERVAL_MS;
 			} catch {
-				if (!cancelled) setStale(true);
+				if (cancelled) return;
+				setStale(true);
+				backOff();
+			} finally {
+				if (!cancelled) {
+					setRefreshing(false);
+					schedule(delay);
+				}
 			}
+		}
+
+		// Coming back to the tab should show fresh numbers, not a 15s-old snapshot.
+		const onVisibility = () => {
+			if (document.visibilityState !== 'visible') return;
+			failures = 0;
+			delay = POLL_INTERVAL_MS;
+			schedule(0);
 		};
 
-		const interval = setInterval(poll, POLL_INTERVAL_MS);
+		document.addEventListener('visibilitychange', onVisibility);
+		schedule(delay);
+
 		return () => {
 			cancelled = true;
-			clearInterval(interval);
+			clearTimeout(timer);
+			document.removeEventListener('visibilitychange', onVisibility);
 		};
 	}, []);
 
@@ -213,6 +271,10 @@ export const StatsRealtimeCard: React.FC<StatsRealtimeCardProps> = ({
 					{stale ? (
 						<>
 							<WifiOff className="h-3 w-3" /> Reconnecting
+						</>
+					) : refreshing ? (
+						<>
+							<Loader2 className="h-3 w-3 animate-spin" /> Updating
 						</>
 					) : (
 						<>

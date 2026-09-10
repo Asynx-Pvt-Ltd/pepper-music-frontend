@@ -1,5 +1,6 @@
 import {
 	ArrowRight,
+	Ban,
 	Clock3,
 	Globe2,
 	Headphones,
@@ -15,6 +16,8 @@ import {
 	Waves,
 } from 'lucide-react';
 
+import { Suspense } from 'react';
+
 import {
 	ActionLink,
 	CtaBand,
@@ -24,12 +27,15 @@ import {
 	Surface,
 } from '@/components/shared/page/parts';
 import FeatureCards from '@/components/shared/feature/parts/featureCards';
+import CommandReference from '@/components/shared/feature/parts/commandReference';
+import LanguageBadges from '@/components/shared/feature/parts/languageBadges';
+import BadgeRowSkeleton from '@/components/skeletons/badgeRowSkeleton';
+import CommandListSkeleton from '@/components/skeletons/commandListSkeleton';
 import {
-	botCommands,
 	discordServerLink,
 	inviteLink,
 	musicSources,
-	supportedLanguages,
+	unsupportedSource,
 } from '@/constants';
 
 const steps = [
@@ -43,7 +49,7 @@ const steps = [
 	},
 	{
 		title: 'Run /play',
-		body: 'Search by name or paste a link. The track starts, the queue builds itself, and autoplay takes over when it empties.',
+		body: 'Search by name or paste a Spotify, Apple Music, Deezer or SoundCloud link. Drop in a YouTube link and Pepper finds the same track on Spotify instead.',
 	},
 ];
 
@@ -76,7 +82,12 @@ const depth = [
 	{
 		icon: <Languages className="h-4 w-4" />,
 		title: 'Per-user language',
-		body: `Responses in ${supportedLanguages.length} languages, set for the whole server or just for you.`,
+		body: 'Every response is translated, set for the whole server or just for you — the list below is read straight from the bot.',
+	},
+	{
+		icon: <Radio className="h-4 w-4" />,
+		title: 'Autoplay when the queue empties',
+		body: 'Autoplay currently uses Lavalink\'s own recommendations across Spotify and SoundCloud. Our own recommendation algorithm is in the works.',
 	},
 ];
 
@@ -182,24 +193,12 @@ const FeatureComponent: React.FC = () => {
 						<SectionHeading
 							label="Reference"
 							title="Every command, one list"
-							description="All of them are slash commands, so Discord autocompletes the options as you type."
+							description="Read live from the bot, so this list is never out of date. Switch the language to see the commands exactly as your server will."
 						/>
-						<div className="mt-10 overflow-hidden rounded-xl border border-white/10">
-							<div className="divide-y divide-white/[0.07]">
-								{botCommands.map((command) => (
-									<div
-										key={command.name}
-										className="grid gap-1 px-5 py-3.5 transition-colors hover:bg-white/[0.04] sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-baseline sm:gap-6"
-									>
-										<code className="font-mono text-sm font-semibold text-white">
-											{command.name}
-										</code>
-										<p className="text-[14px] leading-relaxed text-gray-400">
-											{command.description}
-										</p>
-									</div>
-								))}
-							</div>
+						<div className="mt-10">
+							<Suspense fallback={<CommandListSkeleton rows={10} />}>
+								<CommandReference />
+							</Suspense>
 						</div>
 					</div>
 				</div>
@@ -252,16 +251,23 @@ const FeatureComponent: React.FC = () => {
 									</span>
 								))}
 							</div>
-							<div className="mt-4 flex flex-wrap gap-2">
-								{supportedLanguages.map((language) => (
-									<span
-										key={language}
-										className="rounded-full border border-white/10 px-3 py-1 text-[13px] text-gray-500"
-									>
-										{language}
-									</span>
-								))}
+
+							<div className="mt-5 flex gap-3 rounded-lg border border-white/10 bg-white/[0.02] p-4">
+								<Ban className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" />
+								<p className="text-[13px] leading-relaxed text-gray-400">
+									<span className="font-semibold text-gray-300">
+										{unsupportedSource.summary}
+									</span>{' '}
+									{unsupportedSource.detail}
+								</p>
 							</div>
+
+							<p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
+								Languages
+							</p>
+							<Suspense fallback={<BadgeRowSkeleton count={7} />}>
+								<LanguageBadges className="mt-3" />
+							</Suspense>
 						</Surface>
 					</div>
 				</div>

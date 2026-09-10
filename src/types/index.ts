@@ -9,36 +9,86 @@ export interface FeaturesType extends MenuItemType {
 	imgSrc: string;
 }
 
+/**
+ * Command catalogue — mirrors `GET /api/v1/commands` on the bot (see Pepper-Bot
+ * `src/core/api/commands/index.ts`). Names and descriptions come back already
+ * translated for the requested locale.
+ */
+export interface CommandChoice {
+	name: string;
+	value: string | number;
+}
+
 export interface CommandOption {
-	type: number;
 	name: string;
 	description: string;
-	required?: boolean;
-	options?: CommandOption[];
-	autocomplete?: boolean;
-	min_value?: number;
-	max_value?: number;
+	type: number;
+	typeName: string;
+	required: boolean;
+	autocomplete: boolean;
+	choices: CommandChoice[];
+}
+
+export interface CommandSubcommand {
+	name: string;
+	description: string;
+	/** Set when the subcommand sits inside a group, e.g. `/language set`. */
+	group: string | null;
+	options: CommandOption[];
 }
 
 export interface BotCommand {
 	name: string;
 	description: string;
-	type: string;
+	category: string;
+	categoryName: string;
+	categoryEmoji: string;
 	cooldown: number;
+	dj: boolean;
+	premium: boolean;
 	ownerOnly: boolean;
-	premiumOnly: boolean;
-	guildOnly: boolean;
+	userPermissions: string[];
+	botPermissions: string[];
 	options: CommandOption[];
+	subcommands: CommandSubcommand[];
 }
 
-export interface CommandsData {
-	status: string;
-	timestamp: string;
+export interface CommandCategory {
+	id: string;
+	name: string;
+	emoji: string;
 	count: number;
-	data: {
-		slash: BotCommand[];
-		message: BotCommand[];
-	};
+}
+
+/** `GET /commands` */
+export interface CommandCatalogue {
+	locale: string;
+	total: number;
+	categories: CommandCategory[];
+	commands: BotCommand[];
+}
+
+/**
+ * Language catalogue — mirrors `GET /api/v1/languages` (see Pepper-Bot
+ * `src/core/api/languages/index.ts`). `completeness` is the share of translation
+ * keys present for that locale, 0-1.
+ */
+export interface BotLanguage {
+	code: string;
+	name: string;
+	nativeName: string;
+	discordLocale: string | null;
+	default: boolean;
+	completeness: number;
+	totalKeys: number;
+	missingKeys: number;
+}
+
+/** `GET /languages` */
+export interface LanguageCatalogue {
+	default: string;
+	total: number;
+	languages: BotLanguage[];
 }
 
 export interface HealthAPIData {

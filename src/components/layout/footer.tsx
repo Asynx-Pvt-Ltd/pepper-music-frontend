@@ -73,8 +73,8 @@ const Footer: NextPage<Props> = ({}) => {
 						</Link>
 
 						<p className="mt-4 text-[14px] leading-relaxed text-gray-400">
-							A free Discord music bot with high-quality playback, smart
-							autoplay and controls your moderators can trust.
+							A free Discord music bot with high-quality playback, autoplay
+							and controls your moderators can trust.
 						</p>
 
 						<div className="mt-6">

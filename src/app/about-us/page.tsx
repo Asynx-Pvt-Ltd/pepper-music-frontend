@@ -31,8 +31,8 @@ import {
 	musicSources,
 	pepperLogoLink,
 	privacyLink,
-	supportedLanguages,
 } from '@/constants';
+import { getLanguagesOrFallback } from '@/lib/bot-catalogue';
 
 interface Props {}
 
@@ -76,7 +76,10 @@ const values = [
 	},
 ];
 
-const AboutUs: NextPage<Props> = ({}) => {
+const AboutUs: NextPage<Props> = async ({}) => {
+	// Read from the bot rather than hard-coded, so the count cannot go stale.
+	const { total: languageCount } = await getLanguagesOrFallback();
+
 	return (
 		<div className="min-h-screen bg-black text-white">
 			<PageHero
@@ -118,9 +121,8 @@ const AboutUs: NextPage<Props> = ({}) => {
 								<p>
 									It grew from there. Today it runs on audio infrastructure we
 									host ourselves, streams from {musicSources.length} major
-									platforms, speaks {supportedLanguages.length} languages, and
-									plays for communities around the world — still free, still
-									improving.
+									platforms, speaks {languageCount} languages, and plays for
+									communities around the world — still free, still improving.
 								</p>
 								<p>
 									It is run by a small team that uses it daily. If you want to
@@ -204,8 +206,8 @@ const AboutUs: NextPage<Props> = ({}) => {
 								},
 								{
 									icon: <Sparkle className="h-4 w-4" />,
-									title: 'Our own autoplay engine',
-									body: 'Recommendations come from an algorithm we wrote around your listening history, not a third-party radio feed.',
+									title: 'Autoplay, honestly',
+									body: 'When the queue empties, autoplay keeps going on Lavalink\'s own recommendations across Spotify and SoundCloud. A recommendation engine of our own is being built.',
 								},
 							].map((item) => (
 								<Surface key={item.title} className="p-6">

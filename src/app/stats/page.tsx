@@ -1,8 +1,10 @@
+import { Suspense } from 'react';
 import { NextPage } from 'next';
 import { default as nextDynamic } from 'next/dynamic';
 import { Radio } from 'lucide-react';
 
 import { PageHero } from '@/components/shared/page/parts';
+import StatsPageSkeleton from '@/components/skeletons/statsPageSkeleton';
 import { statsSections } from '@/constants';
 
 const StatsComponent = nextDynamic(
@@ -50,7 +52,10 @@ const StatsPage: NextPage<Props> = async ({}) => {
 				</nav>
 			</PageHero>
 
-			<StatsComponent />
+			{/* The hero is on screen immediately; the numbers stream in behind it. */}
+			<Suspense fallback={<StatsPageSkeleton />}>
+				<StatsComponent />
+			</Suspense>
 		</div>
 	);
 };

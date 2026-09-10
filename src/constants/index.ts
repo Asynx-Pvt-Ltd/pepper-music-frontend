@@ -68,26 +68,31 @@ export const MusicQuotes = [
   "“Your inner voice is the voice of divinity. To hear it, we need to be in solitude, even in crowded places.” – A. R. Rahman"
 ];
 
-/** Slash commands the bot registers — kept in sync with Pepper-Bot `src/commands`. */
-export const botCommands = [
-	{ name: '/play', description: 'Search or paste a link and start playing instantly.' },
-	{ name: '/queue', description: 'See what is lined up next and jump around it.' },
-	{ name: '/autoplay', description: 'Keep the music going with tailored recommendations.' },
-	{ name: '/lyrics', description: 'Pull up the lyrics for the track that is playing.' },
-	{ name: '/chart', description: 'Your top tracks, artists and listening time.' },
-	{ name: '/filter', description: 'Bassboost, nightcore, karaoke and more audio filters.' },
-	{ name: '/loop', description: 'Repeat a single track or the whole queue.' },
-	{ name: '/skip', description: 'Move on to the next track in the queue.' },
-	{ name: '/pause', description: 'Pause playback without losing the queue.' },
-	{ name: '/resume', description: 'Pick up exactly where you paused.' },
-	{ name: '/volume', description: 'Set playback volume for the whole server.' },
-	{ name: '/stop', description: 'Stop playback and clear the queue.' },
-	{ name: '/dj', description: 'Restrict controls to a DJ role you choose.' },
-	{ name: '/language', description: 'Switch Pepper responses to another language.' },
-	{ name: '/login', description: 'Connect Spotify to queue your own playlists.' },
-	{ name: '/logout', description: 'Disconnect a linked account at any time.' },
-	{ name: '/help', description: 'Browse every command with usage examples.' },
-	{ name: '/feedback', description: 'Send bugs or ideas straight to the developers.' },
+/**
+ * Last-resort command list, used only when the bot's `/api/v1/commands`
+ * endpoint cannot be reached. The live catalogue is the source of truth — see
+ * `src/lib/bot-catalogue.ts`.
+ */
+export const fallbackCommands = [
+	{ name: 'play', description: 'Search or paste a link and start playing instantly.', category: 'music' },
+	{ name: 'queue', description: 'See what is lined up next and jump around it.', category: 'music' },
+	{ name: 'autoplay', description: 'Keep the music going once the queue runs dry.', category: 'music' },
+	{ name: 'lyrics', description: 'Pull up the lyrics for the track that is playing.', category: 'music' },
+	{ name: 'chart', description: 'Your top tracks, artists and listening time.', category: 'music' },
+	{ name: 'filter', description: 'Bassboost, nightcore, karaoke and more audio filters.', category: 'music' },
+	{ name: 'loop', description: 'Repeat a single track or the whole queue.', category: 'music' },
+	{ name: 'skip', description: 'Move on to the next track in the queue.', category: 'music' },
+	{ name: 'pause', description: 'Pause playback without losing the queue.', category: 'music' },
+	{ name: 'resume', description: 'Pick up exactly where you paused.', category: 'music' },
+	{ name: 'volume', description: 'Set playback volume for the whole server.', category: 'music' },
+	{ name: 'stop', description: 'Stop playback and clear the queue.', category: 'music' },
+	{ name: 'login', description: 'Connect Spotify to queue your own playlists.', category: 'music' },
+	{ name: 'logout', description: 'Disconnect a linked account at any time.', category: 'music' },
+	{ name: 'dj', description: 'Restrict controls to a DJ role you choose.', category: 'utility' },
+	{ name: 'language', description: 'Switch Pepper responses to another language.', category: 'utility' },
+	{ name: 'help', description: 'Browse every command with usage examples.', category: 'utility' },
+	{ name: 'ping', description: 'Check bot latency and node health.', category: 'utility' },
+	{ name: 'feedback', description: 'Send bugs or ideas straight to the developers.', category: 'utility' },
 ];
 
 /** Platforms Pepper can resolve and stream from. */
@@ -98,15 +103,31 @@ export const musicSources = [
 	'SoundCloud',
 ];
 
-/** Locales shipped in Pepper-Bot `locales/`. */
-export const supportedLanguages = [
-	'English',
-	'Deutsch',
-	'Español',
-	'Français',
-	'Português',
-	'Русский',
-	'Tiếng Việt',
+/**
+ * The source Pepper deliberately does not stream from, and what it does
+ * instead. Shown wherever `musicSources` is, so nobody has to find this out the
+ * hard way. See Pepper-Bot `Music.ytToSpotifyQuery`.
+ */
+export const unsupportedSource = {
+	name: 'YouTube',
+	summary:
+		"YouTube and YouTube Music are not supported — YouTube's terms of service do not allow it.",
+	detail:
+		'Paste a YouTube or YouTube Music link anyway and Pepper looks the same track up on Spotify and plays that instead, as long as the link points at real music.',
+};
+
+/**
+ * Last-resort language list, used only when the bot's `/api/v1/languages`
+ * endpoint cannot be reached. Matches the locale files in Pepper-Bot `locales/`.
+ */
+export const fallbackLanguages = [
+	{ code: 'en', name: 'English', nativeName: 'English' },
+	{ code: 'de', name: 'German', nativeName: 'Deutsch' },
+	{ code: 'es', name: 'Spanish', nativeName: 'Español' },
+	{ code: 'fr', name: 'French', nativeName: 'Français' },
+	{ code: 'pt', name: 'Portuguese', nativeName: 'Português' },
+	{ code: 'ru', name: 'Russian', nativeName: 'Русский' },
+	{ code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt' },
 ];
 
 /** Anchor nav shown in the stats hero; ids match the sections rendered below it. */
